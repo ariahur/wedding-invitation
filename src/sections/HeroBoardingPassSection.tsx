@@ -29,7 +29,6 @@ const HeroBoardingPassSection: React.FC = () => {
       {/* 상단 헤더 영역 (베이지 배경) */}
       <div className="boarding-pass__header">
         <div className="header-date">{t.hero.date}</div>
-        <div className="header-time">{t.hero.time}</div>
       </div>
 
       {/* 메인 보딩 패스 (종이 텍스처 배경) */}
@@ -119,12 +118,20 @@ const HeroBoardingPassSection: React.FC = () => {
 
       <div className="boarding-pass__details">
         <div className="detail-row">
-          <span className="detail-label">{t.hero.details.date}</span>
-          <span className="detail-value">
-            {t.hero.date} {language === 'ko' ? '토요일' : 'Saturday'}
-          </span>
+          <div className="detail-item">
+            <span className="detail-label">{t.hero.details.date}</span>
+            <span className="detail-value">
+              {t.hero.date} {language === 'ko' ? '토요일' : 'Saturday'}
+            </span>
+          </div>
+          <div className="detail-item">
+            <span className="detail-label">{t.hero.details.time}</span>
+            <span className="detail-value">
+              {t.hero.time}
+            </span>
+          </div>
         </div>
-        <div className="detail-row">
+        <div className="detail-row detail-row--column">
           <span className="detail-label">{t.hero.details.venue}</span>
           <div className="detail-value-block">
             <div>{t.directions.venue}</div>

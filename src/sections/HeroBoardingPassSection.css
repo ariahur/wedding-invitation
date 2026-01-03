@@ -39,8 +39,9 @@
   background: #FAF8F3;
   padding: 15px 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  gap: 12px;
   border-bottom: 1px solid #e0e0e0;
 }
 
@@ -272,10 +273,22 @@
 
 .detail-row {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  gap: 24px;
   margin-bottom: 16px;
   padding-bottom: 16px;
   border-bottom: 1px solid #eee;
+}
+
+.detail-row--column {
+  flex-direction: column;
+  gap: 0;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .detail-row:last-child {
@@ -322,8 +335,8 @@
   height: 1px;
   background: repeating-linear-gradient(
     to right,
-    #1A2F4A 0px,
-    #1A2F4A 4px,
+    rgba(26, 47, 74, 0.4) 0px,
+    rgba(26, 47, 74, 0.4) 4px,
     transparent 4px,
     transparent 8px
   );
