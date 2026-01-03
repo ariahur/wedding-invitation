@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { motion } from 'framer-motion';
 import PaperCard from '../components/PaperCard/PaperCard';
 import { supabase } from '../lib/supabase';
 import { Attendance } from '../types/rsvp';
@@ -109,7 +110,13 @@ const RsvpSection: React.FC = () => {
   };
 
   return (
-    <PaperCard texture="paper3" className="rsvp">
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+    >
+      <PaperCard texture="paper3" className="rsvp">
       <h2 className="rsvp__title">{t.rsvp.title}</h2>
       <p className="rsvp__intro">
         {t.rsvp.intro}
@@ -272,6 +279,7 @@ const RsvpSection: React.FC = () => {
         {t.rsvp.footer.inquiry}: {t.rsvp.footer.groom} | {t.rsvp.footer.bride}
       </div>
     </PaperCard>
+    </motion.div>
   );
 };
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import PaperCard from '../components/PaperCard/PaperCard';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
@@ -24,7 +25,13 @@ const DirectionsSection: React.FC = () => {
   };
 
   return (
-    <PaperCard texture="paper2" className="directions">
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+    >
+      <PaperCard texture="paper2" className="directions">
       <h2 className="directions__title">{t.directions.title}</h2>
 
       <div className="directions__section">
@@ -75,6 +82,7 @@ const DirectionsSection: React.FC = () => {
         </button>
       </div>
     </PaperCard>
+    </motion.div>
   );
 };
 

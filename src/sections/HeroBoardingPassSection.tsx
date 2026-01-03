@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import PaperCard from '../components/PaperCard/PaperCard';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
@@ -9,7 +10,13 @@ const HeroBoardingPassSection: React.FC = () => {
   const t = translations[language];
 
   return (
-    <PaperCard texture="paper1" className="boarding-pass" >
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+    >
+      <PaperCard texture="paper1" className="boarding-pass" >
       {/* 최상단 타이틀 */}
       <div className="boarding-pass__top-title" 
         style={{
@@ -139,6 +146,7 @@ const HeroBoardingPassSection: React.FC = () => {
         </div>
       </div>
     </PaperCard>
+    </motion.div>
   );
 };
 
