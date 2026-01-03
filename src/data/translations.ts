@@ -35,11 +35,22 @@ export interface Translations {
     groom: {
       name: string;
       nameEn: string;
+      parents: {
+        father: string;
+        mother: string;
+      };
+      relationship: string;
     };
     bride: {
       name: string;
       nameEn: string;
+      parents: {
+        father: string;
+        mother: string;
+      };
+      relationship: string;
     };
+    invitationTitle: string;
     message: string;
     details: {
       date: string;
@@ -47,7 +58,6 @@ export interface Translations {
       venue: string;
       address: string;
       floor: string;
-      tel: string;
     };
     footer: {
       gate: string;
@@ -169,11 +179,22 @@ export const translations: Record<Language, Translations> = {
       groom: {
         name: '조준용',
         nameEn: 'Daniel',
+        parents: {
+          father: '조웅일',
+          mother: '김미정',
+        },
+        relationship: '장남',
       },
       bride: {
         name: '허다영',
         nameEn: 'Aria',
+        parents: {
+          father: '허윤',
+          mother: '황영식',
+        },
+        relationship: '장녀',
       },
+      invitationTitle: '소중한 분들을 초대합니다.',
       message: '시드니에서 시작된 인연이\n이제 서울에서 아름다운 열매를 맺습니다.\n사랑하는 사람과의 새로운 여행을 시작하려 합니다.\n저희의 첫 비행에 함께하여 주시면 큰 기쁨이 되겠습니다.',
       details: {
         date: '날짜 DATE',
@@ -181,7 +202,6 @@ export const translations: Record<Language, Translations> = {
         venue: '장소 VENUE',
         address: '서울시 강남구 역삼로 607(대치동)',
         floor: '1층 플로리아',
-        tel: 'Tel. 02-6964-7889',
       },
       footer: {
         gate: 'GATE 1F',
@@ -301,11 +321,22 @@ export const translations: Record<Language, Translations> = {
       groom: {
         name: 'Daniel',
         nameEn: 'Daniel',
+        parents: {
+          father: 'Cho Woong-il',
+          mother: 'Kim Mi-jeong',
+        },
+        relationship: 'eldest son',
       },
       bride: {
         name: 'Aria',
         nameEn: 'Aria',
+        parents: {
+          father: 'Hur Yoon',
+          mother: 'Hwang Young-sik',
+        },
+        relationship: 'eldest daughter',
       },
+      invitationTitle: 'We invite our precious guests.',
       message: 'A journey that began in Sydney\nnow bears beautiful fruit in Seoul.\nWe are about to begin a new journey with the one we love.\nIt would be a great joy to have you join us on our first flight together.',
       details: {
         date: 'DATE',
@@ -313,7 +344,6 @@ export const translations: Record<Language, Translations> = {
         venue: 'VENUE',
         address: '607 Yeoksam-ro, Gangnam-gu, Seoul (Daechi-dong)',
         floor: '1F Floria',
-        tel: 'Tel. 02-6964-7889',
       },
       footer: {
         gate: 'GATE 1F',

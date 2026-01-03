@@ -81,39 +81,35 @@ const HeroBoardingPassSection: React.FC = () => {
         </div>
       </div>
 
-      <div className="boarding-pass__couple">
-        <div className="couple-groom">
-          <div className="couple-name">
-            {language === 'ko' 
-              ? `${t.hero.groom.name} (${t.hero.groom.nameEn})`
-              : t.hero.groom.nameEn
-            }
-          </div>
-        </div>
-        <div className="couple-heart">
-          <img 
-            src={`${process.env.PUBLIC_URL}/heart.png`}
-            alt="Heart"
-            className="heart-image"
-          />
-        </div>
-        <div className="couple-bride">
-          <div className="couple-name">
-            {language === 'ko'
-              ? `${t.hero.bride.name} (${t.hero.bride.nameEn})`
-              : t.hero.bride.nameEn
-            }
-          </div>
+      <div className="boarding-pass__message">
+        <h3 className="message-title">{t.hero.invitationTitle}</h3>
+        <div className="message-content">
+          {t.hero.message.split('\n').map((line, index) => (
+            <React.Fragment key={index}>
+              {line}
+              {index < t.hero.message.split('\n').length - 1 && <br />}
+            </React.Fragment>
+          ))}
         </div>
       </div>
 
-      <div className="boarding-pass__message">
-        {t.hero.message.split('\n').map((line, index) => (
-          <React.Fragment key={index}>
-            {line}
-            {index < t.hero.message.split('\n').length - 1 && <br />}
-          </React.Fragment>
-        ))}
+      <div className="boarding-pass__couple">
+        <div className="couple-groom">
+          <div className="couple-line">
+            {language === 'ko' 
+              ? `${t.hero.groom.parents.father} · ${t.hero.groom.parents.mother} 의 ${t.hero.groom.relationship} ${t.hero.groom.name}`
+              : `${t.hero.groom.parents.father} & ${t.hero.groom.parents.mother}'s ${t.hero.groom.relationship} ${t.hero.groom.nameEn}`
+            }
+          </div>
+        </div>
+        <div className="couple-bride">
+          <div className="couple-line">
+            {language === 'ko'
+              ? `${t.hero.bride.parents.father} · ${t.hero.bride.parents.mother} 의 ${t.hero.bride.relationship} ${t.hero.bride.name}`
+              : `${t.hero.bride.parents.father} & ${t.hero.bride.parents.mother}'s ${t.hero.bride.relationship} ${t.hero.bride.nameEn}`
+            }
+          </div>
+        </div>
       </div>
 
       <div className="boarding-pass__details">
@@ -137,7 +133,6 @@ const HeroBoardingPassSection: React.FC = () => {
             <div>{t.directions.venue}</div>
             <div>{t.hero.details.address}</div>
             <div>{t.hero.details.floor}</div>
-            <div>{t.hero.details.tel}</div>
           </div>
         </div>
       </div>

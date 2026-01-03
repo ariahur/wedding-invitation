@@ -220,24 +220,9 @@
 /* 기존 하단 섹션들 */
 .boarding-pass__couple {
   background: #FAF8F3;
-  /* background-image: 
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 0, 0, 0.02) 2px,
-      rgba(0, 0, 0, 0.02) 4px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 0, 0, 0.02) 2px,
-      rgba(0, 0, 0, 0.02) 4px
-    ); */
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 20px;
   margin: 0;
   padding: 20px;
   border-top: 1px solid #e0e0e0;
@@ -245,53 +230,39 @@
 
 .couple-groom,
 .couple-bride {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
   text-align: center;
 }
 
-.couple-name {
-  font-size: 16px;
-  font-weight: 600;
+.couple-line {
+  font-size: 14px;
+  font-weight: 500;
   color: #333;
-}
-
-.couple-heart {
-  margin: 0 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.heart-image {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
+  /* line-height: 1.6; */
 }
 
 .boarding-pass__message {
   background: #FAF8F3;
-  /* background-image: 
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 0, 0, 0.02) 2px,
-      rgba(0, 0, 0, 0.02) 4px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 0, 0, 0.02) 2px,
-      rgba(0, 0, 0, 0.02) 4px
-    ); */
   text-align: center;
-  font-size: 13px;
-  line-height: 1.6;
-  color: #555;
   margin: 0;
   padding: 20px;
-  border-top: 1px solid #e0e0e0;
+  /* border-bottom: 1px solid #e0e0e0; */
+}
+
+.message-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #1A2F4A;
+  margin: 0 0 20px 0;
+  text-align: center;
+}
+
+.message-content {
+  text-align: left;
+  font-size: 14px;
+  line-height: 2;
+  color: #333;
 }
 
 .boarding-pass__details {
@@ -393,13 +364,13 @@
   left: 0;
   right: 0;
   height: 1px;
-  /* background: repeating-linear-gradient(
+  background: repeating-linear-gradient(
     to right,
     rgba(26, 47, 74, 0.4) 0px,
     rgba(26, 47, 74, 0.4) 4px,
     transparent 4px,
     transparent 8px
-  ); */
+  );
 }
 
 .footer-info {

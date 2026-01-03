@@ -69,7 +69,7 @@ const TimelineSection: React.FC = () => {
       <h2 className="timeline__title">{t.timeline.title}</h2>
       
       <div className="timeline__counter">
-        <div className="counter-text">{formatTimeString()}</div>
+        <div className="counter-text">"{formatTimeString()}"</div>
       </div>
 
       <div className="timeline__events">
