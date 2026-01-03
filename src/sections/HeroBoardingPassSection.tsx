@@ -1,8 +1,13 @@
 import React from 'react';
 import PaperCard from '../components/PaperCard/PaperCard';
+import { useLanguage } from '../contexts/LanguageContext';
+import { translations } from '../data/translations';
 import './HeroBoardingPassSection.css';
 
 const HeroBoardingPassSection: React.FC = () => {
+  const language = useLanguage();
+  const t = translations[language];
+
   return (
     <PaperCard texture="paper1" className="boarding-pass" >
       {/* 최상단 타이틀 */}
@@ -10,13 +15,14 @@ const HeroBoardingPassSection: React.FC = () => {
         style={{
           backgroundImage: `url(${process.env.PUBLIC_URL}/textures/paper1.jpg)`,
         }}>
-        <span className="top-title-icon">✈️</span>
-        <span className="top-title-text">WEDDING BOARDING PASS</span>
+        <span className="top-title-icon">✈</span>
+        <span className="top-title-text">{t.hero.topTitle}</span>
       </div>
 
       {/* 상단 헤더 영역 (베이지 배경) */}
       <div className="boarding-pass__header">
-        <div className="header-date">2027.02.20</div>
+        <div className="header-date">{t.hero.date}</div>
+        <div className="header-time">{t.hero.time}</div>
       </div>
 
       {/* 메인 보딩 패스 (종이 텍스처 배경) */}
@@ -29,33 +35,33 @@ const HeroBoardingPassSection: React.FC = () => {
         {/* 상단: 항공사 정보 */}
         <div className="main-top">
           <div className="main-top-left">
-            <span className="heart-icon">❤️</span>
+            {/* <span className="heart-icon">❤️</span> */}
             <div className="airline-info">
-              <div className="airline-name">WEDDING AIRLINES</div>
-              <div className="airline-tagline">Forever Together <span className="small-heart">❤️</span></div>
+              <div className="airline-name">{t.hero.airline}</div>
+              <div className="airline-tagline">{t.hero.tagline} <span className="small-heart">❤️</span></div>
             </div>
           </div>
           <div className="main-top-right">
             <div className="class-label">CLASS</div>
-            <div className="class-value">FIRST</div>
+            <div className="class-value">{t.hero.class}</div>
           </div>
         </div>
 
         {/* 중앙: 항공편 정보 */}
         <div className="main-route">
           <div className="route-origin">
-            <div className="route-code">SYD</div>
-            <div className="route-city">Sydney</div>
-            <div className="route-city-ko">시드니</div>
+            <div className="route-code">{t.hero.origin.code}</div>
+            <div className="route-city">{t.hero.origin.city}</div>
+            <div className="route-city-ko">{t.hero.origin.cityKo}</div>
           </div>
           <div className="route-center">
             <div className="route-icon">✈️</div>
-            <div className="route-label">Flight</div>
+            <div className="route-label">{t.hero.flight}</div>
           </div>
           <div className="route-destination">
-            <div className="route-code">ICN</div>
-            <div className="route-city">Seoul</div>
-            <div className="route-city-ko">서울</div>
+            <div className="route-code">{t.hero.destination.code}</div>
+            <div className="route-city">{t.hero.destination.city}</div>
+            <div className="route-city-ko">{t.hero.destination.cityKo}</div>
           </div>
         </div>
 
@@ -71,47 +77,65 @@ const HeroBoardingPassSection: React.FC = () => {
 
       <div className="boarding-pass__couple">
         <div className="couple-groom">
-          <div className="couple-name">조준용 (Daniel)</div>
+          <div className="couple-name">
+            {language === 'ko' 
+              ? `${t.hero.groom.name} (${t.hero.groom.nameEn})`
+              : t.hero.groom.nameEn
+            }
+          </div>
         </div>
-        <div className="couple-heart">❤️</div>
+        <div className="couple-heart">
+          <img 
+            src={`${process.env.PUBLIC_URL}/heart.png`}
+            alt="Heart"
+            className="heart-image"
+          />
+        </div>
         <div className="couple-bride">
-          <div className="couple-name">허다영 (Aria)</div>
+          <div className="couple-name">
+            {language === 'ko'
+              ? `${t.hero.bride.name} (${t.hero.bride.nameEn})`
+              : t.hero.bride.nameEn
+            }
+          </div>
         </div>
       </div>
 
       <div className="boarding-pass__message">
-      시드니에서 시작된 인연이 <br/>이제 서울에서 아름다운 열매를 맺습니다.<br/>사랑하는 사람과의 새로운 여행을 시작하려 합니다.<br/>저희의 첫 비행에 함께하여 주시면 큰 기쁨이 되겠습니다.
+        {t.hero.message.split('\n').map((line, index) => (
+          <React.Fragment key={index}>
+            {line}
+            {index < t.hero.message.split('\n').length - 1 && <br />}
+          </React.Fragment>
+        ))}
       </div>
 
       <div className="boarding-pass__details">
         <div className="detail-row">
-          <span className="detail-label">날짜 DATE</span>
-          <span className="detail-value">2027.02.20 토요일</span>
+          <span className="detail-label">{t.hero.details.date}</span>
+          <span className="detail-value">
+            {t.hero.date} {language === 'ko' ? '토요일' : 'Saturday'}
+          </span>
         </div>
         <div className="detail-row">
-          <span className="detail-label">시간 TIME</span>
-          <span className="detail-value">15:00 오후 3시</span>
-        </div>
-        <div className="detail-row">
-          <span className="detail-label">장소 VENUE</span>
+          <span className="detail-label">{t.hero.details.venue}</span>
           <div className="detail-value-block">
-            <div>그랜드힐컨벤션</div>
-            <div>서울시 강남구 역삼로 607(대치동)</div>
-            <div>1층 플로리아</div>
-            <div>Tel. 02-6964-7889</div>
+            <div>{t.directions.venue}</div>
+            <div>{t.hero.details.address}</div>
+            <div>{t.hero.details.floor}</div>
+            <div>{t.hero.details.tel}</div>
           </div>
         </div>
       </div>
 
       <div className="boarding-pass__footer">
         <div className="footer-info">
-          <span>GATE 1F</span>
-          <span>BOARDING 15:00</span>
-          <span>SEAT ❤️</span>
+          <span>{t.hero.footer.gate}</span>
+          <span>{t.hero.footer.boarding}</span>
         </div>
         <div className="barcode">
           <div className="barcode-lines"></div>
-          <div className="barcode-text">&lt;WEDDING2027022014KJ08PS&gt;</div>
+          <div className="barcode-text">{t.hero.barcode}</div>
         </div>
       </div>
     </PaperCard>

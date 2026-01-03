@@ -5,37 +5,45 @@ import { z } from 'zod';
 import PaperCard from '../components/PaperCard/PaperCard';
 import { supabase } from '../lib/supabase';
 import { Attendance } from '../types/rsvp';
+import { useLanguage } from '../contexts/LanguageContext';
+import { translations } from '../data/translations';
 import './RsvpSection.css';
 
-const rsvpSchema = z.object({
-  name: z.string().min(1, '성함을 입력해주세요').max(30, '성함은 30자 이하로 입력해주세요'),
-  phone: z.string().min(10, '연락처를 올바르게 입력해주세요'),
-  email: z.union([
-    z.string().email('올바른 이메일 형식이 아닙니다'),
-    z.literal(''),
-  ]).optional(),
-  attendance: z.enum(['attending', 'not_attending'], {
-    message: '참석 여부를 선택해주세요',
-  }),
-  guestCount: z.number().min(1).max(10).optional().nullable(),
-  note: z.string().optional(),
-  honeypot: z.string().max(0, '스팸으로 감지되었습니다'),
-}).refine((data) => {
-  if (data.attendance === 'attending') {
-    return data.guestCount !== undefined && data.guestCount !== null && data.guestCount >= 1 && data.guestCount <= 10;
-  }
-  return true;
-}, {
-  message: '동행 인원을 입력해주세요 (1-10명)',
-  path: ['guestCount'],
-});
-
-type RsvpFormData = z.infer<typeof rsvpSchema>;
+const createRsvpSchema = (language: 'ko' | 'en') => {
+  const t = translations[language].rsvp.form;
+  
+  return z.object({
+    name: z.string().min(1, language === 'ko' ? '성함을 입력해주세요' : 'Please enter your name').max(30, language === 'ko' ? '성함은 30자 이하로 입력해주세요' : 'Name must be 30 characters or less'),
+    phone: z.string().min(10, language === 'ko' ? '연락처를 올바르게 입력해주세요' : 'Please enter a valid phone number'),
+    email: z.union([
+      z.string().email(language === 'ko' ? '올바른 이메일 형식이 아닙니다' : 'Please enter a valid email address'),
+      z.literal(''),
+    ]).optional(),
+    attendance: z.enum(['attending', 'not_attending'], {
+      message: language === 'ko' ? '참석 여부를 선택해주세요' : 'Please select your attendance',
+    }),
+    guestCount: z.number().min(1).max(10).optional().nullable(),
+    note: z.string().optional(),
+    honeypot: z.string().max(0, language === 'ko' ? '스팸으로 감지되었습니다' : 'Spam detected'),
+  }).refine((data) => {
+    if (data.attendance === 'attending') {
+      return data.guestCount !== undefined && data.guestCount !== null && data.guestCount >= 1 && data.guestCount <= 10;
+    }
+    return true;
+  }, {
+    message: language === 'ko' ? '동행 인원을 입력해주세요 (1-10명)' : 'Please enter number of guests (1-10)',
+    path: ['guestCount'],
+  });
+};
 
 const RsvpSection: React.FC = () => {
+  const language = useLanguage();
+  const t = translations[language];
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const rsvpSchema = createRsvpSchema(language);
 
   const {
     register,
@@ -43,7 +51,7 @@ const RsvpSection: React.FC = () => {
     watch,
     reset,
     formState: { errors },
-  } = useForm<RsvpFormData>({
+  } = useForm<z.infer<typeof rsvpSchema>>({
     resolver: zodResolver(rsvpSchema),
     defaultValues: {
       attendance: undefined,
@@ -53,7 +61,7 @@ const RsvpSection: React.FC = () => {
 
   const attendance = watch('attendance') as Attendance | undefined;
 
-  const onSubmit = async (data: RsvpFormData) => {
+  const onSubmit = async (data: z.infer<typeof rsvpSchema>) => {
     // Honeypot check
     if (data.honeypot) {
       return;
@@ -94,7 +102,7 @@ const RsvpSection: React.FC = () => {
     } catch (error: any) {
       console.error('Error submitting RSVP:', error);
       setSubmitStatus('error');
-      setErrorMessage(error?.message || '제출 중 오류가 발생했습니다. 다시 시도해주세요.');
+      setErrorMessage(error?.message || t.rsvp.form.error);
     } finally {
       setIsSubmitting(false);
     }
@@ -102,10 +110,15 @@ const RsvpSection: React.FC = () => {
 
   return (
     <PaperCard texture="paper3" className="rsvp">
-      <h2 className="rsvp__title">참석 여부 전달하기</h2>
+      <h2 className="rsvp__title">{t.rsvp.title}</h2>
       <p className="rsvp__intro">
-        참석 여부를 알려주시면 소중히 준비하겠습니다
+        {t.rsvp.intro}
       </p>
+
+      <div className="rsvp__messages">
+        <p className="rsvp__thank-you">{t.rsvp.thankYouMessage}</p>
+        <p className="rsvp__seating">{t.rsvp.seatingMessage}</p>
+      </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="rsvp__form">
         {/* Honeypot field */}
@@ -120,13 +133,13 @@ const RsvpSection: React.FC = () => {
         <div className="form-group">
           <label htmlFor="name" className="form-label">
             <span className="form-icon">👤</span>
-            성함
+            {t.rsvp.form.name}
           </label>
           <input
             id="name"
             type="text"
             {...register('name')}
-            placeholder="홍길동"
+            placeholder={language === 'ko' ? '홍길동' : 'John Doe'}
             className={`form-input ${errors.name ? 'form-input--error' : ''}`}
           />
           {errors.name && (
@@ -137,13 +150,13 @@ const RsvpSection: React.FC = () => {
         <div className="form-group">
           <label htmlFor="phone" className="form-label">
             <span className="form-icon">📱</span>
-            연락처
+            {t.rsvp.form.phone}
           </label>
           <input
             id="phone"
             type="tel"
             {...register('phone')}
-            placeholder="010-0000-0000"
+            placeholder={t.rsvp.form.phonePlaceholder}
             className={`form-input ${errors.phone ? 'form-input--error' : ''}`}
           />
           {errors.phone && (
@@ -154,7 +167,7 @@ const RsvpSection: React.FC = () => {
         <div className="form-group">
           <label htmlFor="email" className="form-label">
             <span className="form-icon">✉️</span>
-            이메일 (선택)
+            {t.rsvp.form.email} {t.rsvp.form.emailOptional}
           </label>
           <input
             id="email"
@@ -171,7 +184,7 @@ const RsvpSection: React.FC = () => {
         <div className="form-group">
           <label className="form-label">
             <span className="form-icon">✓</span>
-            참석 여부
+            {t.rsvp.form.attendance}
           </label>
           <div className="radio-group">
             <label className="radio-label">
@@ -181,7 +194,7 @@ const RsvpSection: React.FC = () => {
                 {...register('attendance')}
                 className="radio-input"
               />
-              <span className="radio-text">참석합니다</span>
+              <span className="radio-text">{t.rsvp.form.attending}</span>
             </label>
             <label className="radio-label">
               <input
@@ -190,7 +203,7 @@ const RsvpSection: React.FC = () => {
                 {...register('attendance')}
                 className="radio-input"
               />
-              <span className="radio-text">참석이 어렵습니다</span>
+              <span className="radio-text">{t.rsvp.form.notAttending}</span>
             </label>
           </div>
           {errors.attendance && (
@@ -202,7 +215,7 @@ const RsvpSection: React.FC = () => {
           <div className="form-group">
             <label htmlFor="guestCount" className="form-label">
               <span className="form-icon">👥</span>
-              동행 인원 (본인 포함)
+              {t.rsvp.form.guestCount}
             </label>
             <input
               id="guestCount"
@@ -216,19 +229,19 @@ const RsvpSection: React.FC = () => {
             {errors.guestCount && (
               <span className="form-error">{errors.guestCount.message}</span>
             )}
-            <span className="form-hint">최소 1명, 최대 10명</span>
+            <span className="form-hint">{t.rsvp.form.guestCountHint}</span>
           </div>
         )}
 
         <div className="form-group">
           <label htmlFor="note" className="form-label">
             <span className="form-icon">📝</span>
-            요청사항 (선택)
+            {t.rsvp.form.note}
           </label>
           <textarea
             id="note"
             {...register('note')}
-            placeholder="음식 알러지, 휠체어 필요 등 요청사항을 입력해주세요"
+            placeholder={t.rsvp.form.notePlaceholder}
             rows={4}
             className="form-textarea"
           />
@@ -236,7 +249,7 @@ const RsvpSection: React.FC = () => {
 
         {submitStatus === 'success' && (
           <div className="form-message form-message--success">
-            제출이 완료되었습니다
+            {t.rsvp.form.success}
           </div>
         )}
 
@@ -251,16 +264,15 @@ const RsvpSection: React.FC = () => {
           disabled={isSubmitting}
           className="form-submit"
         >
-          {isSubmitting ? '제출 중...' : '❤️ RSVP 제출하기'}
+          {isSubmitting ? t.rsvp.form.submitting : t.rsvp.form.submit}
         </button>
       </form>
 
       <div className="rsvp__footer">
-        문의: 신랑 010-1234-5678 | 신부 010-9876-5432
+        {t.rsvp.footer.inquiry}: {t.rsvp.footer.groom} | {t.rsvp.footer.bride}
       </div>
     </PaperCard>
   );
 };
 
 export default RsvpSection;
-

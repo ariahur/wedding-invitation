@@ -2,6 +2,7 @@
   padding: 0;
   background: white;
   overflow: visible;
+  border-radius: 16px;
 }
 
 /* 최상단 타이틀 */
@@ -13,15 +14,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
   font-size: 11px;
   font-weight: bold;
   letter-spacing: 2px;
   text-transform: uppercase;
+  border-radius: 16px 16px 0 0;
 }
 
 .top-title-icon {
-  font-size: 14px;
+  font-size: 16px;
+  color: white;
+  font-weight: normal;
+  display: inline-block;
+  transform: rotate(0deg);
 }
 
 .top-title-text {
@@ -31,14 +37,21 @@
 /* 상단 헤더 영역 (베이지 배경) */
 .boarding-pass__header {
   background: #FAF8F3;
-  padding: 15px 10px;
+  padding: 15px 20px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #e0e0e0;
 }
 
 .header-date {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1A2F4A;
+  letter-spacing: 1px;
+}
+
+.header-time {
   font-size: 18px;
   font-weight: bold;
   color: #1A2F4A;
@@ -227,8 +240,16 @@
 }
 
 .couple-heart {
-  font-size: 20px;
   margin: 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heart-image {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
 }
 
 .boarding-pass__message {
@@ -289,6 +310,23 @@
   margin: 0;
   padding: 20px;
   border-top: 1px solid #e0e0e0;
+  position: relative;
+}
+
+.boarding-pass__footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: repeating-linear-gradient(
+    to right,
+    #1A2F4A 0px,
+    #1A2F4A 4px,
+    transparent 4px,
+    transparent 8px
+  );
 }
 
 .footer-info {
@@ -305,16 +343,304 @@
 }
 
 .barcode-lines {
-  height: 40px;
-  background: repeating-linear-gradient(
-    90deg,
-    #000 0px,
-    #000 2px,
-    transparent 2px,
-    transparent 4px
-  );
-  margin-bottom: 8px;
-  border-radius: 4px;
+  height: 50px;
+  width: 180px;
+  margin: 0 auto 8px;
+  background: 
+    repeating-linear-gradient(
+      90deg,
+      #000 0px,
+      #000 1px,
+      transparent 1px,
+      transparent 2px,
+      #000 2px,
+      #000 3px,
+      transparent 3px,
+      transparent 4px,
+      #000 4px,
+      #000 6px,
+      transparent 6px,
+      transparent 7px,
+      #000 7px,
+      #000 8px,
+      transparent 8px,
+      transparent 9px,
+      #000 9px,
+      #000 11px,
+      transparent 11px,
+      transparent 12px,
+      #000 12px,
+      #000 13px,
+      transparent 13px,
+      transparent 14px,
+      #000 14px,
+      #000 16px,
+      transparent 16px,
+      transparent 17px,
+      #000 17px,
+      #000 18px,
+      transparent 18px,
+      transparent 19px,
+      #000 19px,
+      #000 21px,
+      transparent 21px,
+      transparent 22px,
+      #000 22px,
+      #000 23px,
+      transparent 23px,
+      transparent 24px,
+      #000 24px,
+      #000 26px,
+      transparent 26px,
+      transparent 27px,
+      #000 27px,
+      #000 28px,
+      transparent 28px,
+      transparent 29px,
+      #000 29px,
+      #000 31px,
+      transparent 31px,
+      transparent 32px,
+      #000 32px,
+      #000 33px,
+      transparent 33px,
+      transparent 34px,
+      #000 34px,
+      #000 36px,
+      transparent 36px,
+      transparent 37px,
+      #000 37px,
+      #000 38px,
+      transparent 38px,
+      transparent 39px,
+      #000 39px,
+      #000 41px,
+      transparent 41px,
+      transparent 42px,
+      #000 42px,
+      #000 43px,
+      transparent 43px,
+      transparent 44px,
+      #000 44px,
+      #000 46px,
+      transparent 46px,
+      transparent 47px,
+      #000 47px,
+      #000 48px,
+      transparent 48px,
+      transparent 49px,
+      #000 49px,
+      #000 51px,
+      transparent 51px,
+      transparent 52px,
+      #000 52px,
+      #000 53px,
+      transparent 53px,
+      transparent 54px,
+      #000 54px,
+      #000 56px,
+      transparent 56px,
+      transparent 57px,
+      #000 57px,
+      #000 58px,
+      transparent 58px,
+      transparent 59px,
+      #000 59px,
+      #000 61px,
+      transparent 61px,
+      transparent 62px,
+      #000 62px,
+      #000 63px,
+      transparent 63px,
+      transparent 64px,
+      #000 64px,
+      #000 66px,
+      transparent 66px,
+      transparent 67px,
+      #000 67px,
+      #000 68px,
+      transparent 68px,
+      transparent 69px,
+      #000 69px,
+      #000 71px,
+      transparent 71px,
+      transparent 72px,
+      #000 72px,
+      #000 73px,
+      transparent 73px,
+      transparent 74px,
+      #000 74px,
+      #000 76px,
+      transparent 76px,
+      transparent 77px,
+      #000 77px,
+      #000 78px,
+      transparent 78px,
+      transparent 79px,
+      #000 79px,
+      #000 81px,
+      transparent 81px,
+      transparent 82px,
+      #000 82px,
+      #000 83px,
+      transparent 83px,
+      transparent 84px,
+      #000 84px,
+      #000 86px,
+      transparent 86px,
+      transparent 87px,
+      #000 87px,
+      #000 88px,
+      transparent 88px,
+      transparent 89px,
+      #000 89px,
+      #000 91px,
+      transparent 91px,
+      transparent 92px,
+      #000 92px,
+      #000 93px,
+      transparent 93px,
+      transparent 94px,
+      #000 94px,
+      #000 96px,
+      transparent 96px,
+      transparent 97px,
+      #000 97px,
+      #000 98px,
+      transparent 98px,
+      transparent 99px,
+      #000 99px,
+      #000 101px,
+      transparent 101px,
+      transparent 102px,
+      #000 102px,
+      #000 103px,
+      transparent 103px,
+      transparent 104px,
+      #000 104px,
+      #000 106px,
+      transparent 106px,
+      transparent 107px,
+      #000 107px,
+      #000 108px,
+      transparent 108px,
+      transparent 109px,
+      #000 109px,
+      #000 111px,
+      transparent 111px,
+      transparent 112px,
+      #000 112px,
+      #000 113px,
+      transparent 113px,
+      transparent 114px,
+      #000 114px,
+      #000 116px,
+      transparent 116px,
+      transparent 117px,
+      #000 117px,
+      #000 118px,
+      transparent 118px,
+      transparent 119px,
+      #000 119px,
+      #000 121px,
+      transparent 121px,
+      transparent 122px,
+      #000 122px,
+      #000 123px,
+      transparent 123px,
+      transparent 124px,
+      #000 124px,
+      #000 126px,
+      transparent 126px,
+      transparent 127px,
+      #000 127px,
+      #000 128px,
+      transparent 128px,
+      transparent 129px,
+      #000 129px,
+      #000 131px,
+      transparent 131px,
+      transparent 132px,
+      #000 132px,
+      #000 133px,
+      transparent 133px,
+      transparent 134px,
+      #000 134px,
+      #000 136px,
+      transparent 136px,
+      transparent 137px,
+      #000 137px,
+      #000 138px,
+      transparent 138px,
+      transparent 139px,
+      #000 139px,
+      #000 141px,
+      transparent 141px,
+      transparent 142px,
+      #000 142px,
+      #000 143px,
+      transparent 143px,
+      transparent 144px,
+      #000 144px,
+      #000 146px,
+      transparent 146px,
+      transparent 147px,
+      #000 147px,
+      #000 148px,
+      transparent 148px,
+      transparent 149px,
+      #000 149px,
+      #000 151px,
+      transparent 151px,
+      transparent 152px,
+      #000 152px,
+      #000 153px,
+      transparent 153px,
+      transparent 154px,
+      #000 154px,
+      #000 156px,
+      transparent 156px,
+      transparent 157px,
+      #000 157px,
+      #000 158px,
+      transparent 158px,
+      transparent 159px,
+      #000 159px,
+      #000 161px,
+      transparent 161px,
+      transparent 162px,
+      #000 162px,
+      #000 163px,
+      transparent 163px,
+      transparent 164px,
+      #000 164px,
+      #000 166px,
+      transparent 166px,
+      transparent 167px,
+      #000 167px,
+      #000 168px,
+      transparent 168px,
+      transparent 169px,
+      #000 169px,
+      #000 171px,
+      transparent 171px,
+      transparent 172px,
+      #000 172px,
+      #000 173px,
+      transparent 173px,
+      transparent 174px,
+      #000 174px,
+      #000 176px,
+      transparent 176px,
+      transparent 177px,
+      #000 177px,
+      #000 178px,
+      transparent 178px,
+      transparent 179px,
+      #000 179px,
+      #000 181px
+    );
+  border-radius: 2px;
 }
 
 .barcode-text {
