@@ -141,7 +141,7 @@ export const translations: Record<Language, Translations> = {
       topTitle: 'WEDDING BOARDING PASS',
       date: '2027.02.20',
       time: '15:00',
-      airline: 'WEDDING AIRLINES',
+      airline: 'NO RETURN AIRLINES',
       tagline: 'Forever Together',
       class: 'FIRST',
       flight: 'Flight',
