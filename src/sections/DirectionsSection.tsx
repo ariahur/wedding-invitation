@@ -5,12 +5,13 @@ import './DirectionsSection.css';
 const DirectionsSection: React.FC = () => {
   const [copied, setCopied] = useState(false);
   
-  const address = '서울특별시 강남구 테헤란로 123';
-  const venueName = '더 클래식 웨딩홀';
+  const address = '서울시 강남구 역삼로 607(대치동)';
+  const venueName = '그랜드힐컨벤션';
+  const fullAddress = `${venueName} ${address} 1층 플로리아`;
 
   const handleCopyAddress = async () => {
     try {
-      await navigator.clipboard.writeText(`${venueName} ${address}`);
+      await navigator.clipboard.writeText(fullAddress);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
@@ -25,8 +26,9 @@ const DirectionsSection: React.FC = () => {
       <div className="directions__section">
         <h3 className="directions__subtitle">지하철</h3>
         <ul className="directions__list">
-          <li>2호선 강남역 3번 출구 도보 5분</li>
-          <li>신분당선 강남역 5번 출구 도보 7분</li>
+          <li>2호선 삼성역 1번 출구</li>
+          <li className="directions__note">1번 출구인 경우 셔틀버스가 대기</li>
+          <li className="directions__note">2번 출구인 경우 도보로 5분 소요</li>
         </ul>
       </div>
 
@@ -34,32 +36,31 @@ const DirectionsSection: React.FC = () => {
         <h3 className="directions__subtitle">버스</h3>
         <ul className="directions__list">
           <li>
-            <strong>간선:</strong> 146, 360, 740
+            <strong>간선:</strong> 143, 146, 341, 360, 401
           </li>
           <li>
-            <strong>지선:</strong> 3011, 4318, 6411
+            <strong>지선:</strong> 2413, 3411, 3422, 4318, 11-3
           </li>
-          <li>강남역 정류장 하차</li>
+          <li>
+            <strong>광역:</strong> 9407, 6900
+          </li>
         </ul>
       </div>
 
       <div className="directions__section">
         <h3 className="directions__subtitle">자가용</h3>
         <ul className="directions__list">
-          <li>내비게이션: "{venueName}" 검색</li>
-          <li>건물 지하 1~3층 주차 가능 (3시간 무료)</li>
+          <li>서울특별시 강남구 대치동 1004-3 네비게이션 검색 시 입구 안내</li>
+          <li>건물 주차타워 주차 가능 (3시간 무료)</li>
         </ul>
-        <div className="directions__parking-note">
-          주차 안내: 건물 후면 주차장 이용 가능하며, 웨딩홀 이용 고객은 3시간 무료 주차가 제공됩니다. 만차 시 인근 강남역 공영주차장을 이용해 주세요.
-        </div>
       </div>
 
       <div className="directions__address">
         <div className="address-content">
           <div className="address-venue">{venueName}</div>
           <div className="address-text">{address}</div>
-          <div className="address-text">3층 그랜드볼룸</div>
-          <div className="address-text">Tel. 02-1234-5678</div>
+          <div className="address-text">1층 플로리아</div>
+          <div className="address-text">Tel. 02-6964-7889</div>
         </div>
         <button 
           className="address-copy-btn"

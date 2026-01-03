@@ -4,24 +4,19 @@ import './HeroBoardingPassSection.css';
 
 const HeroBoardingPassSection: React.FC = () => {
   return (
-    <PaperCard texture="paper1" className="boarding-pass">
+    <PaperCard texture="paper1" className="boarding-pass" >
       {/* 최상단 타이틀 */}
-      <div className="boarding-pass__top-title">
+      <div className="boarding-pass__top-title" 
+        style={{
+          backgroundImage: `url(${process.env.PUBLIC_URL}/textures/paper1.jpg)`,
+        }}>
         <span className="top-title-icon">✈️</span>
         <span className="top-title-text">WEDDING BOARDING PASS</span>
       </div>
 
-      {/* 상단 헤더 영역 (흰색 배경) */}
+      {/* 상단 헤더 영역 (베이지 배경) */}
       <div className="boarding-pass__header">
-        <div className="header-logo-circle">
-          <div className="logo-text-top">wedding</div>
-          <div className="logo-letter">W</div>
-          <div className="logo-text-bottom">invitation</div>
-        </div>
-        <div className="header-date-label">
-          <div className="date-label-text">DATE</div>
-          <div className="date-value">2027.02.20</div>
-        </div>
+        <div className="header-date">2027.02.20</div>
       </div>
 
       {/* 메인 보딩 패스 (종이 텍스처 배경) */}
@@ -66,60 +61,57 @@ const HeroBoardingPassSection: React.FC = () => {
 
         {/* 하단: 커플 사진 */}
         <div className="main-photo">
-          <div className="photo-placeholder">
-            <div className="photo-icon">👫</div>
-            <div className="photo-text">Couple Photo</div>
-          </div>
+          <img 
+            src={`${process.env.PUBLIC_URL}/couple-navy.jpeg`}
+            alt="Couple"
+            className="couple-photo"
+          />
         </div>
       </div>
 
       <div className="boarding-pass__couple">
         <div className="couple-groom">
-          <div className="couple-name">김지훈 (Kim Jihoon)</div>
-          <div className="couple-parents">김철수·이영희의 장남</div>
+          <div className="couple-name">조준용 (Daniel)</div>
         </div>
         <div className="couple-heart">❤️</div>
         <div className="couple-bride">
-          <div className="couple-name">박수민 (Park Sumin)</div>
-          <div className="couple-parents">박영수·최미희의 장녀</div>
+          <div className="couple-name">허다영 (Aria)</div>
         </div>
       </div>
 
       <div className="boarding-pass__message">
-        시드니에서 시작된 인연이 이제 서울에서 아름다운 열매를 맺습니다.
-        <br />
-        새로운 여정의 시작을 축복해 주시면 감사하겠습니다.
+      시드니에서 시작된 인연이 <br/>이제 서울에서 아름다운 열매를 맺습니다.<br/>사랑하는 사람과의 새로운 여행을 시작하려 합니다.<br/>저희의 첫 비행에 함께하여 주시면 큰 기쁨이 되겠습니다.
       </div>
 
       <div className="boarding-pass__details">
         <div className="detail-row">
           <span className="detail-label">날짜 DATE</span>
-          <span className="detail-value">2026.03.21 토요일</span>
+          <span className="detail-value">2027.02.20 토요일</span>
         </div>
         <div className="detail-row">
           <span className="detail-label">시간 TIME</span>
-          <span className="detail-value">14:00 오후 2시</span>
+          <span className="detail-value">15:00 오후 3시</span>
         </div>
         <div className="detail-row">
           <span className="detail-label">장소 VENUE</span>
           <div className="detail-value-block">
-            <div>더 클래식 웨딩홀</div>
-            <div>서울특별시 강남구 테헤란로 123</div>
-            <div>3층 그랜드볼룸</div>
-            <div>Tel. 02-1234-5678</div>
+            <div>그랜드힐컨벤션</div>
+            <div>서울시 강남구 역삼로 607(대치동)</div>
+            <div>1층 플로리아</div>
+            <div>Tel. 02-6964-7889</div>
           </div>
         </div>
       </div>
 
       <div className="boarding-pass__footer">
         <div className="footer-info">
-          <span>GATE 3F</span>
-          <span>BOARDING 13:30</span>
+          <span>GATE 1F</span>
+          <span>BOARDING 15:00</span>
           <span>SEAT ❤️</span>
         </div>
         <div className="barcode">
           <div className="barcode-lines"></div>
-          <div className="barcode-text">&lt;WEDDING2926032114KJ08PS&gt;</div>
+          <div className="barcode-text">&lt;WEDDING2027022014KJ08PS&gt;</div>
         </div>
       </div>
     </PaperCard>

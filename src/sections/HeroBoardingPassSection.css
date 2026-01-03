@@ -6,7 +6,8 @@
 
 /* 최상단 타이틀 */
 .boarding-pass__top-title {
-  background: #1A2F4A;
+  /* background: #1A2F4A; */
+  /* background-image: url('../../public/textures/paper1.jpg'); */
   color: white;
   padding: 12px 20px;
   display: flex;
@@ -27,67 +28,21 @@
   letter-spacing: 2px;
 }
 
-/* 상단 헤더 영역 (흰색 배경) */
+/* 상단 헤더 영역 (베이지 배경) */
 .boarding-pass__header {
-  background: white;
-  padding: 20px;
+  background: #FAF8F3;
+  padding: 15px 10px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   border-bottom: 1px solid #e0e0e0;
 }
 
-.header-logo-circle {
-  width: 80px;
-  height: 80px;
-  border: 2px dashed #ccc;
-  border-radius: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.logo-text-top,
-.logo-text-bottom {
-  font-size: 8px;
-  color: #999;
-  text-transform: lowercase;
-  line-height: 1;
-}
-
-.logo-letter {
-  font-size: 32px;
-  font-weight: bold;
-  color: #999;
-  line-height: 1;
-  margin: 4px 0;
-}
-
-.header-date-label {
-  background: #1A2F4A;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 4px;
-  text-align: center;
-}
-
-.date-label-text {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  margin-bottom: 4px;
-}
-
-.date-value {
+.header-date {
   font-size: 18px;
   font-weight: bold;
-  color: #333;
-  background: white;
-  padding: 4px 8px;
-  border-radius: 2px;
-  margin-top: 4px;
+  color: #1A2F4A;
+  letter-spacing: 1px;
 }
 
 /* 메인 보딩 패스 (종이 텍스처 배경) */
@@ -108,7 +63,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(26, 47, 74, 0.7);
+  /* background: rgba(26, 47, 74, 0.7); */
   z-index: 0;
 }
 
@@ -239,33 +194,18 @@
   margin-top: 20px;
 }
 
-.photo-placeholder {
+.couple-photo {
   width: 100%;
-  aspect-ratio: 2 / 1;
-  background: rgba(255, 255, 255, 0.1);
+  /* height: auto; */
+  height: 150px;
   border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: 1px dashed rgba(255, 255, 255, 0.3);
-}
-
-.photo-icon {
-  font-size: 48px;
-  margin-bottom: 8px;
-  opacity: 0.7;
-}
-
-.photo-text {
-  font-size: 12px;
-  color: white;
-  opacity: 0.7;
+  object-fit: cover;
+  display: block;
 }
 
 /* 기존 하단 섹션들 */
 .boarding-pass__couple {
-  background: white;
+  background: #FAF8F3;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -284,12 +224,6 @@
   font-size: 16px;
   font-weight: 600;
   color: #333;
-  margin-bottom: 4px;
-}
-
-.couple-parents {
-  font-size: 11px;
-  color: #666;
 }
 
 .couple-heart {
@@ -298,7 +232,7 @@
 }
 
 .boarding-pass__message {
-  background: white;
+  background: #FAF8F3;
   text-align: center;
   font-size: 13px;
   line-height: 1.6;
@@ -309,7 +243,7 @@
 }
 
 .boarding-pass__details {
-  background: white;
+  background: #FAF8F3;
   margin: 0;
   padding: 20px;
   border-top: 1px solid #e0e0e0;
@@ -351,7 +285,7 @@
 }
 
 .boarding-pass__footer {
-  background: white;
+  background: #FAF8F3;
   margin: 0;
   padding: 20px;
   border-top: 1px solid #e0e0e0;
