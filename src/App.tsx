@@ -25,7 +25,7 @@ const WeddingInvitation: React.FC = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 3000); // 3초 후 로딩 완료
+    }, 4000); // 4초 후 로딩 완료
 
     return () => clearTimeout(timer);
   }, []);

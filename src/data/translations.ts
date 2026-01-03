@@ -116,7 +116,7 @@ export interface Translations {
 export const translations: Record<Language, Translations> = {
   ko: {
     loading: {
-      message: '우리는 결혼합니다',
+      message: "We're getting married.",
     },
     timeline: {
       title: '함께한 시간',
