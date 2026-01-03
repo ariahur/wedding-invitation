@@ -74,7 +74,7 @@ const HeroBoardingPassSection: React.FC = () => {
         {/* 하단: 커플 사진 */}
         <div className="main-photo">
           <img 
-            src={`${process.env.PUBLIC_URL}/couple-navy.jpeg`}
+            src={`${process.env.PUBLIC_URL}/couple-navy1.jpeg`}
             alt="Couple"
             className="couple-photo"
           />
