@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route, Navigate, useParams } from 'react-router-dom';
 import HeroBoardingPassSection from './sections/HeroBoardingPassSection';
 import TimelineSection from './sections/TimelineSection';
 import DirectionsSection from './sections/DirectionsSection';
 import RsvpSection from './sections/RsvpSection';
+import LoadingScreen from './components/LoadingScreen/LoadingScreen';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { Language } from './types/language';
 import './App.css';
@@ -11,6 +12,7 @@ import './App.css';
 const WeddingInvitation: React.FC = () => {
   const { lang } = useParams<{ lang: string }>();
   const language = (lang === 'en' ? 'en' : 'ko') as Language;
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (language === 'ko') {
@@ -20,9 +22,18 @@ const WeddingInvitation: React.FC = () => {
     }
   }, [language]);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000); // 3초 후 로딩 완료
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <LanguageProvider language={language}>
-      <div className="App">
+      {isLoading && <LoadingScreen />}
+      <div className="App" style={{ opacity: isLoading ? 0 : 1, transition: 'opacity 0.5s ease-in' }}>
         <HeroBoardingPassSection />
         
         {/* Gallery section removed for this version */}

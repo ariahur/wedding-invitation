@@ -1,0 +1,43 @@
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #FAF8F3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeOut 0.5s ease-out 2.5s forwards;
+}
+
+.loading-content {
+  text-align: center;
+}
+
+.loading-text {
+  font-size: 24px;
+  font-weight: 300;
+  color: #1A2F4A;
+  letter-spacing: 2px;
+  min-height: 32px;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@media (max-width: 430px) {
+  .loading-text {
+    font-size: 20px;
+    letter-spacing: 1px;
+  }
+}
+

@@ -7,6 +7,9 @@ export interface TimelineEvent {
 }
 
 export interface Translations {
+  loading: {
+    message: string;
+  };
   timeline: {
     title: string;
     events: TimelineEvent[];
@@ -112,6 +115,9 @@ export interface Translations {
 
 export const translations: Record<Language, Translations> = {
   ko: {
+    loading: {
+      message: '우리는 결혼합니다',
+    },
     timeline: {
       title: '함께한 시간',
       events: [
@@ -236,6 +242,9 @@ export const translations: Record<Language, Translations> = {
     },
   },
   en: {
+    loading: {
+      message: "We're getting married",
+    },
     timeline: {
       title: 'Time Together',
       events: [
