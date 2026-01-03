@@ -220,7 +220,7 @@
 /* 기존 하단 섹션들 */
 .boarding-pass__couple {
   background: #FAF8F3;
-  background-image: 
+  /* background-image: 
     repeating-linear-gradient(
       0deg,
       transparent,
@@ -234,7 +234,7 @@
       transparent 2px,
       rgba(0, 0, 0, 0.02) 2px,
       rgba(0, 0, 0, 0.02) 4px
-    );
+    ); */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -270,7 +270,7 @@
 
 .boarding-pass__message {
   background: #FAF8F3;
-  background-image: 
+  /* background-image: 
     repeating-linear-gradient(
       0deg,
       transparent,
@@ -284,7 +284,7 @@
       transparent 2px,
       rgba(0, 0, 0, 0.02) 2px,
       rgba(0, 0, 0, 0.02) 4px
-    );
+    ); */
   text-align: center;
   font-size: 13px;
   line-height: 1.6;
@@ -296,7 +296,7 @@
 
 .boarding-pass__details {
   background: #FAF8F3;
-  background-image: 
+  /* background-image: 
     repeating-linear-gradient(
       0deg,
       transparent,
@@ -310,7 +310,7 @@
       transparent 2px,
       rgba(0, 0, 0, 0.02) 2px,
       rgba(0, 0, 0, 0.02) 4px
-    );
+    ); */
   margin: 0;
   padding: 20px;
   border-top: 1px solid #e0e0e0;
@@ -365,7 +365,7 @@
 
 .boarding-pass__footer {
   background: #FAF8F3;
-  background-image: 
+  /* background-image: 
     repeating-linear-gradient(
       0deg,
       transparent,
@@ -379,7 +379,7 @@
       transparent 2px,
       rgba(0, 0, 0, 0.02) 2px,
       rgba(0, 0, 0, 0.02) 4px
-    );
+    ); */
   margin: 0;
   padding: 20px;
   border-top: 1px solid #e0e0e0;
@@ -393,13 +393,13 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: repeating-linear-gradient(
+  /* background: repeating-linear-gradient(
     to right,
     rgba(26, 47, 74, 0.4) 0px,
     rgba(26, 47, 74, 0.4) 4px,
     transparent 4px,
     transparent 8px
-  );
+  ); */
 }
 
 .footer-info {
