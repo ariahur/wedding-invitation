@@ -16,7 +16,7 @@ const LoadingScreen: React.FC = () => {
           typeSpeed={80}
           backSpeed={50}
           showCursor={true}
-          cursorChar="|"
+          cursorChar="✈️"
           className="loading-text"
         />
       </div>

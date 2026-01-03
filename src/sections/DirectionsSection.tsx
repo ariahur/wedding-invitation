@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import PaperCard from '../components/PaperCard/PaperCard';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -9,9 +9,6 @@ const DirectionsSection: React.FC = () => {
   const language = useLanguage();
   const t = translations[language];
   const [copied, setCopied] = useState(false);
-  const [mapError, setMapError] = useState(false);
-  const mapRef = useRef<HTMLDivElement>(null);
-  const kakaoMapLoaded = useRef(false);
   
   const fullAddress = language === 'ko'
     ? `${t.directions.venue} ${t.directions.address} ${t.directions.floor}`
@@ -27,105 +24,6 @@ const DirectionsSection: React.FC = () => {
     }
   };
 
-  // 카카오맵 초기화
-  useEffect(() => {
-    if (language !== 'ko' || !mapRef.current) return;
-
-    const initializeMap = () => {
-      if (!mapRef.current) return;
-
-      const container = mapRef.current;
-      const defaultCoords = new window.kakao.maps.LatLng(37.5013, 127.0574); // 대치동 근처 좌표
-      
-      const options = {
-        center: defaultCoords,
-        level: 3,
-      };
-      
-      const map = new window.kakao.maps.Map(container, options);
-      
-      // 주소로 좌표 검색
-      const geocoder = new window.kakao.maps.services.Geocoder();
-      geocoder.addressSearch(t.directions.address, (result: any, status: any) => {
-        if (status === window.kakao.maps.services.Status.OK) {
-          const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
-          map.setCenter(coords);
-          
-          // 마커 표시
-          const marker = new window.kakao.maps.Marker({
-            position: coords,
-          });
-          marker.setMap(map);
-        } else {
-          // 주소 검색 실패 시 기본 좌표에 마커 표시
-          const marker = new window.kakao.maps.Marker({
-            position: defaultCoords,
-          });
-          marker.setMap(map);
-        }
-      });
-    };
-
-    // 이미 스크립트가 로드되어 있는지 확인
-    if (window.kakao && window.kakao.maps) {
-      window.kakao.maps.load(initializeMap);
-      return;
-    }
-
-    // 스크립트가 이미 존재하는지 확인
-    const existingScript = document.querySelector('script[src*="dapi.kakao.com"]');
-    if (existingScript) {
-      // 스크립트가 이미 로드된 경우 바로 초기화 시도
-      if (window.kakao && window.kakao.maps) {
-        window.kakao.maps.load(initializeMap);
-      } else {
-        // 스크립트가 아직 로드 중인 경우
-        existingScript.addEventListener('load', () => {
-          if (window.kakao && window.kakao.maps) {
-            window.kakao.maps.load(initializeMap);
-          }
-        });
-      }
-      return;
-    }
-
-    // 새 스크립트 로드
-    const script = document.createElement('script');
-    const apiKey = process.env.REACT_APP_KAKAO_MAP_API_KEY || '';
-    if (!apiKey) {
-      console.warn('카카오맵 API 키가 설정되지 않았습니다.');
-      setMapError(true);
-      return;
-    }
-    
-    const scriptUrl = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${apiKey}&autoload=false`;
-    script.src = scriptUrl;
-    script.async = true;
-    
-    script.onload = () => {
-      if (window.kakao && window.kakao.maps) {
-        window.kakao.maps.load(initializeMap);
-      } else {
-        console.error('카카오맵 스크립트 로드 실패: window.kakao가 없습니다.');
-        setMapError(true);
-      }
-    };
-    
-    script.onerror = (error) => {
-      console.error('카카오맵 스크립트 로드 중 오류 발생:', error);
-      console.error('스크립트 URL:', scriptUrl);
-      console.error('API 키 확인:', apiKey ? `${apiKey.substring(0, 10)}...` : '없음');
-      console.error('도메인 설정 확인 필요: 카카오 개발자 콘솔에서 현재 도메인을 등록했는지 확인하세요.');
-      setMapError(true);
-    };
-    
-    document.head.appendChild(script);
-  }, [language, t.directions.address]);
-
-  const handleKakaoMapClick = () => {
-    const searchQuery = encodeURIComponent(t.directions.address);
-    window.open(`https://map.kakao.com/link/to/1948333104`, '_blank');
-  };
 
   return (
     <motion.div
@@ -179,41 +77,16 @@ const DirectionsSection: React.FC = () => {
         
         {/* 지도 영역 */}
         <div className="directions__map">
-          {language === 'ko' ? (
-            mapError ? (
-              <div className="map-error-container">
-                <div className="map-error-content">
-                  <div className="map-error-icon">📍</div>
-                  <div className="map-error-message">
-                    <p className="map-error-title">지도를 불러올 수 없습니다</p>
-                    <p className="map-error-description">
-                      카카오맵에서 위치를 확인하세요
-                    </p>
-                  </div>
-                  <button 
-                    className="map-link-button"
-                    onClick={handleKakaoMapClick}
-                  >
-                    <span className="map-link-icon">🗺️</span>
-                    카카오맵에서 보기
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <div ref={mapRef} className="kakao-map-container" />
-            )
-          ) : (
-            <iframe
-              src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3165.079789985077!2d127.06414271122055!3d37.50603622747875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca447548b6c33%3A0xe8177a2e737683a9!2sGrand%20Hill%20Convention%2C%20Seoul!5e0!3m2!1sen!2skr!4v1767444168082!5m2!1sen!2skr`}
-              width="100%"
-              height="250"
-              style={{ border: 0, borderRadius: '8px' }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Google Maps"
-            />
-          )}
+          <iframe
+            src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3165.079789985077!2d127.06414271122055!3d37.50603622747875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca447548b6c33%3A0xe8177a2e737683a9!2sGrand%20Hill%20Convention%2C%20Seoul!5e0!3m2!1sen!2skr!4v1767444168082!5m2!1sen!2skr`}
+            width="100%"
+            height="250"
+            style={{ border: 0, borderRadius: '8px' }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Google Maps"
+          />
         </div>
         
         <button 

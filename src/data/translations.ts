@@ -134,27 +134,27 @@ export const translations: Record<Language, Translations> = {
         {
           title: '첫만남',
           description: '저희는 대학교에서\n처음 만났어요.',
-          image: '/timeline/first-meeting.jpg',
+          image: '/timeline/2013-4.jpeg',
         },
         {
-          title: '5주년', // 2018
+          title: '5주년',
           description: '스무 살의 시작부터\n20대의 청춘을 함께 보냈어요.',
-          image: '/timeline/5th-anniversary.jpg',
+          image: '/timeline/2018.jpeg',
         },
         {
           title: '갑자기 찾아온 장거리',
           description: '2019년 1월,\n우리는 장거리 연애를 시작했어요.\n떨어져 있어도 마음만은 늘 가까웠어요.',
-          image: '/timeline/long-distance.jpg',
+          image: '/timeline/2019.jpeg',
         },
         {
           title: '10주년',
           description: '다시 같은 곳에서,\n우리는 재회를 넘어\n결혼을 결심했어요.',
-          image: '/timeline/10th-anniversary.jpg',
+          image: '/timeline/2025.jpeg',
         },
         {
           title: 'Wedding Day',
           description: '이제 부부로서\n새로운 시작을 합니다.\n저희의 하루를 함께 축하해주세요.',
-          image: '/timeline/wedding-day.jpg',
+          image: '/timeline/2027.jpeg',
         },
       ],
     },
@@ -276,27 +276,27 @@ export const translations: Record<Language, Translations> = {
         {
           title: 'First Meeting',
           description: 'We first met at university.',
-          image: '/timeline/first-meeting.jpg',
+          image: '/timeline/2013.jpeg',
         },
         {
           title: '5th Anniversary',
           description: 'We spent our youth together from the age of 20.',
-          image: '/timeline/5th-anniversary.jpg',
+          image: '/timeline/2018.jpeg',
         },
         {
           title: 'Long Distance Begins',
           description: 'In January 2019, we started a long distance relationship. Even though we were apart, our hearts were always close.',
-          image: '/timeline/long-distance.jpg',
+          image: '/timeline/2019.jpeg',
         },
         {
           title: '10th Anniversary',
           description: 'Back in the same place, we decided to get married, going beyond just reuniting.',
-          image: '/timeline/10th-anniversary.jpg',
+          image: '/timeline/2025.jpeg',
         },
         {
           title: 'Wedding Day',
           description: 'Now we begin a new chapter as husband and wife. Please celebrate our special day with us.',
-          image: '/timeline/wedding-day.jpg',
+          image: '/timeline/2027.jpeg',
         },
       ],
     },
