@@ -134,7 +134,7 @@ export const translations: Record<Language, Translations> = {
         {
           title: '첫만남',
           description: '저희는 대학교에서\n처음 만났어요.',
-          image: '/timeline/2013-4.jpeg',
+          image: '/timeline/2013-3.jpeg',
         },
         {
           title: '5주년',
@@ -279,30 +279,30 @@ export const translations: Record<Language, Translations> = {
           image: '/timeline/2013.jpeg',
         },
         {
-          title: '5th Anniversary',
-          description: 'We spent our youth together from the age of 20.',
+          title: 'Five Years Together',
+          description: 'From the beginning of our twenties,\nwe shared many days and grew together.',
           image: '/timeline/2018.jpeg',
         },
         {
-          title: 'Long Distance Begins',
-          description: 'In January 2019, we started a long distance relationship. Even though we were apart, our hearts were always close.',
+          title: 'Long Distance',
+          description: 'Then, in January 2019, distance unexpectedly became part of our journey,\nbut we stayed close in the ways that mattered.',
           image: '/timeline/2019.jpeg',
         },
         {
-          title: '10th Anniversary',
-          description: 'Back in the same place, we decided to get married, going beyond just reuniting.',
+          title: 'Ten Years Later',
+          description: 'After many turns and a few tears,\nwe chose to spend our lives together.',
           image: '/timeline/2025.jpeg',
         },
         {
           title: 'Wedding Day',
-          description: 'Now we begin a new chapter as husband and wife. Please celebrate our special day with us.',
+          description: 'Now, as husband and wife, we begin a new journey.\nPlease join us in celebrating our first steps together.',
           image: '/timeline/2027.jpeg',
         },
       ],
     },
     hero: {
       topTitle: 'WEDDING BOARDING PASS',
-      date: '2027.02.20',
+      date: '20.02.2027',
       time: '15:00',
       airline: 'NO RETURN AIRLINES',
       tagline: 'Forever Together',
@@ -319,7 +319,7 @@ export const translations: Record<Language, Translations> = {
         cityKo: 'Seoul',
       },
       groom: {
-        name: 'Daniel',
+        name: 'Daniel Cho',
         nameEn: 'Daniel',
         parents: {
           father: 'Cho Woong-il',
@@ -328,7 +328,7 @@ export const translations: Record<Language, Translations> = {
         relationship: 'eldest son',
       },
       bride: {
-        name: 'Aria',
+        name: 'Aria Hur',
         nameEn: 'Aria',
         parents: {
           father: 'Hur Yoon',
@@ -336,8 +336,8 @@ export const translations: Record<Language, Translations> = {
         },
         relationship: 'eldest daughter',
       },
-      invitationTitle: 'We invite our precious guests.',
-      message: 'A journey that began in Sydney\nnow bears beautiful fruit in Seoul.\nWe are about to begin a new journey with the one we love.\nIt would be a great joy to have you join us on our first flight together.',
+      invitationTitle: 'To Our Dearest People.',
+      message: 'A connection that began in Sydney\nnow bears beautiful fruit in Seoul.\nAs we begin a new journey with the one we love,\nwe would be honoured to have you join us on our first flight.',
       details: {
         date: 'DATE',
         time: 'TIME',

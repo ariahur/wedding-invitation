@@ -105,7 +105,7 @@ const TimelineSection: React.FC = () => {
                       /\d+ year together/g,
                       /\d+ years together/g,
                     ];
-                    const highlightWords = ['처음', 'first', '결혼해요', 'get married'];
+                    const highlightWords: string[] = [];
                     
                     let text = event.description;
                     const parts: (string | JSX.Element)[] = [];
