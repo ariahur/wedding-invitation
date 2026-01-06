@@ -7,8 +7,9 @@
 
 /* 최상단 타이틀 */
 .boarding-pass__top-title {
-  /* background: #1A2F4A; */
+  background: #1A2F4A;
   /* background-image: url('../../public/textures/paper1.jpg'); */
+  font-family: "Roboto", sans-serif;
   color: white;
   padding: 12px 20px;
   display: flex;
@@ -23,20 +24,30 @@
 }
 
 .top-title-icon {
-  font-size: 16px;
+  font-family: "Material Symbols Outlined", sans-serif;
+  font-size: 17px;
   color: white;
   font-weight: normal;
   display: inline-block;
   transform: rotate(0deg);
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+  font-style: normal;
+  line-height: 1;
 }
 
 .top-title-text {
+  font-family: "Roboto", sans-serif;
   letter-spacing: 2px;
 }
 
 /* 상단 헤더 영역 (베이지 배경) */
 .boarding-pass__header {
-  background: #FAF8F3;
+  font-family: "Roboto", sans-serif;
+  background: #FFFFFF;
   padding: 15px 20px;
   display: flex;
   justify-content: center;
@@ -46,14 +57,16 @@
 }
 
 .header-date {
-  font-size: 18px;
+  font-family: "Roboto", sans-serif;
+  font-size: 17px;
   font-weight: bold;
   color: #1A2F4A;
   letter-spacing: 1px;
 }
 
 .header-time {
-  font-size: 18px;
+  font-family: "Roboto", sans-serif;
+  font-size: 17px;
   font-weight: bold;
   color: #1A2F4A;
   letter-spacing: 1px;
@@ -61,9 +74,11 @@
 
 /* 메인 보딩 패스 (종이 텍스처 배경) */
 .boarding-pass__main {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  font-family: "Roboto", sans-serif;
+  /* background-size: cover; */
+  /* background-position: center; */
+  /* background-repeat: no-repeat; */
+  background-color: #1A2F4A;
   color: white;
   padding: 20px;
   position: relative;
@@ -111,19 +126,21 @@
 }
 
 .airline-name {
-  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  font-size: 13px;
   font-weight: bold;
   letter-spacing: 1px;
   margin-bottom: 4px;
 }
 
 .airline-tagline {
+  font-family: "Roboto", sans-serif;
   font-size: 11px;
   opacity: 0.95;
 }
 
 .small-heart {
-  font-size: 10px;
+  font-size: 11px;
   margin-left: 2px;
 }
 
@@ -132,6 +149,7 @@
 }
 
 .class-label {
+  font-family: "Roboto", sans-serif;
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 1px;
@@ -140,7 +158,8 @@
 }
 
 .class-value {
-  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
   font-weight: bold;
   letter-spacing: 1px;
 }
@@ -163,7 +182,8 @@
 }
 
 .route-code {
-  font-size: 36px;
+  font-family: "Roboto", sans-serif;
+  font-size: 32px;
   font-weight: bold;
   color: white;
   margin-bottom: 6px;
@@ -171,14 +191,16 @@
 }
 
 .route-city {
-  font-size: 12px;
+  font-family: "Roboto", sans-serif;
+  font-size: 13px;
   color: white;
   margin-bottom: 2px;
   opacity: 0.95;
 }
 
 .route-city-ko {
-  font-size: 10px;
+  font-family: "Roboto", sans-serif;
+  font-size: 13px;
   color: white;
   opacity: 0.85;
 }
@@ -192,34 +214,124 @@
 }
 
 .route-icon {
+  font-family: "Material Symbols Outlined", sans-serif;
   font-size: 24px;
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+  font-style: normal;
+  line-height: 1;
+  display: inline-block;
 }
 
 .route-label {
-  font-size: 9px;
+  font-family: "Roboto", sans-serif;
+  font-size: 13px;
   color: white;
   opacity: 0.8;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-/* 하단: 커플 사진 */
+/* 하단: 커플 이름 */
 .main-photo {
   margin-top: 20px;
+  margin-left: -20px;
+  margin-right: -20px;
+  margin-bottom: -20px;
+  width: calc(100% + 40px);
 }
 
-.couple-photo {
+.couple-photo-container {
+  position: relative;
   width: 100%;
-  /* height: auto; */
+  height: 256px;
+  border-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+.couple-photo-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.1);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.couple-photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(26, 47, 74, 0.5) 0%,
+    rgba(26, 47, 74, 0.55) 10%,
+    rgba(0, 0, 0, 0.5) 50%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+}
+
+.couple-stamp-container {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 20px;
+}
+
+.couple-stamp {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  transform: rotate(-8deg);
+  filter: drop-shadow(0 8px 16px rgba(212, 175, 55, 0.5)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+}
+
+.couple-stamp-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.couple-stamp-decoration {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.couple-stamp-line {
+  height: 1px;
+  width: 32px;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.couple-stamp-heart {
+  font-size: 16px;
+  color: white;
+}
+
+/* 하단: 커플 사진 (이전 버전) */
+/* .couple-photo {
+  width: 100%;
   height: 200px;
   border-radius: 8px;
   object-fit: cover;
   display: block;
-}
+} */
 
 /* 기존 하단 섹션들 */
 .boarding-pass__couple {
-  background: #FAF8F3;
+  background: #FFFFFF;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -236,14 +348,14 @@
 }
 
 .couple-line {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   color: #333;
   /* line-height: 1.6; */
 }
 
 .boarding-pass__message {
-  background: #FAF8F3;
+  background: #FFFFFF;
   text-align: center;
   margin: 0;
   padding: 20px;
@@ -251,22 +363,35 @@
 }
 
 .message-title {
-  font-size: 16px;
-  font-weight: 500;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  font-style: normal;
   color: #1A2F4A;
   margin: 0 0 20px 0;
   text-align: center;
 }
 
+.message-title:lang(en) {
+  font-family: "Lora", serif;
+}
+
 .message-content {
-  text-align: left;
-  font-size: 14px;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+  font-size: 12px;
   line-height: 2;
   color: #333;
 }
 
+.message-content:lang(en) {
+  font-family: "Lora", serif;
+}
+
 .boarding-pass__details {
-  background: #FAF8F3;
+  background: #FFFFFF;
   /* background-image: 
     repeating-linear-gradient(
       0deg,
@@ -312,20 +437,20 @@
 }
 
 .detail-label {
-  font-size: 11px;
+  font-size: 12px;
   color: #999;
   margin-bottom: 4px;
   font-weight: 500;
 }
 
 .detail-value {
-  font-size: 14px;
+  font-size: 12px;
   color: #333;
   font-weight: 500;
 }
 
 .detail-value-block {
-  font-size: 14px;
+  font-size: 12px;
   color: #333;
   line-height: 1.6;
 }
@@ -335,7 +460,7 @@
 }
 
 .boarding-pass__footer {
-  background: #FAF8F3;
+  background: #FFFFFF;
   /* background-image: 
     repeating-linear-gradient(
       0deg,
@@ -374,6 +499,7 @@
 }
 
 .footer-info {
+  font-family: "Roboto", sans-serif;
   display: flex;
   justify-content: space-around;
   font-size: 11px;
@@ -688,9 +814,9 @@
 }
 
 .barcode-text {
+  font-family: "Roboto", sans-serif;
   font-size: 10px;
   color: #666;
-  font-family: monospace;
   letter-spacing: 1px;
 }
 
@@ -705,15 +831,15 @@
   }
 
   .logo-letter {
-    font-size: 28px;
+    font-size: 30px;
   }
 
   .date-value {
-    font-size: 16px;
+    font-size: 15px;
   }
 
   .route-code {
-    font-size: 28px;
+    font-size: 26px;
   }
 
   .main-route {
@@ -725,11 +851,11 @@
   }
 
   .couple-name {
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .boarding-pass__message {
-    font-size: 12px;
+    font-size: 13px;
     padding: 16px;
   }
 

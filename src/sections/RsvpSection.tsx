@@ -24,6 +24,8 @@ const createRsvpSchema = (language: 'ko' | 'en') => {
       message: language === 'ko' ? '참석 여부를 선택해주세요' : 'Please select your attendance',
     }),
     guestCount: z.number().min(1).max(10).optional().nullable(),
+    hasChildren: z.enum(['no', 'yes']).optional(),
+    childrenAges: z.string().optional(),
     note: z.string().optional(),
     honeypot: z.string().max(0, language === 'ko' ? '스팸으로 감지되었습니다' : 'Spam detected'),
   }).refine((data) => {
@@ -61,6 +63,7 @@ const RsvpSection: React.FC = () => {
   });
 
   const attendance = watch('attendance') as Attendance | undefined;
+  const hasChildren = watch('hasChildren');
 
   const onSubmit = async (data: z.infer<typeof rsvpSchema>) => {
     // Honeypot check
@@ -82,6 +85,8 @@ const RsvpSection: React.FC = () => {
             email: data.email || null,
             attendance: data.attendance,
             guest_count: data.attendance === 'attending' ? data.guestCount || 1 : null,
+            has_children: data.hasChildren || null,
+            children_ages: data.childrenAges || null,
             note: data.note || null,
           },
         ]);
@@ -97,6 +102,8 @@ const RsvpSection: React.FC = () => {
         email: '',
         attendance: undefined,
         guestCount: null,
+        hasChildren: undefined,
+        childrenAges: '',
         note: '',
         honeypot: '',
       });
@@ -114,18 +121,18 @@ const RsvpSection: React.FC = () => {
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
+      transition={{ duration: 0.4, ease: 'easeOut' }}
     >
       <PaperCard texture="paper3" className="rsvp">
       <h2 className="rsvp__title">{t.rsvp.title}</h2>
       <p className="rsvp__intro">
-        {t.rsvp.intro}
+        {t.rsvp.intro.split('\n').map((line, index) => (
+          <React.Fragment key={index}>
+            {line}
+            {index < t.rsvp.intro.split('\n').length - 1 && <br />}
+          </React.Fragment>
+        ))}
       </p>
-
-      <div className="rsvp__messages">
-        <p className="rsvp__thank-you">{t.rsvp.thankYouMessage}</p>
-        <p className="rsvp__seating">{t.rsvp.seatingMessage}</p>
-      </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="rsvp__form">
         {/* Honeypot field */}
@@ -139,7 +146,6 @@ const RsvpSection: React.FC = () => {
 
         <div className="form-group">
           <label htmlFor="name" className="form-label">
-            <span className="form-icon">👤</span>
             {t.rsvp.form.name}
           </label>
           <input
@@ -156,7 +162,6 @@ const RsvpSection: React.FC = () => {
 
         <div className="form-group">
           <label htmlFor="phone" className="form-label">
-            <span className="form-icon">📱</span>
             {t.rsvp.form.phone}
           </label>
           <input
@@ -173,7 +178,6 @@ const RsvpSection: React.FC = () => {
 
         <div className="form-group">
           <label htmlFor="email" className="form-label">
-            <span className="form-icon">✉️</span>
             {t.rsvp.form.email} {t.rsvp.form.emailOptional}
           </label>
           <input
@@ -190,7 +194,6 @@ const RsvpSection: React.FC = () => {
 
         <div className="form-group">
           <label className="form-label">
-            <span className="form-icon">✓</span>
             {t.rsvp.form.attendance}
           </label>
           <div className="radio-group">
@@ -221,7 +224,6 @@ const RsvpSection: React.FC = () => {
         {attendance === 'attending' && (
           <div className="form-group">
             <label htmlFor="guestCount" className="form-label">
-              <span className="form-icon">👥</span>
               {t.rsvp.form.guestCount}
             </label>
             <input
@@ -236,13 +238,61 @@ const RsvpSection: React.FC = () => {
             {errors.guestCount && (
               <span className="form-error">{errors.guestCount.message}</span>
             )}
-            <span className="form-hint">{t.rsvp.form.guestCountHint}</span>
+            <span className="form-hint">
+              {t.rsvp.form.guestCountHint.split('\n').map((line, index) => (
+                <React.Fragment key={index}>
+                  {line}
+                  {index < t.rsvp.form.guestCountHint.split('\n').length - 1 && <br />}
+                </React.Fragment>
+              ))}
+            </span>
+          </div>
+        )}
+
+        {attendance === 'attending' && (
+          <div className="form-group">
+            <label className="form-label">
+              {t.rsvp.form.hasChildren}
+            </label>
+            <div className="radio-group">
+              <label className="radio-label">
+                <input
+                  type="radio"
+                  value="no"
+                  {...register('hasChildren')}
+                  className="radio-input"
+                />
+                <span className="radio-text">{t.rsvp.form.hasChildrenNo}</span>
+              </label>
+              <label className="radio-label">
+                <input
+                  type="radio"
+                  value="yes"
+                  {...register('hasChildren')}
+                  className="radio-input"
+                />
+                <span className="radio-text">{t.rsvp.form.hasChildrenYes}</span>
+              </label>
+            </div>
+            {hasChildren === 'yes' && (
+              <div style={{ marginTop: '12px' }}>
+                <label htmlFor="childrenAges" className="form-label" style={{ marginBottom: '8px', fontSize: '12px' }}>
+                  {t.rsvp.form.childrenAges}
+                </label>
+                <input
+                  id="childrenAges"
+                  type="text"
+                  {...register('childrenAges')}
+                  placeholder={t.rsvp.form.childrenAgesPlaceholder}
+                  className="form-input"
+                />
+              </div>
+            )}
           </div>
         )}
 
         <div className="form-group">
           <label htmlFor="note" className="form-label">
-            <span className="form-icon">📝</span>
             {t.rsvp.form.note}
           </label>
           <textarea
@@ -270,6 +320,7 @@ const RsvpSection: React.FC = () => {
           type="submit"
           disabled={isSubmitting}
           className="form-submit"
+          lang={language}
         >
           {isSubmitting ? t.rsvp.form.submitting : t.rsvp.form.submit}
         </button>
@@ -277,6 +328,10 @@ const RsvpSection: React.FC = () => {
 
       <div className="rsvp__footer">
         {t.rsvp.footer.inquiry}: {t.rsvp.footer.groom} | {t.rsvp.footer.bride}
+      </div>
+
+      <div className="rsvp__thank-you">
+        {language === 'ko' ? '감사합니다 ❤️' : 'Thank you ❤️'}
       </div>
     </PaperCard>
     </motion.div>

@@ -1,10 +1,10 @@
 .directions {
   padding: 24px;
-  background-color: #FAF8F3;
+  background-color: #FFFFFF;
 }
 
 .directions__title {
-  font-size: 20px;
+  font-size: 17px;
   font-weight: bold;
   color: #333;
   margin-bottom: 24px;
@@ -16,21 +16,23 @@
 }
 
 .directions__subtitle {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   color: #1A2F4A;
   margin-bottom: 12px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
-.directions__subtitle::before {
-  content: '';
-  width: 4px;
-  height: 16px;
-  background: #1A2F4A;
-  border-radius: 2px;
+.directions__icon {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
 }
 
 .directions__list {
@@ -39,27 +41,19 @@
 }
 
 .directions__list li {
-  font-size: 14px;
+  font-size: 12px;
   color: #555;
   line-height: 1.8;
-  padding-left: 16px;
+  padding-left: 0;
   position: relative;
 }
 
 .directions__note {
   font-size: 12px;
   color: #888;
-  font-style: italic;
   padding-left: 20px !important;
 }
 
-.directions__list li::before {
-  content: '•';
-  position: absolute;
-  left: 0;
-  color: #1A2F4A;
-  font-weight: bold;
-}
 
 .directions__list strong {
   color: #333;
@@ -97,29 +91,34 @@
 }
 
 .address-venue {
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 600;
   color: #333;
   margin-bottom: 8px;
 }
 
 .address-text {
-  font-size: 14px;
+  font-size: 12px;
   color: #666;
   line-height: 1.8;
 }
 
 .address-copy-btn {
+  font-family: "Gowun Dodum", "Lora", sans-serif;
   width: 100%;
   padding: 12px 24px;
   background: #1A2F4A;
   color: white;
   border: none;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+}
+
+.address-copy-btn:lang(en) {
+  font-family: "Lora", serif;
 }
 
 .address-copy-btn:hover {
@@ -138,11 +137,11 @@
   }
   
   .directions__title {
-    font-size: 18px;
+    font-size: 16px;
   }
   
   .directions__subtitle {
-    font-size: 15px;
+    font-size: 13px;
   }
 }
 

@@ -30,7 +30,7 @@ const DirectionsSection: React.FC = () => {
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
+      transition={{ duration: 0.4, ease: 'easeOut' }}
     >
       <PaperCard texture="paper2" className="directions">
       <h2 className="directions__title">{t.directions.title}</h2>
@@ -48,13 +48,13 @@ const DirectionsSection: React.FC = () => {
         <h3 className="directions__subtitle">{t.directions.bus.title}</h3>
         <ul className="directions__list">
           <li>
-            <strong>{t.directions.bus.main}:</strong> 143, 146, 341, 360, 401
+            {t.directions.bus.main}: 143, 146, 341, 360, 401
           </li>
           <li>
-            <strong>{t.directions.bus.branch}:</strong> 2413, 3411, 3422, 4318, 11-3
+            {t.directions.bus.branch}: 2413, 3411, 3422, 4318, 11-3
           </li>
           <li>
-            <strong>{t.directions.bus.express}:</strong> 9407, 6900
+            {t.directions.bus.express}: 9407, 6900
           </li>
         </ul>
       </div>
@@ -93,6 +93,7 @@ const DirectionsSection: React.FC = () => {
           className="address-copy-btn"
           onClick={handleCopyAddress}
           aria-label={t.directions.copyButton}
+          lang={language}
         >
           {copied ? t.directions.copiedButton : t.directions.copyButton}
         </button>

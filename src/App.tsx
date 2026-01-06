@@ -17,8 +17,10 @@ const WeddingInvitation: React.FC = () => {
   useEffect(() => {
     if (language === 'ko') {
       document.title = '조준용 ❤️ 허다영 결혼';
+      document.documentElement.lang = 'ko';
     } else {
       document.title = 'Daniel ❤️ Aria Wedding';
+      document.documentElement.lang = 'en';
     }
   }, [language]);
 

@@ -108,6 +108,11 @@ export interface Translations {
         notAttending: string;
         guestCount: string;
         guestCountHint: string;
+        hasChildren: string;
+        hasChildrenNo: string;
+        hasChildrenYes: string;
+        childrenAges: string;
+        childrenAgesPlaceholder: string;
         note: string;
         notePlaceholder: string;
         submit: string;
@@ -126,7 +131,7 @@ export interface Translations {
 export const translations: Record<Language, Translations> = {
   ko: {
     loading: {
-      message: "We're getting married.",
+      message: "We're getting married!",
     },
     timeline: {
       title: '함께한 시간',
@@ -134,7 +139,7 @@ export const translations: Record<Language, Translations> = {
         {
           title: '첫만남',
           description: '저희는 대학교에서\n처음 만났어요.',
-          image: '/timeline/2013-3.jpeg',
+          image: '/timeline/2013.jpeg',
         },
         {
           title: '5주년',
@@ -142,7 +147,7 @@ export const translations: Record<Language, Translations> = {
           image: '/timeline/2018.jpeg',
         },
         {
-          title: '갑자기 찾아온 장거리',
+          title: '장거리 시작',
           description: '2019년 1월,\n우리는 장거리 연애를 시작했어요.\n떨어져 있어도 마음만은 늘 가까웠어요.',
           image: '/timeline/2019.jpeg',
         },
@@ -213,7 +218,7 @@ export const translations: Record<Language, Translations> = {
       title: '오시는 길',
       subway: {
         title: '지하철',
-        line1: '2호선 삼성역 1번 출구',
+        line1: '2호선 삼성역',
         note1: '1번 출구인 경우 셔틀버스가 대기',
         note2: '2번 출구인 경우 도보로 5분 소요',
       },
@@ -225,7 +230,7 @@ export const translations: Record<Language, Translations> = {
       },
       car: {
         title: '자가용',
-        address: '서울특별시 강남구 대치동 1004-3 네비게이션 검색 시 입구 안내',
+        address: '내비게이션: \'서울특별시 강남구 대치동 1004-3\' 검색',
         navigation: '',
         parking: '건물 주차타워 주차 가능 (3시간 무료)',
       },
@@ -238,7 +243,7 @@ export const translations: Record<Language, Translations> = {
     },
     rsvp: {
       title: '참석 여부 전달하기',
-      intro: '참석 여부를 알려주시면 소중히 준비하겠습니다',
+      intro: '참석 여부를 알려주시면 소중히 준비하겠습니다\n소중한 시간을 내어 참석해주시는 분들께 진심으로 감사드립니다.',
       thankYouMessage: '소중한 시간을 내어 참석해주시는 분들께 진심으로 감사드립니다.',
       seatingMessage: '예식이 지정좌석제로 진행되어 참석 여부를 10월 1일까지 회신해주시면 감사하겠습니다.',
       form: {
@@ -250,11 +255,16 @@ export const translations: Record<Language, Translations> = {
         attendance: '참석 여부',
         attending: '참석합니다',
         notAttending: '참석이 어렵습니다',
-        guestCount: '동행 인원 (본인 포함)',
-        guestCountHint: '최소 1명, 최대 10명',
+        guestCount: '동행 인원',
+        guestCountHint: '좌석 배치를 위해 참석하시는 모든 분(영유아 포함)을 인원수에 포함해주세요.\n식사는 만 2세 이상부터 제공됩니다.',
+        hasChildren: '어린이 또는 영유아가 함께 참석하나요?',
+        hasChildrenNo: '아니오',
+        hasChildrenYes: '예',
+        childrenAges: '나이(개월/세)를 적어주세요:',
+        childrenAgesPlaceholder: '예: 6개월, 2세, 5세',
         note: '요청사항',
-        notePlaceholder: '음식 알러지, 휠체어 필요 등 요청사항을 입력해주세요',
-        submit: '❤️ RSVP 제출하기',
+        notePlaceholder: '음식 알러지 등 요청사항을 입력해주세요',
+        submit: '체크 완료하기',
         submitting: '제출 중...',
         success: '제출이 완료되었습니다',
         error: '제출 중 오류가 발생했습니다. 다시 시도해주세요.',
@@ -268,7 +278,7 @@ export const translations: Record<Language, Translations> = {
   },
   en: {
     loading: {
-      message: "We're getting married",
+      message: "We're getting married!",
     },
     timeline: {
       title: 'Time Together',
@@ -322,8 +332,8 @@ export const translations: Record<Language, Translations> = {
         name: 'Daniel Cho',
         nameEn: 'Daniel',
         parents: {
-          father: 'Cho Woong-il',
-          mother: 'Kim Mi-jeong',
+          father: 'Wung Il Jo',
+          mother: 'Mi Jeong Kim',
         },
         relationship: 'eldest son',
       },
@@ -331,18 +341,18 @@ export const translations: Record<Language, Translations> = {
         name: 'Aria Hur',
         nameEn: 'Aria',
         parents: {
-          father: 'Hur Yoon',
-          mother: 'Hwang Young-sik',
+          father: 'Yoon Hur',
+          mother: 'Young Sik Hwang',
         },
         relationship: 'eldest daughter',
       },
       invitationTitle: 'To Our Dearest People.',
-      message: 'A connection that began in Sydney\nnow bears beautiful fruit in Seoul.\nAs we begin a new journey with the one we love,\nwe would be honoured to have you join us on our first flight.',
+      message: 'A connection that began in Sydney\nnow bears beautiful fruit in Seoul.\nAs we begin a new journey\nwith the one we love,\nwe would be honoured to have you join us\non our first flight.',
       details: {
         date: 'DATE',
         time: 'TIME',
         venue: 'VENUE',
-        address: '607 Yeoksam-ro, Gangnam-gu, Seoul (Daechi-dong)',
+        address: '607 Yeoksam-ro, Gangnam-gu,\nSeoul (Daechi-dong)',
         floor: '1F Floria',
       },
       footer: {
@@ -355,7 +365,7 @@ export const translations: Record<Language, Translations> = {
       title: 'Directions',
       subway: {
         title: 'Subway',
-        line1: 'Line 2, Samsung Station, Exit 1',
+        line1: 'Line 2, Samsung Station',
         note1: 'Shuttle bus available at Exit 1',
         note2: '5 minutes walk from Exit 2',
       },
@@ -367,7 +377,7 @@ export const translations: Record<Language, Translations> = {
       },
       car: {
         title: 'Car',
-        address: '1004-3 Daechi-dong, Gangnam-gu, Seoul (Navigation: search for entrance)',
+        address: 'Navigation: search \'1004-3 Daechi-dong, Gangnam-gu, Seoul\'',
         navigation: '',
         parking: 'Building parking tower available (3 hours free)',
       },
@@ -380,11 +390,11 @@ export const translations: Record<Language, Translations> = {
     },
     rsvp: {
       title: 'RSVP',
-      intro: 'Please let us know if you will be attending so we can prepare accordingly',
-      thankYouMessage: 'We sincerely thank those who take the time to attend our special day.',
+      intro: 'We sincerely thank you for taking the time to complete the form below.\nAs the ceremony will be held with assigned seating, we would appreciate your RSVP by October 1st.',
+      thankYouMessage: 'As the ceremony will be held with assigned seating, we would appreciate your RSVP by October 1st.',
       seatingMessage: 'As the ceremony will be held with assigned seating, we would appreciate your RSVP by October 1st.',
       form: {
-        name: 'Name',
+        name: 'Full Name',
         phone: 'Phone',
         phonePlaceholder: '0400-000-000',
         email: 'Email',
@@ -392,11 +402,16 @@ export const translations: Record<Language, Translations> = {
         attendance: 'Attendance',
         attending: 'I will attend',
         notAttending: 'I cannot attend',
-        guestCount: 'Number of Guests (including yourself)',
-        guestCountHint: 'Minimum 1, Maximum 10',
+        guestCount: 'Number of Guests',
+        guestCountHint: 'Please include all guests attending (including infants) for seating purposes.\nMeals will be provided for guests aged 2 and over only.',
+        hasChildren: 'Will any children or babies be attending?',
+        hasChildrenNo: 'No',
+        hasChildrenYes: 'Yes',
+        childrenAges: 'please let us know their age(s):',
+        childrenAgesPlaceholder: 'e.g., 6 months, 2 years, 5 years',
         note: 'Special Requests',
-        notePlaceholder: 'Please enter any requests such as food allergies, wheelchair needs, etc.',
-        submit: '❤️ Submit RSVP',
+        notePlaceholder: 'Please enter any requests such as food allergies, etc.',
+        submit: 'Complete Check',
         submitting: 'Submitting...',
         success: 'Your RSVP has been submitted successfully',
         error: 'An error occurred while submitting. Please try again.',
