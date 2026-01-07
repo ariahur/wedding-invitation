@@ -57,7 +57,8 @@ const RsvpSection: React.FC = () => {
   } = useForm<z.infer<typeof rsvpSchema>>({
     resolver: zodResolver(rsvpSchema),
     defaultValues: {
-      attendance: undefined,
+      attendance: 'attending',
+      hasChildren: 'no',
       honeypot: '',
     },
   });
@@ -121,10 +122,10 @@ const RsvpSection: React.FC = () => {
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.4, ease: 'easeOut' }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       <PaperCard texture="paper3" className="rsvp">
-      <h2 className="rsvp__title">{t.rsvp.title}</h2>
+      <h2 className="rsvp__title" lang={language}>{t.rsvp.title}</h2>
       <p className="rsvp__intro">
         {t.rsvp.intro.split('\n').map((line, index) => (
           <React.Fragment key={index}>
@@ -146,15 +147,17 @@ const RsvpSection: React.FC = () => {
 
         <div className="form-group">
           <label htmlFor="name" className="form-label">
-            {t.rsvp.form.name}
+            {t.rsvp.form.name} <span className="form-required">*</span>
           </label>
-          <input
-            id="name"
-            type="text"
-            {...register('name')}
-            placeholder={language === 'ko' ? '홍길동' : 'John Doe'}
-            className={`form-input ${errors.name ? 'form-input--error' : ''}`}
-          />
+          <div className="form-input-wrapper">
+            <input
+              id="name"
+              type="text"
+              {...register('name')}
+              placeholder={language === 'ko' ? '홍길동' : 'John Doe'}
+              className={`form-input ${errors.name ? 'form-input--error' : ''}`}
+            />
+          </div>
           {errors.name && (
             <span className="form-error">{errors.name.message}</span>
           )}
@@ -162,15 +165,17 @@ const RsvpSection: React.FC = () => {
 
         <div className="form-group">
           <label htmlFor="phone" className="form-label">
-            {t.rsvp.form.phone}
+            {t.rsvp.form.phone} <span className="form-required">*</span>
           </label>
-          <input
-            id="phone"
-            type="tel"
-            {...register('phone')}
-            placeholder={t.rsvp.form.phonePlaceholder}
-            className={`form-input ${errors.phone ? 'form-input--error' : ''}`}
-          />
+          <div className="form-input-wrapper">
+            <input
+              id="phone"
+              type="tel"
+              {...register('phone')}
+              placeholder={t.rsvp.form.phonePlaceholder}
+              className={`form-input ${errors.phone ? 'form-input--error' : ''}`}
+            />
+          </div>
           {errors.phone && (
             <span className="form-error">{errors.phone.message}</span>
           )}
@@ -180,39 +185,43 @@ const RsvpSection: React.FC = () => {
           <label htmlFor="email" className="form-label">
             {t.rsvp.form.email} {t.rsvp.form.emailOptional}
           </label>
-          <input
-            id="email"
-            type="email"
-            {...register('email')}
-            placeholder="example@email.com"
-            className={`form-input ${errors.email ? 'form-input--error' : ''}`}
-          />
+          <div className="form-input-wrapper">
+            <input
+              id="email"
+              type="email"
+              {...register('email')}
+              placeholder="example@email.com"
+              className={`form-input ${errors.email ? 'form-input--error' : ''}`}
+            />
+          </div>
           {errors.email && (
             <span className="form-error">{errors.email.message}</span>
           )}
         </div>
 
-        <div className="form-group">
+        <div className="form-group form-group--column">
           <label className="form-label">
             {t.rsvp.form.attendance}
           </label>
           <div className="radio-group">
-            <label className="radio-label">
+            <label className={`radio-label ${attendance === 'attending' ? 'radio-label--active' : ''}`}>
               <input
                 type="radio"
                 value="attending"
                 {...register('attendance')}
                 className="radio-input"
               />
+              <span className="radio-icon">✓</span>
               <span className="radio-text">{t.rsvp.form.attending}</span>
             </label>
-            <label className="radio-label">
+            <label className={`radio-label ${attendance === 'not_attending' ? 'radio-label--active' : ''}`}>
               <input
                 type="radio"
                 value="not_attending"
                 {...register('attendance')}
                 className="radio-input"
               />
+              <span className="radio-icon">✕</span>
               <span className="radio-text">{t.rsvp.form.notAttending}</span>
             </label>
           </div>
@@ -226,15 +235,17 @@ const RsvpSection: React.FC = () => {
             <label htmlFor="guestCount" className="form-label">
               {t.rsvp.form.guestCount}
             </label>
-            <input
-              id="guestCount"
-              type="number"
-              min="1"
-              max="10"
-              {...register('guestCount', { valueAsNumber: true })}
-              placeholder="1"
-              className={`form-input ${errors.guestCount ? 'form-input--error' : ''}`}
-            />
+            <div className="form-input-wrapper">
+              <input
+                id="guestCount"
+                type="number"
+                min="1"
+                max="10"
+                {...register('guestCount', { valueAsNumber: true })}
+                placeholder="1"
+                className={`form-input ${errors.guestCount ? 'form-input--error' : ''}`}
+              />
+            </div>
             {errors.guestCount && (
               <span className="form-error">{errors.guestCount.message}</span>
             )}
@@ -250,27 +261,29 @@ const RsvpSection: React.FC = () => {
         )}
 
         {attendance === 'attending' && (
-          <div className="form-group">
+          <div className="form-group form-group--column">
             <label className="form-label">
               {t.rsvp.form.hasChildren}
             </label>
             <div className="radio-group">
-              <label className="radio-label">
+              <label className={`radio-label ${hasChildren === 'no' ? 'radio-label--active' : ''}`}>
                 <input
                   type="radio"
                   value="no"
                   {...register('hasChildren')}
                   className="radio-input"
                 />
+                <span className="radio-icon">✕</span>
                 <span className="radio-text">{t.rsvp.form.hasChildrenNo}</span>
               </label>
-              <label className="radio-label">
+              <label className={`radio-label ${hasChildren === 'yes' ? 'radio-label--active' : ''}`}>
                 <input
                   type="radio"
                   value="yes"
                   {...register('hasChildren')}
                   className="radio-input"
                 />
+                <span className="radio-icon">✓</span>
                 <span className="radio-text">{t.rsvp.form.hasChildrenYes}</span>
               </label>
             </div>
@@ -279,29 +292,33 @@ const RsvpSection: React.FC = () => {
                 <label htmlFor="childrenAges" className="form-label" style={{ marginBottom: '8px', fontSize: '12px' }}>
                   {t.rsvp.form.childrenAges}
                 </label>
-                <input
-                  id="childrenAges"
-                  type="text"
-                  {...register('childrenAges')}
-                  placeholder={t.rsvp.form.childrenAgesPlaceholder}
-                  className="form-input"
-                />
+                <div className="form-input-wrapper">
+                  <input
+                    id="childrenAges"
+                    type="text"
+                    {...register('childrenAges')}
+                    placeholder={t.rsvp.form.childrenAgesPlaceholder}
+                    className="form-input"
+                  />
+                </div>
               </div>
             )}
           </div>
         )}
 
-        <div className="form-group">
+        <div className="form-group form-group--column">
           <label htmlFor="note" className="form-label">
             {t.rsvp.form.note}
           </label>
-          <textarea
-            id="note"
-            {...register('note')}
-            placeholder={t.rsvp.form.notePlaceholder}
-            rows={4}
-            className="form-textarea"
-          />
+          <div className="form-input-wrapper">
+            <textarea
+              id="note"
+              {...register('note')}
+              placeholder={t.rsvp.form.notePlaceholder}
+              rows={4}
+              className="form-textarea"
+            />
+          </div>
         </div>
 
         {submitStatus === 'success' && (
@@ -325,14 +342,6 @@ const RsvpSection: React.FC = () => {
           {isSubmitting ? t.rsvp.form.submitting : t.rsvp.form.submit}
         </button>
       </form>
-
-      <div className="rsvp__footer">
-        {t.rsvp.footer.inquiry}: {t.rsvp.footer.groom} | {t.rsvp.footer.bride}
-      </div>
-
-      <div className="rsvp__thank-you">
-        {language === 'ko' ? '감사합니다 ❤️' : 'Thank you ❤️'}
-      </div>
     </PaperCard>
     </motion.div>
   );

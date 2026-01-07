@@ -4,29 +4,44 @@
 }
 
 .rsvp__title {
-  font-size: 17px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 12px;
+  font-size: 28px;
+  font-weight: 400;
+  color: #1A2F4A;
+  margin-top: 8px;
+  margin-bottom: 24px;
+  padding: 12px 0;
   text-align: center;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+  letter-spacing: 1px;
+  line-height: 1.4;
+}
+
+.rsvp__title:lang(en) {
+  text-transform: uppercase;
+  font-size: 24px;
+  letter-spacing: 3px;
+  font-weight: 300;
+  font-family: "Lora", serif;
 }
 
 .rsvp__intro {
   font-size: 11px;
-  color: #666;
+  color: #999;
   text-align: center;
   margin-bottom: 20px;
   line-height: 1.6;
   white-space: pre-line;
+  margin-top: 0;
 }
 
-.rsvp__thank-you {
+/* Moved to App.css as app-footer */
+/* .rsvp__thank-you {
   font-size: 11px;
   color: #555;
   line-height: 1.6;
   margin-bottom: 20px;
   text-align: center;
-}
+} */
 
 .rsvp__seating {
   font-size: 11px;
@@ -44,8 +59,20 @@
 
 .form-group {
   display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.form-group--column {
   flex-direction: column;
-  gap: 8px;
+}
+
+.form-group--column .form-input-wrapper {
+  width: 100%;
+  flex: none;
 }
 
 .form-label {
@@ -54,39 +81,57 @@
   color: #333;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
+  min-width: 80px;
+  flex-shrink: 0;
+  padding-top: 8px;
+}
+
+.form-required {
+  color: #ef4444;
+  font-size: 12px;
 }
 
 .form-icon {
   font-size: 17px;
 }
 
+.form-input-wrapper {
+  position: relative;
+  flex: 1;
+  padding-bottom: 8px;
+}
+
 .form-input,
 .form-textarea {
   width: 100%;
-  padding: 12px 16px;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
+  padding: 8px 0;
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  border-radius: 0;
   font-size: 11px;
   font-family: inherit;
   transition: all 0.2s;
-  background: white;
+  background: transparent;
+  color: #666;
 }
 
 .form-input:focus,
 .form-textarea:focus {
   outline: none;
-  border-color: #4A90E2;
-  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+  border-bottom-color: #1A2F4A;
+}
+
+.form-input::placeholder {
+  color: #999;
 }
 
 .form-input--error {
-  border-color: #ef4444;
+  border-bottom-color: #ef4444;
 }
 
 .form-input--error:focus {
-  border-color: #ef4444;
-  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  border-bottom-color: #ef4444;
 }
 
 .form-textarea {
@@ -97,7 +142,13 @@
 .form-error {
   font-size: 11px;
   color: #ef4444;
-  margin-top: -4px;
+  margin-top: 4px;
+  width: 100%;
+  order: 3;
+}
+
+.form-group {
+  flex-wrap: wrap;
 }
 
 .form-hint {
@@ -108,56 +159,77 @@
 
 .radio-group {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  flex-direction: row;
+  gap: 0;
   margin-top: 8px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+  width: 100%;
 }
 
 .radio-label {
+  flex: 1;
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+  gap: 8px;
   cursor: pointer;
-  padding: 12px;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
+  padding: 12px 16px;
+  background: white;
   transition: all 0.2s;
-}
-
-.radio-label:hover {
-  border-color: #1A2F4A;
-  background: rgba(26, 47, 74, 0.02);
-}
-
-.radio-input {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  accent-color: #1A2F4A;
-  background-color: white;
-  border: 2px solid #e0e0e0;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  border-radius: 50%;
+  border: none;
   position: relative;
 }
 
-.radio-input:checked {
-  background-color: white;
-  border-color: #1A2F4A;
+.radio-label--active {
+  background: #C9A77C !important;
 }
 
-.radio-input:checked::before {
-  content: '';
+.radio-label--active .radio-text {
+  color: white !important;
+}
+
+.radio-label--active .radio-icon {
+  color: white !important;
+}
+
+.radio-input:checked + .radio-icon + .radio-text {
+  color: white;
+}
+
+.radio-label:has(.radio-input:checked) {
+  background: #C9A77C !important;
+}
+
+.radio-label:has(.radio-input:checked) .radio-text {
+  color: white !important;
+}
+
+.radio-label:has(.radio-input:checked) .radio-icon {
+  color: white !important;
+}
+
+.radio-input {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 10px;
-  height: 10px;
-  background-color: #1A2F4A;
-  border-radius: 50%;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.radio-icon {
+  font-size: 16px;
+  color: #999;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.radio-label--active .radio-icon {
+  color: #4CAF50;
+}
+
+.radio-label:not(.radio-label--active) .radio-icon {
+  color: #999;
 }
 
 .radio-input:checked + .radio-text {
@@ -200,9 +272,9 @@
   font-family: "Gowun Dodum", "Lora", sans-serif;
   width: 100%;
   padding: 16px 24px;
-  background: #1A2F4A;
-  color: white;
-  border: none;
+  background: transparent;
+  color: #1A2F4A;
+  border: 2px solid #1A2F4A;
   border-radius: 8px;
   font-size: 11px;
   font-weight: 600;
@@ -216,9 +288,9 @@
 }
 
 .form-submit:hover:not(:disabled) {
-  background: #3A7BC8;
+  background: rgba(26, 47, 74, 0.05);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+  box-shadow: 0 4px 12px rgba(26, 47, 74, 0.2);
 }
 
 .form-submit:active:not(:disabled) {
@@ -226,12 +298,15 @@
 }
 
 .form-submit:disabled {
-  background: #ccc;
+  background: transparent;
+  color: #ccc;
+  border-color: #ccc;
   cursor: not-allowed;
   transform: none;
 }
 
-.rsvp__footer {
+/* Moved to App.css as app-footer */
+/* .rsvp__footer {
   margin-top: 32px;
   padding-top: 24px;
   border-top: 1px solid #eee;
@@ -250,7 +325,7 @@
   margin-top: 24px;
   border-top: 1px solid #e0e0e0;
   padding-top: 20px;
-}
+} */
 
 @media (max-width: 430px) {
   .rsvp {

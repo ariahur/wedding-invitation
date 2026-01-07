@@ -68,10 +68,10 @@ const TimelineSection: React.FC = () => {
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.4, ease: 'easeOut' }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       <PaperCard texture="paper2" className="timeline">
-      <h2 className="timeline__title">{t.timeline.title}</h2>
+      <h2 className="timeline__title" lang={language}>{t.timeline.title}</h2>
       
       <div className="timeline__counter">
         <div className="counter-text">"{formatTimeString()}"</div>

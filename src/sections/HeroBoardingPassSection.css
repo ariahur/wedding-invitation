@@ -26,7 +26,8 @@
 .top-title-icon {
   font-family: "Material Symbols Outlined", sans-serif;
   font-size: 17px;
-  color: white;
+  color: transparent;
+  -webkit-text-stroke: 1px #C9A77C;
   font-weight: normal;
   display: inline-block;
   transform: rotate(0deg);
@@ -42,6 +43,21 @@
 .top-title-text {
   font-family: "Roboto", sans-serif;
   letter-spacing: 2px;
+}
+
+/* 액센트 보더 */
+.boarding-pass__accent-border {
+  height: 4px;
+  background: linear-gradient(
+    to right,
+    rgba(201, 167, 124, 0.9) 0%,
+    #C9A77C 15%,
+    #D4B896 30%,
+    #D4B896 70%,
+    #C9A77C 85%,
+    rgba(201, 167, 124, 0.9) 100%
+  );
+  box-shadow: 0 1px 2px rgba(201, 167, 124, 0.2);
 }
 
 /* 상단 헤더 영역 (베이지 배경) */
@@ -60,7 +76,16 @@
   font-family: "Roboto", sans-serif;
   font-size: 17px;
   font-weight: bold;
-  color: #1A2F4A;
+  background: linear-gradient(
+    to right,
+    #4A5568 0%,
+    #6B7280 40%,
+    #9CA3AF 60%,
+    #C9A77C 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   letter-spacing: 1px;
 }
 
@@ -162,6 +187,7 @@
   font-size: 14px;
   font-weight: bold;
   letter-spacing: 1px;
+  color: #C9A77C;
 }
 
 /* 중앙: 항공편 정보 */
@@ -209,13 +235,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   margin: 0 20px;
 }
 
 .route-icon {
   font-family: "Material Symbols Outlined", sans-serif;
   font-size: 24px;
+  color: transparent;
+  -webkit-text-stroke: 1px #C9A77C;
   font-variation-settings:
     'FILL' 0,
     'wght' 400,
@@ -226,13 +254,26 @@
   display: inline-block;
 }
 
+.route-separator {
+  width: 40px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(201, 167, 124, 0.3) 20%,
+    #C9A77C 50%,
+    rgba(201, 167, 124, 0.3) 80%,
+    transparent 100%
+  );
+}
+
 .route-label {
   font-family: "Roboto", sans-serif;
   font-size: 13px;
-  color: white;
-  opacity: 0.8;
-  text-transform: uppercase;
+  color: #C9A77C;
+  text-transform: capitalize;
   letter-spacing: 1px;
+  font-weight: 400;
 }
 
 /* 하단: 커플 이름 */
@@ -274,9 +315,9 @@
   background: linear-gradient(
     to bottom,
     rgba(26, 47, 74, 0.5) 0%,
-    rgba(26, 47, 74, 0.55) 10%,
-    rgba(0, 0, 0, 0.5) 50%,
-    rgba(0, 0, 0, 0.7) 100%
+    rgba(26, 47, 74, 0.55) 5%,
+    rgba(26, 47, 74, 0.2) 25%,
+    transparent 100%
   );
 }
 

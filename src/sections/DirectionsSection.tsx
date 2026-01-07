@@ -8,21 +8,6 @@ import './DirectionsSection.css';
 const DirectionsSection: React.FC = () => {
   const language = useLanguage();
   const t = translations[language];
-  const [copied, setCopied] = useState(false);
-  
-  const fullAddress = language === 'ko'
-    ? `${t.directions.venue} ${t.directions.address} ${t.directions.floor}`
-    : `${t.directions.venue} ${t.directions.address} ${t.directions.floor}`;
-
-  const handleCopyAddress = async () => {
-    try {
-      await navigator.clipboard.writeText(fullAddress);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error('Failed to copy address:', err);
-    }
-  };
 
 
   return (
@@ -30,49 +15,25 @@ const DirectionsSection: React.FC = () => {
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.4, ease: 'easeOut' }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       <PaperCard texture="paper2" className="directions">
-      <h2 className="directions__title">{t.directions.title}</h2>
-
-      <div className="directions__section">
-        <h3 className="directions__subtitle">{t.directions.subway.title}</h3>
-        <ul className="directions__list">
-          <li>{t.directions.subway.line1}</li>
-          <li className="directions__note">{t.directions.subway.note1}</li>
-          <li className="directions__note">{t.directions.subway.note2}</li>
-        </ul>
-      </div>
-
-      <div className="directions__section">
-        <h3 className="directions__subtitle">{t.directions.bus.title}</h3>
-        <ul className="directions__list">
-          <li>
-            {t.directions.bus.main}: 143, 146, 341, 360, 401
-          </li>
-          <li>
-            {t.directions.bus.branch}: 2413, 3411, 3422, 4318, 11-3
-          </li>
-          <li>
-            {t.directions.bus.express}: 9407, 6900
-          </li>
-        </ul>
-      </div>
-
-      <div className="directions__section">
-        <h3 className="directions__subtitle">{t.directions.car.title}</h3>
-        <ul className="directions__list">
-          <li>{t.directions.car.address}</li>
-          <li>{t.directions.car.parking}</li>
-        </ul>
-      </div>
+      <h2 className="directions__title" lang={language}>{t.directions.title}</h2>
 
       <div className="directions__address">
         <div className="address-content">
-          <div className="address-venue">{t.directions.venue}</div>
+          <div className="address-venue">
+            {t.directions.venue}
+            <a 
+              href={`tel:${t.directions.tel.replace(/[^0-9-]/g, '')}`}
+              className="address-phone-icon"
+              aria-label="전화하기"
+            >
+              <span className="material-symbols-outlined">call</span>
+            </a>
+          </div>
           <div className="address-text">{t.directions.address}</div>
           <div className="address-text">{t.directions.floor}</div>
-          <div className="address-text">{t.directions.tel}</div>
         </div>
         
         {/* 지도 영역 */}
@@ -88,15 +49,48 @@ const DirectionsSection: React.FC = () => {
             title="Google Maps"
           />
         </div>
-        
-        <button 
-          className="address-copy-btn"
-          onClick={handleCopyAddress}
-          aria-label={t.directions.copyButton}
-          lang={language}
-        >
-          {copied ? t.directions.copiedButton : t.directions.copyButton}
-        </button>
+      </div>
+
+      <div className="directions__section">
+        <h3 className="directions__subtitle">{t.directions.subway.title}</h3>
+        <ul className="directions__list">
+          <li className="directions__item">
+            <span className="directions__circle directions__circle--green"></span>
+            {t.directions.subway.line1}
+          </li>
+          <li className="directions__note">{t.directions.subway.note1}</li>
+          <li className="directions__note">{t.directions.subway.note2}</li>
+        </ul>
+      </div>
+
+      <div className="directions__divider"></div>
+
+      <div className="directions__section">
+        <h3 className="directions__subtitle">{t.directions.bus.title}</h3>
+        <ul className="directions__list">
+          <li className="directions__item">
+            <span className="directions__circle directions__circle--blue"></span>
+            {t.directions.bus.main}: 143, 146, 341, 360, 401
+          </li>
+          <li className="directions__item">
+            <span className="directions__circle directions__circle--green"></span>
+            {t.directions.bus.branch}: 2413, 3411, 3422, 4318, 11-3
+          </li>
+          <li className="directions__item">
+            <span className="directions__circle directions__circle--red"></span>
+            {t.directions.bus.express}: 9407, 6900
+          </li>
+        </ul>
+      </div>
+
+      <div className="directions__divider"></div>
+
+      <div className="directions__section">
+        <h3 className="directions__subtitle">{t.directions.car.title}</h3>
+        <ul className="directions__list">
+          <li>{t.directions.car.address}</li>
+          <li>{t.directions.car.parking}</li>
+        </ul>
       </div>
     </PaperCard>
     </motion.div>

@@ -4,15 +4,34 @@
 }
 
 .directions__title {
-  font-size: 17px;
-  font-weight: bold;
-  color: #333;
+  font-size: 28px;
+  font-weight: 400;
+  color: #1A2F4A;
+  margin-top: 8px;
   margin-bottom: 24px;
+  padding: 12px 0;
   text-align: center;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+  letter-spacing: 1px;
+  line-height: 1.4;
+}
+
+.directions__title:lang(en) {
+  text-transform: uppercase;
+  font-size: 24px;
+  letter-spacing: 3px;
+  font-weight: 300;
+  font-family: "Lora", serif;
 }
 
 .directions__section {
   margin-bottom: 24px;
+}
+
+.directions__divider {
+  height: 1px;
+  background-color: #e0e0e0;
+  margin: 20px 0;
 }
 
 .directions__subtitle {
@@ -48,6 +67,31 @@
   position: relative;
 }
 
+.directions__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.directions__circle {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.directions__circle--blue {
+  background-color: #4A90E2;
+}
+
+.directions__circle--green {
+  background-color: #4CAF50;
+}
+
+.directions__circle--red {
+  background-color: #F44336;
+}
+
 .directions__note {
   font-size: 12px;
   color: #888;
@@ -71,14 +115,16 @@
 }
 
 .directions__address {
-  margin-top: 32px;
-  padding-top: 24px;
-  border-top: 2px solid #eee;
+  margin-top: 0;
+  margin-bottom: 32px;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .directions__map {
-  margin: 20px 0;
+  margin: 20px auto;
   width: 100%;
+  max-width: 600px;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -88,6 +134,7 @@
 
 .address-content {
   margin-bottom: 16px;
+  text-align: center;
 }
 
 .address-venue {
@@ -95,12 +142,44 @@
   font-weight: 600;
   color: #333;
   margin-bottom: 8px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.address-phone-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #1A2F4A;
+  text-decoration: none;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+
+.address-phone-icon:hover {
+  color: #C9A77C;
+}
+
+.address-phone-icon .material-symbols-outlined {
+  font-family: "Material Symbols Outlined", sans-serif;
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+  font-size: 18px;
+  font-style: normal;
+  line-height: 1;
 }
 
 .address-text {
   font-size: 12px;
   color: #666;
   line-height: 1.8;
+  text-align: center;
 }
 
 .address-copy-btn {

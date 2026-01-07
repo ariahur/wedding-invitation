@@ -14,7 +14,7 @@ const HeroBoardingPassSection: React.FC = () => {
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.4, ease: 'easeOut' }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       <PaperCard texture="paper1" className="boarding-pass" >
       {/* 최상단 타이틀 */}
@@ -26,6 +26,9 @@ const HeroBoardingPassSection: React.FC = () => {
         <span className="top-title-icon material-symbols-outlined">travel</span>
         <span className="top-title-text">{t.hero.topTitle}</span>
       </div>
+
+      {/* 액센트 보더 */}
+      <div className="boarding-pass__accent-border"></div>
 
       {/* 상단 헤더 영역 (베이지 배경) */}
       <div className="boarding-pass__header">
@@ -62,6 +65,7 @@ const HeroBoardingPassSection: React.FC = () => {
           </div>
           <div className="route-center">
             <div className="route-icon material-symbols-outlined">travel</div>
+            <div className="route-separator"></div>
             <div className="route-label">{t.hero.flight}</div>
           </div>
           <div className="route-destination">
