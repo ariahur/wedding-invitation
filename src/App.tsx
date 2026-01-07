@@ -77,9 +77,12 @@ const WeddingInvitation: React.FC = () => {
       updateMetaTag('og:title', '조준용 ❤️ 허다영 결혼합니다');
       updateMetaTag('og:description', '2월 20일 토요일 오후 3시\n그랜드힐 1층 플로리아');
       updateMetaTag('og:image', imageUrl);
+      updateMetaTag('og:image:width', '1200');
+      updateMetaTag('og:image:height', '630');
       updateMetaTag('og:url', currentUrl);
       updateMetaTag('og:type', 'website');
       updateMetaTag('og:locale', 'ko_KR');
+      updateMetaTag('og:site_name', '조준용 ❤️ 허다영 결혼합니다');
       
       updateMetaTag('twitter:card', 'summary_large_image');
       updateMetaTag('twitter:title', '조준용 ❤️ 허다영 결혼합니다');
@@ -95,9 +98,12 @@ const WeddingInvitation: React.FC = () => {
       updateMetaTag('og:title', 'Daniel ❤️ Aria Wedding');
       updateMetaTag('og:description', 'February 20, Saturday 3:00 PM\nGrand Hill 1F Floria');
       updateMetaTag('og:image', imageUrl);
+      updateMetaTag('og:image:width', '1200');
+      updateMetaTag('og:image:height', '630');
       updateMetaTag('og:url', currentUrl);
       updateMetaTag('og:type', 'website');
       updateMetaTag('og:locale', 'en_US');
+      updateMetaTag('og:site_name', 'Daniel ❤️ Aria Wedding');
       
       updateMetaTag('twitter:card', 'summary_large_image');
       updateMetaTag('twitter:title', 'Daniel ❤️ Aria Wedding');
