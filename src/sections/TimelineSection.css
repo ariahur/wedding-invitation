@@ -27,16 +27,30 @@
 .timeline__counter {
   text-align: center;
   margin: 0 -24px 24px -24px;
-  padding: 16px;
-  background: rgba(26, 47, 74, 0.7);
+  padding: 24px 16px;
+  background: transparent;
   border-radius: 0;
 }
 
 .counter-text {
-  font-size: 11px;
-  color: white;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+  font-size: 14px;
+  color: #666;
+  font-weight: 400;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+  line-height: 1.8;
+  letter-spacing: 0.3px;
+}
+
+.counter-text:lang(en) {
+  font-family: "Lora", serif;
+}
+
+.counter-number {
+  font-size: 18px;
+  color: #666;
+  font-weight: 400;
+  font-family: "Lora", "Playfair Display", serif;
+  letter-spacing: 0;
 }
 
 .timeline__events {
@@ -229,15 +243,21 @@
 
   .timeline__counter {
     margin: 0 -20px 32px -20px;
+    padding: 20px 12px;
+  }
+
+  .counter-text {
+    font-size: 12px;
+  }
+
+  .counter-number {
+    font-size: 16px;
   }
 
   .timeline__title {
     font-size: 17px;
   }
 
-  .counter-text {
-    font-size: 12px;
-  }
 
   .timeline__events {
     padding: 16px 0;

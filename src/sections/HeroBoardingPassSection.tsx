@@ -20,7 +20,7 @@ const HeroBoardingPassSection: React.FC = () => {
       {/* 최상단 타이틀 */}
       {/* backgroundImage 스타일 주석처리 - 색상으로 변경 */}
       {/* style={{
-        backgroundImage: `url(${process.env.PUBLIC_URL}/textures/paper1.jpg)`,
+          backgroundImage: `url(${process.env.PUBLIC_URL}/textures/paper1.jpg)`,
       }} */}
       <div className="boarding-pass__top-title">
         <span className="top-title-icon material-symbols-outlined">travel</span>
@@ -38,7 +38,7 @@ const HeroBoardingPassSection: React.FC = () => {
       {/* 메인 보딩 패스 (종이 텍스처 배경) */}
       {/* backgroundImage 스타일 주석처리 - 색상으로 변경 */}
       {/* style={{
-        backgroundImage: `url(${process.env.PUBLIC_URL}/textures/paper1.jpg)`,
+          backgroundImage: `url(${process.env.PUBLIC_URL}/textures/paper1.jpg)`,
       }} */}
       <div className="boarding-pass__main">
         {/* 상단: 항공사 정보 */}

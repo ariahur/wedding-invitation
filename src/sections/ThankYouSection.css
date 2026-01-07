@@ -1,0 +1,71 @@
+.thank-you {
+  padding: 24px;
+  background-color: #FFFFFF;
+  position: relative;
+  overflow: hidden;
+  min-height: 150px;
+}
+
+.thank-you__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.3;
+  z-index: 0;
+}
+
+.thank-you__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  min-height: 120px;
+}
+
+.thank-you__message {
+  text-align: center;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+  color: #1A2F4A;
+  line-height: 2;
+}
+
+.thank-you__message:lang(en) {
+  font-family: "Lora", serif;
+}
+
+.thank-you__line {
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+  color: #1A2F4A;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+.thank-you__line:lang(en) {
+  font-size: 13px;
+  letter-spacing: 0.3px;
+}
+
+@media (max-width: 430px) {
+  .thank-you {
+    padding: 20px;
+  }
+
+
+  .thank-you__line {
+    font-size: 12px;
+  }
+
+  .thank-you__line:lang(en) {
+    font-size: 11px;
+  }
+}
+

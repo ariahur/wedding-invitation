@@ -1,10 +1,9 @@
 .paper-card {
   /* background-color: #fff; */
   background-color: #FAF8F3;
-  border-radius: 16px;
-  padding: 24px;
-  margin: 16px auto;
-  max-width: 375px;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 12px;
   box-shadow: 
     0 8px 32px rgba(0, 0, 0, 0.25),
     0 4px 16px rgba(0, 0, 0, 0.2),
@@ -64,11 +63,4 @@
   z-index: 0;
 }
 
-@media (max-width: 430px) {
-  .paper-card {
-    margin: 12px;
-    padding: 20px;
-    border-radius: 12px;
-  }
-}
 

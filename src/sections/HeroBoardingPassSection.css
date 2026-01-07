@@ -290,8 +290,8 @@
   width: 100%;
   height: 256px;
   border-radius: 0;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
   overflow: hidden;
   background: transparent;
 }
@@ -520,6 +520,8 @@
   margin: 0;
   padding: 20px;
   border-top: 1px solid #e0e0e0;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
   position: relative;
 }
 
@@ -903,5 +905,15 @@
   .boarding-pass__details,
   .boarding-pass__footer {
     padding: 16px;
+  }
+
+  .couple-photo-container {
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+  }
+
+  .boarding-pass__footer {
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
   }
 }

@@ -52,12 +52,25 @@ const TimelineSection: React.FC = () => {
 
   const formatTimeString = () => {
     if (language === 'ko') {
-      return `${timeTogether.years}년 ${timeTogether.months}개월 ${timeTogether.days}일 ${timeTogether.hours}시간 ${timeTogether.minutes}분 ${timeTogether.seconds}초`;
+      return (
+        <>
+          <span className="counter-number">{timeTogether.years}</span>년{' '}
+          <span className="counter-number">{timeTogether.months}</span>개월{' '}
+          <span className="counter-number">{timeTogether.days}</span>일{' '}
+          <span className="counter-number">{timeTogether.hours}</span>시간{' '}
+          <span className="counter-number">{timeTogether.minutes}</span>분{' '}
+          <span className="counter-number">{timeTogether.seconds}</span>초
+        </>
+      );
     } else {
       return (
         <>
-          {timeTogether.years} years {timeTogether.months} months {timeTogether.days} days<br />
-          {timeTogether.hours} hours {timeTogether.minutes} minutes {timeTogether.seconds} seconds
+          <span className="counter-number">{timeTogether.years}</span> years{' '}
+          <span className="counter-number">{timeTogether.months}</span> months{' '}
+          <span className="counter-number">{timeTogether.days}</span> days<br />
+          <span className="counter-number">{timeTogether.hours}</span> hours{' '}
+          <span className="counter-number">{timeTogether.minutes}</span> minutes{' '}
+          <span className="counter-number">{timeTogether.seconds}</span> seconds
         </>
       );
     }
@@ -74,7 +87,9 @@ const TimelineSection: React.FC = () => {
       <h2 className="timeline__title" lang={language}>{t.timeline.title}</h2>
       
       <div className="timeline__counter">
-        <div className="counter-text">"{formatTimeString()}"</div>
+        <div className="counter-text">
+          &quot;{formatTimeString()}&quot;
+        </div>
       </div>
 
       <div className="timeline__events">

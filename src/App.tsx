@@ -4,6 +4,7 @@ import HeroBoardingPassSection from './sections/HeroBoardingPassSection';
 import TimelineSection from './sections/TimelineSection';
 import DirectionsSection from './sections/DirectionsSection';
 import RsvpSection from './sections/RsvpSection';
+import ThankYouSection from './sections/ThankYouSection';
 import LoadingScreen from './components/LoadingScreen/LoadingScreen';
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import { Language } from './types/language';
@@ -43,75 +44,40 @@ const updateMetaTag = (property: string, content: string) => {
   }
 };
 
-const Footer: React.FC = () => {
-  const language = useLanguage();
-  const t = translations[language];
-
-  return (
-    <div className="app-footer">
-      <div className="app-footer__thank-you">
-        {language === 'ko' ? '감사합니다 ❤️' : 'Thank you ❤️'}
-      </div>
-      <div className="app-footer__inquiry">
-        {t.rsvp.footer.inquiry}: {t.rsvp.footer.groom} | {t.rsvp.footer.bride}
-      </div>
-    </div>
-  );
-};
-
 const WeddingInvitation: React.FC = () => {
   const { lang } = useParams<{ lang: string }>();
   const language = (lang === 'en' ? 'en' : 'ko') as Language;
   const [isLoading, setIsLoading] = useState(true);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
     const baseUrl = window.location.origin;
     const currentUrl = `${baseUrl}/${language}`;
     const imageUrl = `${baseUrl}/couple.jpg`;
     
-    if (language === 'ko') {
-      document.title = '조준용 ❤️ 허다영 결혼합니다';
-      document.documentElement.lang = 'ko';
-      
-      // 메타 태그 설정
-      updateMetaTag('og:title', '조준용 ❤️ 허다영 결혼합니다');
-      updateMetaTag('og:description', '2월 20일 토요일 오후 3시\n그랜드힐 1층 플로리아');
-      updateMetaTag('og:image', imageUrl);
-      updateMetaTag('og:image:width', '1200');
-      updateMetaTag('og:image:height', '630');
-      updateMetaTag('og:url', currentUrl);
-      updateMetaTag('og:type', 'website');
-      updateMetaTag('og:locale', 'ko_KR');
-      updateMetaTag('og:site_name', '조준용 ❤️ 허다영 결혼합니다');
-      
-      updateMetaTag('twitter:card', 'summary_large_image');
-      updateMetaTag('twitter:title', '조준용 ❤️ 허다영 결혼합니다');
-      updateMetaTag('twitter:description', '2월 20일 토요일 오후 3시\n그랜드힐 1층 플로리아');
-      updateMetaTag('twitter:image', imageUrl);
-      
-      updateMetaTag('description', '2월 20일 토요일 오후 3시\n그랜드힐 1층 플로리아');
-    } else {
-      document.title = 'Daniel ❤️ Aria Wedding';
-      document.documentElement.lang = 'en';
-      
-      // 메타 태그 설정
-      updateMetaTag('og:title', 'Daniel ❤️ Aria Wedding');
-      updateMetaTag('og:description', 'February 20, Saturday 3:00 PM\nGrand Hill 1F Floria');
-      updateMetaTag('og:image', imageUrl);
-      updateMetaTag('og:image:width', '1200');
-      updateMetaTag('og:image:height', '630');
-      updateMetaTag('og:url', currentUrl);
-      updateMetaTag('og:type', 'website');
-      updateMetaTag('og:locale', 'en_US');
-      updateMetaTag('og:site_name', 'Daniel ❤️ Aria Wedding');
-      
-      updateMetaTag('twitter:card', 'summary_large_image');
-      updateMetaTag('twitter:title', 'Daniel ❤️ Aria Wedding');
-      updateMetaTag('twitter:description', 'February 20, Saturday 3:00 PM\nGrand Hill 1F Floria');
-      updateMetaTag('twitter:image', imageUrl);
-      
-      updateMetaTag('description', 'February 20, Saturday 3:00 PM\nGrand Hill 1F Floria');
-    }
+    // 메타 태그 설정 (국문/영문 동일)
+    const title = '조준용(Daniel) ❤️ 허다영(Aria)';
+    const description = '2027/02/20 15:00';
+    
+    document.title = title;
+    document.documentElement.lang = language;
+    
+    updateMetaTag('og:title', title);
+    updateMetaTag('og:description', description);
+    updateMetaTag('og:image', imageUrl);
+    updateMetaTag('og:image:width', '1200');
+    updateMetaTag('og:image:height', '630');
+    updateMetaTag('og:url', currentUrl);
+    updateMetaTag('og:type', 'website');
+    updateMetaTag('og:locale', language === 'ko' ? 'ko_KR' : 'en_US');
+    updateMetaTag('og:site_name', title);
+    
+    updateMetaTag('twitter:card', 'summary_large_image');
+    updateMetaTag('twitter:title', title);
+    updateMetaTag('twitter:description', description);
+    updateMetaTag('twitter:image', imageUrl);
+    
+    updateMetaTag('description', description);
   }, [language]);
 
   useEffect(() => {
@@ -121,6 +87,23 @@ const WeddingInvitation: React.FC = () => {
 
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      setShowScrollTop(scrollTop > 300);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   return (
     <LanguageProvider language={language}>
@@ -134,7 +117,18 @@ const WeddingInvitation: React.FC = () => {
         <TimelineSection />
         <DirectionsSection />
         <RsvpSection />
-        <Footer />
+        <ThankYouSection />
+        
+        {/* Scroll to Top Button (Mobile Only) */}
+        {showScrollTop && (
+          <button 
+            className="scroll-to-top-btn" 
+            onClick={scrollToTop}
+            aria-label="Scroll to top"
+          >
+            <span className="material-symbols-outlined">keyboard_arrow_up</span>
+          </button>
+        )}
       </div>
     </LanguageProvider>
   );
