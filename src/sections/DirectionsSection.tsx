@@ -104,7 +104,10 @@ const DirectionsSection: React.FC = () => {
         <h3 className="directions__subtitle">{t.directions.car.title}</h3>
         <ul className="directions__list">
           <li className="directions__navigation-item">
-            {t.directions.car.address}
+            <span className="directions__navigation-text">
+              {t.directions.car.addressBeforeSearch}
+              {t.directions.car.addressSearch}
+            </span>
             <button 
               onClick={handleCopyAddress}
               className="directions__copy-button"

@@ -47,6 +47,10 @@ const HeroBoardingPassSection: React.FC = () => {
             {/* <span className="heart-icon">❤️</span> */}
             <div className="airline-info">
               <div className="airline-name">{t.hero.airline}</div>
+              <div className="airline-flight">
+                <span className="airline-flight-label">{t.hero.flightLabel}</span>
+                <span className="airline-flight-number">{t.hero.flight}</span>
+              </div>
             </div>
           </div>
           <div className="main-top-right">
@@ -68,7 +72,6 @@ const HeroBoardingPassSection: React.FC = () => {
           <div className="route-center">
             <div className="route-icon material-symbols-outlined">travel</div>
             <div className="route-separator"></div>
-            <div className="route-label">{t.hero.flight}</div>
           </div>
           <div className="route-destination">
             <div className="route-code">{t.hero.destination.code}</div>

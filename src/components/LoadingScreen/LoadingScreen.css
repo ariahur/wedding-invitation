@@ -21,13 +21,12 @@
 
 .loading-text {
   font-family: "Dancing Script", cursive;
-  font-size: 48px;
+  font-size: 36px;
   font-weight: 400;
   font-style: normal;
   color: #1A2F4A;
-  letter-spacing: 2px;
-  line-height: 1.4;
-  white-space: pre-line;
+  letter-spacing: 1.5px;
+  line-height: 1.6;
   word-wrap: break-word;
   min-height: 60px;
 }
@@ -49,7 +48,7 @@
   }
   
   .loading-text {
-    font-size: 36px;
+    font-size: 28px;
     letter-spacing: 1px;
     min-height: 50px;
   }

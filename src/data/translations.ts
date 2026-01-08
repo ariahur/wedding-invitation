@@ -22,6 +22,7 @@ export interface Translations {
     tagline: string;
     class: string;
     flight: string;
+    flightLabel: string;
     origin: {
       code: string;
       city: string;
@@ -82,6 +83,8 @@ export interface Translations {
     car: {
       title: string;
       address: string;
+      addressBeforeSearch: string;
+      addressSearch: string;
       navigation: string;
       parking: string;
     };
@@ -177,7 +180,8 @@ export const translations: Record<Language, Translations> = {
       airline: 'NO RETURN AIRLINES',
       tagline: 'Forever Together',
       class: 'VVIP',
-      flight: 'DA206',
+      flight: 'DA0206',
+      flightLabel: 'Flight no.',
       origin: {
         code: 'SYD',
         city: 'Sydney',
@@ -238,6 +242,8 @@ export const translations: Record<Language, Translations> = {
       car: {
         title: '자가용',
         address: '내비게이션: \'서울특별시 강남구 대치동 1004-3\' 검색',
+        addressBeforeSearch: '내비게이션: \'서울특별시 강남구 대치동 1004-3\' ',
+        addressSearch: '검색',
         navigation: '',
         parking: '건물 주차타워 주차 가능 (3시간 무료)',
       },
@@ -250,7 +256,7 @@ export const translations: Record<Language, Translations> = {
     },
     rsvp: {
       title: '탑승권 신청',
-      intro: '참석 여부를 알려주시면 소중히 준비하겠습니다\n예식이 지정좌석제로 진행되어 참석 여부를 12월 1일까지 회신해주시면 감사하겠습니다.',
+      intro: '참석 여부를 알려주시면 소중히 준비하겠습니다\n예식이 지정좌석제로 진행되어 참석 여부를\n12월 1일까지 회신해주시면 감사하겠습니다.',
       thankYouMessage: '소중한 시간을 내어 참석해주시는 분들께 진심으로 감사드립니다.',
       seatingMessage: '예식이 지정좌석제로 진행되어 참석 여부를 12월 1일까지 회신해주시면 감사하겠습니다.',
       form: {
@@ -332,6 +338,7 @@ export const translations: Record<Language, Translations> = {
       tagline: 'Forever Together',
       class: 'VVIP',
       flight: 'DA206',
+      flightLabel: 'Flight no.',
       origin: {
         code: 'SYD',
         city: 'Sydney',
@@ -392,6 +399,8 @@ export const translations: Record<Language, Translations> = {
       car: {
         title: 'Car',
         address: 'Navigation: search \'1004-3 Daechi-dong, Gangnam-gu, Seoul\'',
+        addressBeforeSearch: 'Navigation: ',
+        addressSearch: 'search \'1004-3 Daechi-dong, Gangnam-gu, Seoul\'',
         navigation: '',
         parking: 'Building parking tower available (3 hours free)',
       },
@@ -403,8 +412,8 @@ export const translations: Record<Language, Translations> = {
       copiedButton: '✓ Copied',
     },
     rsvp: {
-      title: 'Boarding Pass Request',
-      intro: 'We sincerely thank you for taking the time to complete the form below.\nAs the ceremony will be held with assigned seating, we would appreciate your RSVP by December 1st.',
+      title: 'boarding pass rsvp',
+      intro: 'We sincerely thank you for taking the time\nto complete the form below.\nAs the ceremony will be held with assigned seating,\nwe would appreciate your RSVP by December 1st.',
       thankYouMessage: 'As the ceremony will be held with assigned seating, we would appreciate your RSVP by December 1st.',
       seatingMessage: 'As the ceremony will be held with assigned seating, we would appreciate your RSVP by December 1st.',
       form: {

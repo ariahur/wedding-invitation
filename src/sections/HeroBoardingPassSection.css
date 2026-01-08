@@ -158,6 +158,29 @@
   margin-bottom: 4px;
 }
 
+.airline-flight {
+  font-family: "Roboto", sans-serif;
+  margin-top: 2px;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.airline-flight-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: rgba(201, 167, 124, 0.8);
+  text-transform: uppercase;
+}
+
+.airline-flight-number {
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #C9A77C;
+}
+
 .airline-tagline {
   font-family: "Roboto", sans-serif;
   font-size: 11px;
@@ -267,15 +290,6 @@
   );
 }
 
-.route-label {
-  font-family: "Roboto", sans-serif;
-  font-size: 13px;
-  color: #C9A77C;
-  text-transform: capitalize;
-  letter-spacing: 1px;
-  font-weight: 400;
-}
-
 /* 하단: 커플 이름 */
 .main-photo {
   margin-top: 20px;
@@ -381,7 +395,7 @@
 }
 
 .couple-line {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
   color: #333;
   /* line-height: 1.6; */
@@ -397,7 +411,7 @@
 
 .message-title {
   font-family: "Gowun Dodum", "Lora", sans-serif;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 600;
   font-style: normal;
   color: #1A2F4A;
@@ -414,7 +428,7 @@
   font-weight: 400;
   font-style: normal;
   text-align: center;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 2;
   color: #333;
 }
@@ -470,20 +484,20 @@
 }
 
 .detail-label {
-  font-size: 12px;
+  font-size: 13px;
   color: #999;
   margin-bottom: 4px;
   font-weight: 500;
 }
 
 .detail-value {
-  font-size: 12px;
+  font-size: 13px;
   color: #333;
   font-weight: 500;
 }
 
 .detail-value-block {
-  font-size: 12px;
+  font-size: 13px;
   color: #333;
   line-height: 1.6;
 }

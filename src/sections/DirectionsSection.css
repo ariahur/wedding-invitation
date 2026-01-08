@@ -35,7 +35,7 @@
 }
 
 .directions__subtitle {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   color: #1A2F4A;
   margin-bottom: 12px;
@@ -60,7 +60,7 @@
 }
 
 .directions__list li {
-  font-size: 12px;
+  font-size: 13px;
   color: #555;
   line-height: 1.8;
   padding-left: 0;
@@ -93,7 +93,7 @@
 }
 
 .directions__note {
-  font-size: 12px;
+  font-size: 13px;
   color: #888;
   padding-left: 20px !important;
 }
@@ -101,7 +101,12 @@
 .directions__navigation-item {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
+}
+
+.directions__navigation-text {
+  display: inline;
 }
 
 .directions__copy-button {
@@ -181,7 +186,7 @@
 }
 
 .address-venue {
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 600;
   color: #333;
   margin-bottom: 8px;
@@ -219,7 +224,7 @@
 }
 
 .address-text {
-  font-size: 12px;
+  font-size: 13px;
   color: #666;
   line-height: 1.8;
   text-align: center;
@@ -263,7 +268,7 @@
   }
   
   .directions__subtitle {
-    font-size: 13px;
+    font-size: 14px;
   }
 }
 

@@ -33,7 +33,7 @@
 }
 
 .counter-text {
-  font-size: 14px;
+  font-size: 15px;
   color: #666;
   font-weight: 400;
   font-family: "Gowun Dodum", "Lora", sans-serif;
@@ -119,7 +119,7 @@
 
 .timeline__event-image {
   width: calc(50% - 8px);
-  max-width: 100px;
+  max-width: 120px;
   aspect-ratio: 1;
   border-radius: 12px;
   overflow: hidden;
@@ -209,7 +209,7 @@
 }
 
 .event-title {
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 600;
   color: #333;
   margin-bottom: 8px;
@@ -232,7 +232,7 @@
 }
 
 .event-description {
-  font-size: 11px;
+  font-size: 13px;
   color: #555;
   line-height: 1.6;
   word-wrap: break-word;
@@ -257,7 +257,7 @@
   }
 
   .counter-text {
-    font-size: 12px;
+    font-size: 13px;
   }
 
   .counter-number {
@@ -292,7 +292,7 @@
 
   .timeline__event-image {
     width: calc(50% - 6px);
-    max-width: 85px;
+    max-width: 100px;
   }
 
   .timeline__event-text {
@@ -313,11 +313,11 @@
   }
 
   .event-title {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .event-description {
-    font-size: 12px;
+    font-size: 13px;
   }
 }
 
