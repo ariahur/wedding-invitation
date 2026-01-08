@@ -135,8 +135,14 @@
 }
 
 .form-textarea {
-  resize: vertical;
-  min-height: 100px;
+  resize: none;
+  overflow: hidden;
+  line-height: 1.5;
+}
+
+.form-textarea--auto-resize {
+  min-height: 24px;
+  max-height: 200px;
 }
 
 .form-error {

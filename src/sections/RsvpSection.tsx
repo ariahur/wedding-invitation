@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -53,6 +53,7 @@ const RsvpSection: React.FC = () => {
     handleSubmit,
     watch,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<z.infer<typeof rsvpSchema>>({
     resolver: zodResolver(rsvpSchema),
@@ -65,6 +66,27 @@ const RsvpSection: React.FC = () => {
 
   const attendance = watch('attendance') as Attendance | undefined;
   const hasChildren = watch('hasChildren');
+  const noteValue = watch('note');
+  const noteTextareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  // 불참 선택 시 guestCount 초기화
+  React.useEffect(() => {
+    if (attendance === 'not_attending') {
+      setValue('guestCount', null);
+      setValue('hasChildren', 'no');
+      setValue('childrenAges', '');
+    }
+  }, [attendance, setValue]);
+
+  // Auto-resize textarea
+  useEffect(() => {
+    const textarea = noteTextareaRef.current;
+    if (textarea) {
+      textarea.style.height = 'auto';
+      const scrollHeight = textarea.scrollHeight;
+      textarea.style.height = `${Math.min(scrollHeight, 200)}px`;
+    }
+  }, [noteValue]);
 
   const onSubmit = async (data: z.infer<typeof rsvpSchema>) => {
     // Honeypot check
@@ -72,28 +94,68 @@ const RsvpSection: React.FC = () => {
       return;
     }
 
+    console.log('Form submitted with data:', data); // 디버깅용
+
     setIsSubmitting(true);
     setSubmitStatus('idle');
     setErrorMessage('');
 
     try {
+      // Supabase에 저장
+      const payload = {
+        name: data.name,
+        phone: data.phone,
+        email: data.email || null,
+        attendance: data.attendance,
+        guest_count: data.attendance === 'attending' ? data.guestCount || 1 : null,
+        has_children: data.hasChildren || null,
+        children_ages: data.childrenAges || null,
+        note: data.note || null,
+      };
+
+      console.log('Submitting to Supabase:', payload); // 디버깅용
+
       const { error } = await supabase
         .from('rsvp_responses')
-        .insert([
-          {
-            name: data.name,
-            phone: data.phone,
-            email: data.email || null,
-            attendance: data.attendance,
-            guest_count: data.attendance === 'attending' ? data.guestCount || 1 : null,
-            has_children: data.hasChildren || null,
-            children_ages: data.childrenAges || null,
-            note: data.note || null,
-          },
-        ]);
+        .insert([payload]);
 
       if (error) {
+        console.error('Supabase error:', error); // 디버깅용
         throw error;
+      }
+
+      console.log('Supabase insert successful'); // 디버깅용
+
+      // Google Sheets에 추가 (선택적, 실패해도 계속 진행)
+      const googleSheetsUrl = process.env.REACT_APP_GOOGLE_SHEETS_WEB_APP_URL;
+      if (googleSheetsUrl) {
+        try {
+          const sheetsPayload = {
+            name: data.name,
+            phone: data.phone,
+            email: data.email || '',
+            attendance: data.attendance,
+            guestCount: data.attendance === 'attending' ? data.guestCount || 1 : null,
+            hasChildren: data.hasChildren || '',
+            childrenAges: data.childrenAges || '',
+            note: data.note || '',
+          };
+          
+          console.log('Submitting to Google Sheets:', sheetsPayload); // 디버깅용
+          
+          await fetch(googleSheetsUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(sheetsPayload),
+          });
+          
+          console.log('Google Sheets insert successful'); // 디버깅용
+        } catch (sheetsError) {
+          // Google Sheets 저장 실패는 로그만 남기고 계속 진행
+          console.warn('Failed to save to Google Sheets:', sheetsError);
+        }
       }
 
       setSubmitStatus('success');
@@ -135,7 +197,9 @@ const RsvpSection: React.FC = () => {
         ))}
       </p>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="rsvp__form">
+      <form onSubmit={handleSubmit(onSubmit, (errors) => {
+        console.log('Form validation errors:', errors);
+      })} className="rsvp__form">
         {/* Honeypot field */}
         <input
           type="text"
@@ -288,17 +352,18 @@ const RsvpSection: React.FC = () => {
               </label>
             </div>
             {hasChildren === 'yes' && (
-              <div style={{ marginTop: '12px' }}>
-                <label htmlFor="childrenAges" className="form-label" style={{ marginBottom: '8px', fontSize: '12px' }}>
+              <div style={{ marginTop: '12px', display: 'flex', alignItems: 'center', gap: '8px', width: '100%' }}>
+                <label htmlFor="childrenAges" className="form-label" style={{ marginBottom: 0, fontSize: '12px', whiteSpace: 'nowrap', flexShrink: 0 }}>
                   {t.rsvp.form.childrenAges}
                 </label>
-                <div className="form-input-wrapper">
+                <div className="form-input-wrapper" style={{ flex: 1, minWidth: 0 }}>
                   <input
                     id="childrenAges"
                     type="text"
                     {...register('childrenAges')}
                     placeholder={t.rsvp.form.childrenAgesPlaceholder}
                     className="form-input"
+                    style={{ width: '100%' }}
                   />
                 </div>
               </div>
@@ -314,9 +379,14 @@ const RsvpSection: React.FC = () => {
             <textarea
               id="note"
               {...register('note')}
+              ref={(e) => {
+                const { ref } = register('note');
+                ref(e);
+                noteTextareaRef.current = e;
+              }}
               placeholder={t.rsvp.form.notePlaceholder}
-              rows={4}
-              className="form-textarea"
+              rows={1}
+              className="form-textarea form-textarea--auto-resize"
             />
           </div>
         </div>
@@ -339,7 +409,11 @@ const RsvpSection: React.FC = () => {
           className="form-submit"
           lang={language}
         >
-          {isSubmitting ? t.rsvp.form.submitting : t.rsvp.form.submit}
+          {isSubmitting 
+            ? t.rsvp.form.submitting 
+            : attendance === 'attending' 
+              ? t.rsvp.form.submit 
+              : t.rsvp.form.submitNotAttending}
         </button>
       </form>
     </PaperCard>

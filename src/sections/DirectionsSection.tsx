@@ -8,6 +8,21 @@ import './DirectionsSection.css';
 const DirectionsSection: React.FC = () => {
   const language = useLanguage();
   const t = translations[language];
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyAddress = async () => {
+    const address = language === 'ko' 
+      ? '서울특별시 강남구 대치동 1004-3'
+      : '1004-3 Daechi-dong, Gangnam-gu, Seoul';
+    
+    try {
+      await navigator.clipboard.writeText(address);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
 
 
   return (
@@ -88,7 +103,19 @@ const DirectionsSection: React.FC = () => {
       <div className="directions__section">
         <h3 className="directions__subtitle">{t.directions.car.title}</h3>
         <ul className="directions__list">
-          <li>{t.directions.car.address}</li>
+          <li className="directions__navigation-item">
+            {t.directions.car.address}
+            <button 
+              onClick={handleCopyAddress}
+              className="directions__copy-button"
+              aria-label={copied ? t.directions.copiedButton : t.directions.copyButton}
+              title={copied ? t.directions.copiedButton : t.directions.copyButton}
+            >
+              <span className="material-symbols-outlined">
+                {copied ? 'check' : 'content_copy'}
+              </span>
+            </button>
+          </li>
           <li>{t.directions.car.parking}</li>
         </ul>
       </div>

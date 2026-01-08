@@ -47,7 +47,6 @@ const HeroBoardingPassSection: React.FC = () => {
             {/* <span className="heart-icon">❤️</span> */}
             <div className="airline-info">
               <div className="airline-name">{t.hero.airline}</div>
-              <div className="airline-tagline">{t.hero.tagline} <span className="small-heart">❤️</span></div>
             </div>
           </div>
           <div className="main-top-right">
@@ -60,8 +59,11 @@ const HeroBoardingPassSection: React.FC = () => {
         <div className="main-route">
           <div className="route-origin">
             <div className="route-code">{t.hero.origin.code}</div>
-            <div className="route-city">{t.hero.origin.city}</div>
-            <div className="route-city-ko">{t.hero.origin.cityKo}</div>
+            {language === 'ko' ? (
+              <div className="route-city-ko">{t.hero.origin.cityKo}</div>
+            ) : (
+              <div className="route-city">{t.hero.origin.city}</div>
+            )}
           </div>
           <div className="route-center">
             <div className="route-icon material-symbols-outlined">travel</div>
@@ -70,8 +72,11 @@ const HeroBoardingPassSection: React.FC = () => {
           </div>
           <div className="route-destination">
             <div className="route-code">{t.hero.destination.code}</div>
-            <div className="route-city">{t.hero.destination.city}</div>
-            <div className="route-city-ko">{t.hero.destination.cityKo}</div>
+            {language === 'ko' ? (
+              <div className="route-city-ko">{t.hero.destination.cityKo}</div>
+            ) : (
+              <div className="route-city">{t.hero.destination.city}</div>
+            )}
           </div>
         </div>
 

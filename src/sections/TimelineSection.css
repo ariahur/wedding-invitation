@@ -128,6 +128,16 @@
   flex-shrink: 0;
 }
 
+.timeline__event--left .timeline__event-image {
+  margin-left: auto;
+  margin-right: 24px;
+}
+
+.timeline__event--right .timeline__event-image {
+  margin-right: auto;
+  margin-left: 24px;
+}
+
 .event-image {
   width: 100%;
   height: 100%;

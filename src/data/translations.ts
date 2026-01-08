@@ -116,6 +116,7 @@ export interface Translations {
       note: string;
       notePlaceholder: string;
       submit: string;
+      submitNotAttending: string;
       submitting: string;
       success: string;
       error: string;
@@ -175,8 +176,8 @@ export const translations: Record<Language, Translations> = {
       time: '15:00',
       airline: 'NO RETURN AIRLINES',
       tagline: 'Forever Together',
-      class: 'FIRST',
-      flight: 'Flight',
+      class: 'VVIP',
+      flight: 'DA206',
       origin: {
         code: 'SYD',
         city: 'Sydney',
@@ -248,7 +249,7 @@ export const translations: Record<Language, Translations> = {
       copiedButton: '✓ 복사됨',
     },
     rsvp: {
-      title: '참석 여부 전달하기',
+      title: '탑승권 신청',
       intro: '참석 여부를 알려주시면 소중히 준비하겠습니다\n예식이 지정좌석제로 진행되어 참석 여부를 12월 1일까지 회신해주시면 감사하겠습니다.',
       thankYouMessage: '소중한 시간을 내어 참석해주시는 분들께 진심으로 감사드립니다.',
       seatingMessage: '예식이 지정좌석제로 진행되어 참석 여부를 12월 1일까지 회신해주시면 감사하겠습니다.',
@@ -268,11 +269,12 @@ export const translations: Record<Language, Translations> = {
         hasChildrenYes: '예',
         childrenAges: '나이(개월/세)를 적어주세요:',
         childrenAgesPlaceholder: '예: 6개월, 2세, 5세',
-        note: '요청사항',
-        notePlaceholder: '음식 알러지 등 요청사항을 입력해주세요',
-        submit: '체크 완료하기',
+        note: '전달사항',
+        notePlaceholder: '음식 알러지 등 알려주실 사항이나 저희에게 전달하고 싶은 말씀이 있으시면 남겨주세요',
+        submit: '탑승권 발급 받기',
+        submitNotAttending: '다음 비행을 기약할게요 ✈️',
         submitting: '제출 중...',
-        success: '제출이 완료되었습니다',
+        success: '탑승권 신청이 완료되었습니다.',
         error: '제출 중 오류가 발생했습니다. 다시 시도해주세요.',
       },
       footer: {
@@ -328,8 +330,8 @@ export const translations: Record<Language, Translations> = {
       time: '15:00',
       airline: 'NO RETURN AIRLINES',
       tagline: 'Forever Together',
-      class: 'FIRST',
-      flight: 'Flight',
+      class: 'VVIP',
+      flight: 'DA206',
       origin: {
         code: 'SYD',
         city: 'Sydney',
@@ -401,7 +403,7 @@ export const translations: Record<Language, Translations> = {
       copiedButton: '✓ Copied',
     },
     rsvp: {
-      title: 'RSVP',
+      title: 'Boarding Pass Request',
       intro: 'We sincerely thank you for taking the time to complete the form below.\nAs the ceremony will be held with assigned seating, we would appreciate your RSVP by December 1st.',
       thankYouMessage: 'As the ceremony will be held with assigned seating, we would appreciate your RSVP by December 1st.',
       seatingMessage: 'As the ceremony will be held with assigned seating, we would appreciate your RSVP by December 1st.',
@@ -422,10 +424,11 @@ export const translations: Record<Language, Translations> = {
         childrenAges: 'please let us know their age(s):',
         childrenAgesPlaceholder: 'e.g., 6 months, 2 years, 5 years',
         note: 'Special Requests',
-        notePlaceholder: 'Please enter any requests such as food allergies, etc.',
-        submit: 'Complete Check',
+        notePlaceholder: 'Please let us know about any food allergies or any messages you would like to share with us',
+        submit: 'Get My Boarding Pass',
+        submitNotAttending: "I'll Catch the Next Flight ✈️",
         submitting: 'Submitting...',
-        success: 'Your RSVP has been submitted successfully',
+        success: 'Your boarding pass request has been submitted.',
         error: 'An error occurred while submitting. Please try again.',
       },
       footer: {

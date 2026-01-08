@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, Navigate, useParams } from 'react-router-dom';
+import { Routes, Route, Navigate, useParams, useNavigate } from 'react-router-dom';
 import HeroBoardingPassSection from './sections/HeroBoardingPassSection';
 import TimelineSection from './sections/TimelineSection';
 import DirectionsSection from './sections/DirectionsSection';
@@ -42,6 +42,27 @@ const updateMetaTag = (property: string, content: string) => {
     }
     element.setAttribute('content', content);
   }
+};
+
+const LanguageToggle: React.FC<{ language: Language }> = ({ language }) => {
+  const navigate = useNavigate();
+
+  const handleLanguageChange = () => {
+    const newLang = language === 'ko' ? 'en' : 'ko';
+    navigate(`/${newLang}`);
+  };
+
+  return (
+    <button 
+      className="language-toggle-button"
+      onClick={handleLanguageChange}
+      aria-label={language === 'ko' ? 'Switch to English' : '한국어로 전환'}
+      title={language === 'ko' ? 'Switch to English' : '한국어로 전환'}
+    >
+      <span className="material-symbols-outlined">language</span>
+      <span className="language-code">{language === 'ko' ? 'EN' : 'KO'}</span>
+    </button>
+  );
 };
 
 const WeddingInvitation: React.FC = () => {
@@ -109,6 +130,9 @@ const WeddingInvitation: React.FC = () => {
     <LanguageProvider language={language}>
       {isLoading && <LoadingScreen />}
       <div className="App" style={{ opacity: isLoading ? 0 : 1, transition: 'opacity 0.5s ease-in' }}>
+        <div className="app-header">
+          <LanguageToggle language={language} />
+        </div>
         <HeroBoardingPassSection />
         
         {/* Gallery section removed for this version */}
