@@ -1,5 +1,4 @@
 .paper-card {
-  /* background-color: #fff; */
   background-color: #FAF8F3;
   border-radius: 12px;
   padding: 20px;
@@ -10,21 +9,6 @@
     0 2px 8px rgba(0, 0, 0, 0.15);
   position: relative;
   overflow: hidden;
-  /* background-image: 
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 0, 0, 0.02) 2px,
-      rgba(0, 0, 0, 0.02) 4px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 0, 0, 0.02) 2px,
-      rgba(0, 0, 0, 0.02) 4px
-    ); */
 }
 
 .paper-card::before {
@@ -48,9 +32,6 @@
   z-index: 1;
 }
 
-/* Texture URLs are set via inline styles in PaperCard.tsx */
-
-/* Fallback overlay for better text readability */
 .paper-card::after {
   content: '';
   position: absolute;

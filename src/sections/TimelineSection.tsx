@@ -98,27 +98,27 @@ const TimelineSection: React.FC = () => {
           // 짝수번째(2,4): 사진 오른쪽, 글 왼쪽
           const isOdd = (index + 1) % 2 === 1; // 홀수번째
           return (
-            <div 
-              key={index} 
+          <div 
+            key={index} 
               className={`timeline__event ${isOdd ? 'timeline__event--left' : 'timeline__event--right'}`}
-            >
+          >
               {isOdd ? (
                 <>
-                  <div className="timeline__event-image">
-                    {event.image ? (
-                      <img 
+              <div className="timeline__event-image">
+                {event.image ? (
+                  <img 
                         src={event.image}
-                        alt={event.title}
-                        className="event-image"
-                      />
-                    ) : (
-                      <div className="event-image-placeholder">
-                        <div className="placeholder-icon">📸</div>
-                        <div className="placeholder-text">{event.title}</div>
-                      </div>
-                    )}
+                    alt={event.title}
+                    className="event-image"
+                  />
+                ) : (
+                  <div className="event-image-placeholder">
+                    <div className="placeholder-icon">📸</div>
+                    <div className="placeholder-text">{event.title}</div>
                   </div>
-                  <div className="timeline__event-text">
+                )}
+              </div>
+              <div className="timeline__event-text">
                     <div className="event-label">{event.title}</div>
                     <p className="event-description">
                       {event.description}
@@ -129,10 +129,10 @@ const TimelineSection: React.FC = () => {
                 <>
                   <div className="timeline__event-text">
                     <div className="event-label">{event.title}</div>
-                    <p className="event-description">
+                <p className="event-description">
                       {event.description}
-                    </p>
-                  </div>
+                </p>
+              </div>
                   <div className="timeline__event-image">
                     {event.image ? (
                       <img 

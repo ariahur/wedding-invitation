@@ -44,16 +44,6 @@
   gap: 10px;
 }
 
-.directions__icon {
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-}
-
 .directions__list {
   list-style: none;
   padding-left: 0;
@@ -109,6 +99,13 @@
   display: inline;
 }
 
+.directions__search-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
 .directions__copy-button {
   display: inline-flex;
   align-items: center;
@@ -152,16 +149,6 @@
   font-weight: 600;
 }
 
-.directions__parking-note {
-  margin-top: 12px;
-  padding: 12px;
-  background: rgba(74, 144, 226, 0.05);
-  border-radius: 8px;
-  font-size: 12px;
-  color: #666;
-  line-height: 1.6;
-}
-
 .directions__address {
   margin-top: 0;
   margin-bottom: 32px;
@@ -176,6 +163,25 @@
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.directions__map .root_daum_roughmap {
+  width: 100% !important;
+  min-height: 360px !important;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.directions__map .root_daum_roughmap iframe {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 8px;
+  border: none;
+}
+
+#daumRoughmapContainer1767943311186 {
+  width: 100% !important;
+  min-height: 360px !important;
 }
 
 
@@ -228,34 +234,6 @@
   color: #666;
   line-height: 1.8;
   text-align: center;
-}
-
-.address-copy-btn {
-  font-family: "Gowun Dodum", "Lora", sans-serif;
-  width: 100%;
-  padding: 12px 24px;
-  background: #1A2F4A;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.address-copy-btn:lang(en) {
-  font-family: "Lora", serif;
-}
-
-.address-copy-btn:hover {
-  background: #3A7BC8;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(74, 144, 226, 0.3);
-}
-
-.address-copy-btn:active {
-  transform: translateY(0);
 }
 
 @media (max-width: 430px) {

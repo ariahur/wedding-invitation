@@ -34,14 +34,6 @@
   margin-top: 0;
 }
 
-/* Moved to App.css as app-footer */
-/* .rsvp__thank-you {
-  font-size: 11px;
-  color: #555;
-  line-height: 1.6;
-  margin-bottom: 20px;
-  text-align: center;
-} */
 
 .rsvp__seating {
   font-size: 15px;
@@ -311,27 +303,6 @@
   transform: none;
 }
 
-/* Moved to App.css as app-footer */
-/* .rsvp__footer {
-  margin-top: 32px;
-  padding-top: 24px;
-  border-top: 1px solid #eee;
-  text-align: center;
-  font-size: 11px;
-  color: #666;
-  line-height: 1.6;
-}
-
-.rsvp__thank-you {
-  text-align: center;
-  padding: 20px 0 0 0;
-  font-size: 11px;
-  color: #333;
-  font-weight: 500;
-  margin-top: 24px;
-  border-top: 1px solid #e0e0e0;
-  padding-top: 20px;
-} */
 
 @media (max-width: 430px) {
   .rsvp {

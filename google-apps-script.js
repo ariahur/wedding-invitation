@@ -23,8 +23,7 @@ function doPost(e) {
     if (!sheet) {
       const newSheet = SpreadsheetApp.getActiveSpreadsheet().insertSheet(SHEET_NAME);
       setupHeaders(newSheet);
-      return ContentService.createTextOutput(JSON.stringify({ success: true, message: 'Sheet created' }))
-        .setMimeType(ContentService.MimeType.JSON);
+      return createResponse({ success: true, message: 'Sheet created' });
     }
     
     // 헤더가 없으면 추가
@@ -53,19 +52,23 @@ function doPost(e) {
     
     sheet.appendRow(row);
     
-    return ContentService.createTextOutput(JSON.stringify({ 
+    return createResponse({ 
       success: true, 
       message: 'Data added successfully' 
-    }))
-    .setMimeType(ContentService.MimeType.JSON);
+    });
     
   } catch (error) {
-    return ContentService.createTextOutput(JSON.stringify({ 
+    return createResponse({ 
       success: false, 
       error: error.toString() 
-    }))
-    .setMimeType(ContentService.MimeType.JSON);
+    });
   }
+}
+
+// CORS 헤더를 포함한 응답 생성
+function createResponse(data) {
+  return ContentService.createTextOutput(JSON.stringify(data))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 function setupHeaders(sheet) {

@@ -25,6 +25,7 @@ const DirectionsSection: React.FC = () => {
   };
 
 
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -53,16 +54,28 @@ const DirectionsSection: React.FC = () => {
         
         {/* 지도 영역 */}
         <div className="directions__map">
-          <iframe
-            src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3165.079789985077!2d127.06414271122055!3d37.50603622747875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca447548b6c33%3A0xe8177a2e737683a9!2sGrand%20Hill%20Convention%2C%20Seoul!5e0!3m2!1sen!2skr!4v1767444168082!5m2!1sen!2skr`}
-            width="100%"
-            height="250"
-            style={{ border: 0, borderRadius: '8px' }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Google Maps"
-          />
+          {language === 'ko' ? (
+            <iframe
+              src={`${process.env.PUBLIC_URL}/kakao-map.html`}
+              width="100%"
+              height="250"
+              style={{ border: 0, borderRadius: '8px' }}
+              allowFullScreen
+              loading="lazy"
+              title="카카오맵"
+            />
+          ) : (
+            <iframe
+              src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3165.079789985077!2d127.06414271122055!3d37.50603622747875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca447548b6c33%3A0xe8177a2e737683a9!2sGrand%20Hill%20Convention%2C%20Seoul!5e0!3m2!1sen!2skr!4v1767444168082!5m2!1sen!2skr`}
+              width="100%"
+              height="250"
+              style={{ border: 0, borderRadius: '8px' }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Google Maps"
+            />
+          )}
         </div>
       </div>
 
@@ -106,18 +119,20 @@ const DirectionsSection: React.FC = () => {
           <li className="directions__navigation-item">
             <span className="directions__navigation-text">
               {t.directions.car.addressBeforeSearch}
-              {t.directions.car.addressSearch}
             </span>
-            <button 
-              onClick={handleCopyAddress}
-              className="directions__copy-button"
-              aria-label={copied ? t.directions.copiedButton : t.directions.copyButton}
-              title={copied ? t.directions.copiedButton : t.directions.copyButton}
-            >
-              <span className="material-symbols-outlined">
-                {copied ? 'check' : 'content_copy'}
-              </span>
-            </button>
+            <span className="directions__search-group">
+              <span>{t.directions.car.addressSearch}</span>
+              <button 
+                onClick={handleCopyAddress}
+                className="directions__copy-button"
+                aria-label={copied ? t.directions.copiedButton : t.directions.copyButton}
+                title={copied ? t.directions.copiedButton : t.directions.copyButton}
+              >
+                <span className="material-symbols-outlined">
+                  {copied ? 'check' : 'content_copy'}
+                </span>
+              </button>
+            </span>
           </li>
           <li>{t.directions.car.parking}</li>
         </ul>

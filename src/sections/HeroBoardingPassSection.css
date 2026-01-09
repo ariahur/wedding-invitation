@@ -5,10 +5,8 @@
   border-radius: 16px;
 }
 
-/* 최상단 타이틀 */
 .boarding-pass__top-title {
   background: #1A2F4A;
-  /* background-image: url('../../public/textures/paper1.jpg'); */
   font-family: "Roboto", sans-serif;
   color: white;
   padding: 12px 20px;
@@ -45,7 +43,6 @@
   letter-spacing: 2px;
 }
 
-/* 액센트 보더 */
 .boarding-pass__accent-border {
   height: 4px;
   background: linear-gradient(
@@ -60,7 +57,6 @@
   box-shadow: 0 1px 2px rgba(201, 167, 124, 0.2);
 }
 
-/* 상단 헤더 영역 (베이지 배경) */
 .boarding-pass__header {
   font-family: "Roboto", sans-serif;
   background: #FFFFFF;
@@ -89,20 +85,8 @@
   letter-spacing: 1px;
 }
 
-.header-time {
-  font-family: "Roboto", sans-serif;
-  font-size: 17px;
-  font-weight: bold;
-  color: #1A2F4A;
-  letter-spacing: 1px;
-}
-
-/* 메인 보딩 패스 (종이 텍스처 배경) */
 .boarding-pass__main {
   font-family: "Roboto", sans-serif;
-  /* background-size: cover; */
-  /* background-position: center; */
-  /* background-repeat: no-repeat; */
   background-color: #1A2F4A;
   color: white;
   padding: 20px;
@@ -117,7 +101,6 @@
   left: 0;
   right: 0;
   bottom: 0;
-  /* background: rgba(26, 47, 74, 0.7); */
   z-index: 0;
 }
 
@@ -126,7 +109,6 @@
   z-index: 1;
 }
 
-/* 상단: 항공사 정보 */
 .main-top {
   display: flex;
   justify-content: space-between;
@@ -139,11 +121,6 @@
   align-items: flex-start;
   gap: 12px;
   flex: 1;
-}
-
-.heart-icon {
-  font-size: 20px;
-  margin-top: 2px;
 }
 
 .airline-info {
@@ -181,17 +158,6 @@
   color: #C9A77C;
 }
 
-.airline-tagline {
-  font-family: "Roboto", sans-serif;
-  font-size: 11px;
-  opacity: 0.95;
-}
-
-.small-heart {
-  font-size: 11px;
-  margin-left: 2px;
-}
-
 .main-top-right {
   text-align: right;
 }
@@ -213,7 +179,6 @@
   color: #C9A77C;
 }
 
-/* 중앙: 항공편 정보 */
 .main-route {
   display: flex;
   justify-content: space-between;
@@ -290,7 +255,6 @@
   );
 }
 
-/* 하단: 커플 이름 */
 .main-photo {
   margin-top: 20px;
   margin-left: -20px;
@@ -327,56 +291,6 @@
   display: none;
 }
 
-.couple-stamp-container {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: flex-end;
-  padding: 20px;
-}
-
-.couple-stamp {
-  position: relative;
-  width: 120px;
-  height: 120px;
-  transform: rotate(-8deg);
-  filter: drop-shadow(0 8px 16px rgba(212, 175, 55, 0.5)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
-}
-
-.couple-stamp-svg {
-  width: 100%;
-  height: 100%;
-}
-
-.couple-stamp-decoration {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.couple-stamp-line {
-  height: 1px;
-  width: 32px;
-  background: rgba(255, 255, 255, 0.6);
-}
-
-.couple-stamp-heart {
-  font-size: 16px;
-  color: white;
-}
-
-/* 하단: 커플 사진 (이전 버전) */
-/* .couple-photo {
-  width: 100%;
-  height: 200px;
-  border-radius: 8px;
-  object-fit: cover;
-  display: block;
-} */
-
-/* 기존 하단 섹션들 */
 .boarding-pass__couple {
   background: #FFFFFF;
   display: flex;
@@ -398,7 +312,6 @@
   font-size: 13px;
   font-weight: 500;
   color: #333;
-  /* line-height: 1.6; */
 }
 
 .boarding-pass__message {
@@ -406,7 +319,6 @@
   text-align: center;
   margin: 0;
   padding: 20px;
-  /* border-bottom: 1px solid #e0e0e0; */
 }
 
 .message-title {
@@ -439,21 +351,6 @@
 
 .boarding-pass__details {
   background: #FFFFFF;
-  /* background-image: 
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 0, 0, 0.02) 2px,
-      rgba(0, 0, 0, 0.02) 4px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 0, 0, 0.02) 2px,
-      rgba(0, 0, 0, 0.02) 4px
-    ); */
   margin: 0;
   padding: 20px;
   border-top: 1px solid #e0e0e0;
@@ -508,21 +405,6 @@
 
 .boarding-pass__footer {
   background: #FFFFFF;
-  /* background-image: 
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 0, 0, 0.02) 2px,
-      rgba(0, 0, 0, 0.02) 4px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 0, 0, 0.02) 2px,
-      rgba(0, 0, 0, 0.02) 4px
-    ); */
   margin: 0;
   padding: 20px;
   border-top: 1px solid #e0e0e0;
@@ -874,19 +756,6 @@
     padding: 16px;
   }
 
-  .header-logo-circle {
-    width: 70px;
-    height: 70px;
-  }
-
-  .logo-letter {
-    font-size: 30px;
-  }
-
-  .date-value {
-    font-size: 15px;
-  }
-
   .route-code {
     font-size: 26px;
   }
@@ -897,10 +766,6 @@
 
   .route-center {
     margin: 0 12px;
-  }
-
-  .couple-name {
-    font-size: 15px;
   }
 
   .boarding-pass__message {

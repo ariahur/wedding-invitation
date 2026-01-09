@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카카오맵</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        #daumRoughmapContainer1767943311186 {
+            width: 100%;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <!-- 지도 노드 -->
+    <div id="daumRoughmapContainer1767943311186" class="root_daum_roughmap root_daum_roughmap_landing"></div>
+
+    <!-- 설치 스크립트 -->
+    <script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
+
+    <!-- 실행 스크립트 -->
+    <script charset="UTF-8">
+        window.onload = function() {
+            if (window.daum && window.daum.roughmap && window.daum.roughmap.Lander) {
+                new window.daum.roughmap.Lander({
+                    "timestamp" : "1767943311186",
+                    "key" : "fpjjqouub89",
+                    "mapWidth" : "640",
+                    "mapHeight" : "250"
+                }).render();
+            } else {
+                // 스크립트 로드 대기
+                var checkInterval = setInterval(function() {
+                    if (window.daum && window.daum.roughmap && window.daum.roughmap.Lander) {
+                        clearInterval(checkInterval);
+                        new window.daum.roughmap.Lander({
+                            "timestamp" : "1767943311186",
+                            "key" : "fpjjqouub89",
+                            "mapWidth" : "640",
+                            "mapHeight" : "250"
+                        }).render();
+                    }
+                }, 100);
+                
+                setTimeout(function() {
+                    clearInterval(checkInterval);
+                }, 10000);
+            }
+        };
+    </script>
+</body>
+</html>

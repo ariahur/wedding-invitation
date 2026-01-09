@@ -94,8 +94,6 @@ const RsvpSection: React.FC = () => {
       return;
     }
 
-    console.log('Form submitted with data:', data); // 디버깅용
-
     setIsSubmitting(true);
     setSubmitStatus('idle');
     setErrorMessage('');
@@ -113,18 +111,13 @@ const RsvpSection: React.FC = () => {
         note: data.note || null,
       };
 
-      console.log('Submitting to Supabase:', payload); // 디버깅용
-
       const { error } = await supabase
         .from('rsvp_responses')
         .insert([payload]);
 
       if (error) {
-        console.error('Supabase error:', error); // 디버깅용
         throw error;
       }
-
-      console.log('Supabase insert successful'); // 디버깅용
 
       // Google Sheets에 추가 (선택적, 실패해도 계속 진행)
       const googleSheetsUrl = process.env.REACT_APP_GOOGLE_SHEETS_WEB_APP_URL;
@@ -141,20 +134,15 @@ const RsvpSection: React.FC = () => {
             note: data.note || '',
           };
           
-          console.log('Submitting to Google Sheets:', sheetsPayload); // 디버깅용
-          
           await fetch(googleSheetsUrl, {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
+              'Content-Type': 'text/plain',
             },
             body: JSON.stringify(sheetsPayload),
           });
-          
-          console.log('Google Sheets insert successful'); // 디버깅용
         } catch (sheetsError) {
-          // Google Sheets 저장 실패는 로그만 남기고 계속 진행
-          console.warn('Failed to save to Google Sheets:', sheetsError);
+          // Google Sheets 저장 실패는 무시하고 계속 진행
         }
       }
 
@@ -197,9 +185,7 @@ const RsvpSection: React.FC = () => {
         ))}
       </p>
 
-      <form onSubmit={handleSubmit(onSubmit, (errors) => {
-        console.log('Form validation errors:', errors);
-      })} className="rsvp__form">
+      <form onSubmit={handleSubmit(onSubmit)} className="rsvp__form">
         {/* Honeypot field */}
         <input
           type="text"
@@ -214,13 +200,13 @@ const RsvpSection: React.FC = () => {
             {t.rsvp.form.name} <span className="form-required">*</span>
           </label>
           <div className="form-input-wrapper">
-            <input
-              id="name"
-              type="text"
-              {...register('name')}
-              placeholder={language === 'ko' ? '홍길동' : 'John Doe'}
-              className={`form-input ${errors.name ? 'form-input--error' : ''}`}
-            />
+          <input
+            id="name"
+            type="text"
+            {...register('name')}
+            placeholder={language === 'ko' ? '홍길동' : 'John Doe'}
+            className={`form-input ${errors.name ? 'form-input--error' : ''}`}
+          />
           </div>
           {errors.name && (
             <span className="form-error">{errors.name.message}</span>
@@ -232,13 +218,13 @@ const RsvpSection: React.FC = () => {
             {t.rsvp.form.phone} <span className="form-required">*</span>
           </label>
           <div className="form-input-wrapper">
-            <input
-              id="phone"
-              type="tel"
-              {...register('phone')}
-              placeholder={t.rsvp.form.phonePlaceholder}
-              className={`form-input ${errors.phone ? 'form-input--error' : ''}`}
-            />
+          <input
+            id="phone"
+            type="tel"
+            {...register('phone')}
+            placeholder={t.rsvp.form.phonePlaceholder}
+            className={`form-input ${errors.phone ? 'form-input--error' : ''}`}
+          />
           </div>
           {errors.phone && (
             <span className="form-error">{errors.phone.message}</span>
@@ -250,13 +236,13 @@ const RsvpSection: React.FC = () => {
             {t.rsvp.form.email} {t.rsvp.form.emailOptional}
           </label>
           <div className="form-input-wrapper">
-            <input
-              id="email"
-              type="email"
-              {...register('email')}
-              placeholder="example@email.com"
-              className={`form-input ${errors.email ? 'form-input--error' : ''}`}
-            />
+          <input
+            id="email"
+            type="email"
+            {...register('email')}
+            placeholder="example@email.com"
+            className={`form-input ${errors.email ? 'form-input--error' : ''}`}
+          />
           </div>
           {errors.email && (
             <span className="form-error">{errors.email.message}</span>
@@ -300,15 +286,15 @@ const RsvpSection: React.FC = () => {
               {t.rsvp.form.guestCount}
             </label>
             <div className="form-input-wrapper">
-              <input
-                id="guestCount"
-                type="number"
-                min="1"
-                max="10"
-                {...register('guestCount', { valueAsNumber: true })}
-                placeholder="1"
-                className={`form-input ${errors.guestCount ? 'form-input--error' : ''}`}
-              />
+            <input
+              id="guestCount"
+              type="number"
+              min="1"
+              max="10"
+              {...register('guestCount', { valueAsNumber: true })}
+              placeholder="1"
+              className={`form-input ${errors.guestCount ? 'form-input--error' : ''}`}
+            />
             </div>
             {errors.guestCount && (
               <span className="form-error">{errors.guestCount.message}</span>
@@ -376,18 +362,18 @@ const RsvpSection: React.FC = () => {
             {t.rsvp.form.note}
           </label>
           <div className="form-input-wrapper">
-            <textarea
-              id="note"
-              {...register('note')}
+          <textarea
+            id="note"
+            {...register('note')}
               ref={(e) => {
                 const { ref } = register('note');
                 ref(e);
                 noteTextareaRef.current = e;
               }}
-              placeholder={t.rsvp.form.notePlaceholder}
+            placeholder={t.rsvp.form.notePlaceholder}
               rows={1}
               className="form-textarea form-textarea--auto-resize"
-            />
+          />
           </div>
         </div>
 

@@ -19,7 +19,6 @@ export interface Translations {
     date: string;
     time: string;
     airline: string;
-    tagline: string;
     class: string;
     flight: string;
     flightLabel: string;
@@ -35,7 +34,6 @@ export interface Translations {
     };
     groom: {
       name: string;
-      nameEn: string;
       parents: {
         father: string;
         mother: string;
@@ -44,7 +42,6 @@ export interface Translations {
     };
     bride: {
       name: string;
-      nameEn: string;
       parents: {
         father: string;
         mother: string;
@@ -82,10 +79,8 @@ export interface Translations {
     };
     car: {
       title: string;
-      address: string;
       addressBeforeSearch: string;
       addressSearch: string;
-      navigation: string;
       parking: string;
     };
     venue: string;
@@ -98,8 +93,6 @@ export interface Translations {
   rsvp: {
     title: string;
     intro: string;
-    thankYouMessage: string;
-    seatingMessage: string;
     form: {
       name: string;
       phone: string;
@@ -124,17 +117,6 @@ export interface Translations {
       success: string;
       error: string;
     };
-    footer: {
-      inquiry: string;
-      groom: string;
-      bride: string;
-    };
-  };
-  thankYou: {
-    line1: string;
-    line2: string;
-    line3: string;
-    line4: string;
   };
 }
 
@@ -178,9 +160,8 @@ export const translations: Record<Language, Translations> = {
       date: '2027.02.20',
       time: '15:00',
       airline: 'NO RETURN AIRLINES',
-      tagline: 'Forever Together',
       class: 'VVIP',
-      flight: 'DA0206',
+      flight: 'DA206',
       flightLabel: 'Flight no.',
       origin: {
         code: 'SYD',
@@ -194,7 +175,6 @@ export const translations: Record<Language, Translations> = {
       },
       groom: {
         name: '조준용',
-        nameEn: 'Daniel',
         parents: {
           father: '조웅일',
           mother: '김미정',
@@ -203,7 +183,6 @@ export const translations: Record<Language, Translations> = {
       },
       bride: {
         name: '허다영',
-        nameEn: 'Aria',
         parents: {
           father: '허윤',
           mother: '황영식',
@@ -241,10 +220,8 @@ export const translations: Record<Language, Translations> = {
       },
       car: {
         title: '자가용',
-        address: '내비게이션: \'서울특별시 강남구 대치동 1004-3\' 검색',
         addressBeforeSearch: '내비게이션: \'서울특별시 강남구 대치동 1004-3\' ',
         addressSearch: '검색',
-        navigation: '',
         parking: '건물 주차타워 주차 가능 (3시간 무료)',
       },
       venue: '그랜드힐컨벤션',
@@ -257,8 +234,6 @@ export const translations: Record<Language, Translations> = {
     rsvp: {
       title: '탑승권 신청',
       intro: '참석 여부를 알려주시면 소중히 준비하겠습니다\n예식이 지정좌석제로 진행되어 참석 여부를\n12월 1일까지 회신해주시면 감사하겠습니다.',
-      thankYouMessage: '소중한 시간을 내어 참석해주시는 분들께 진심으로 감사드립니다.',
-      seatingMessage: '예식이 지정좌석제로 진행되어 참석 여부를 12월 1일까지 회신해주시면 감사하겠습니다.',
       form: {
         name: '성함',
         phone: '연락처',
@@ -283,17 +258,6 @@ export const translations: Record<Language, Translations> = {
         success: '탑승권 신청이 완료되었습니다.',
         error: '제출 중 오류가 발생했습니다. 다시 시도해주세요.',
       },
-      footer: {
-        inquiry: '문의',
-        groom: '신랑 010-1234-5678',
-        bride: '신부 010-9876-5432',
-      },
-    },
-    thankYou: {
-      line1: '귀한 시간 내어주신 모든 분들께',
-      line2: '진심으로 감사드립니다.',
-      line3: '평생 잊지 못할 소중한 순간으로',
-      line4: '간직하겠습니다.',
     },
   },
   en: {
@@ -335,7 +299,6 @@ export const translations: Record<Language, Translations> = {
       date: '20.02.2027',
       time: '15:00',
       airline: 'NO RETURN AIRLINES',
-      tagline: 'Forever Together',
       class: 'VVIP',
       flight: 'DA206',
       flightLabel: 'Flight no.',
@@ -351,7 +314,6 @@ export const translations: Record<Language, Translations> = {
       },
       groom: {
         name: 'Daniel Cho',
-        nameEn: 'Daniel',
         parents: {
           father: 'Wung Il Jo',
           mother: 'Mi Jeong Kim',
@@ -360,7 +322,6 @@ export const translations: Record<Language, Translations> = {
       },
       bride: {
         name: 'Aria Hur',
-        nameEn: 'Aria',
         parents: {
           father: 'Yoon Hur',
           mother: 'Young Sik Hwang',
@@ -398,10 +359,8 @@ export const translations: Record<Language, Translations> = {
       },
       car: {
         title: 'Car',
-        address: 'Navigation: search \'1004-3 Daechi-dong, Gangnam-gu, Seoul\'',
         addressBeforeSearch: 'Navigation: ',
         addressSearch: 'search \'1004-3 Daechi-dong, Gangnam-gu, Seoul\'',
-        navigation: '',
         parking: 'Building parking tower available (3 hours free)',
       },
       venue: 'Grand Hill Convention',
@@ -414,8 +373,6 @@ export const translations: Record<Language, Translations> = {
     rsvp: {
       title: 'boarding pass rsvp',
       intro: 'We sincerely thank you for taking the time\nto complete the form below.\nAs the ceremony will be held with assigned seating,\nwe would appreciate your RSVP by December 1st.',
-      thankYouMessage: 'As the ceremony will be held with assigned seating, we would appreciate your RSVP by December 1st.',
-      seatingMessage: 'As the ceremony will be held with assigned seating, we would appreciate your RSVP by December 1st.',
       form: {
         name: 'Full Name',
         phone: 'Phone',
@@ -440,17 +397,6 @@ export const translations: Record<Language, Translations> = {
         success: 'Your boarding pass request has been submitted.',
         error: 'An error occurred while submitting. Please try again.',
       },
-      footer: {
-        inquiry: 'Inquiries',
-        groom: 'Groom 010-1234-5678',
-        bride: 'Bride 010-9876-5432',
-      },
-    },
-    thankYou: {
-      line1: 'To everyone who took their precious time',
-      line2: 'We sincerely thank you.',
-      line3: 'As a precious moment we will never forget',
-      line4: 'We will cherish it.',
     },
   },
 };

@@ -134,16 +134,11 @@ const WeddingInvitation: React.FC = () => {
           <LanguageToggle language={language} />
         </div>
         <HeroBoardingPassSection />
-        
-        {/* Gallery section removed for this version */}
-        {/* <GallerySection /> */}
-        
         <TimelineSection />
         <DirectionsSection />
         <RsvpSection />
         <ThankYouSection />
         
-        {/* Scroll to Top Button (Mobile Only) */}
         {showScrollTop && (
           <button 
             className="scroll-to-top-btn" 
