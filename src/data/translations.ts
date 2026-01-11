@@ -216,7 +216,7 @@ export const translations: Record<Language, Translations> = {
         {
           title: '첫만남',
           description: '저희는 대학교에서\n처음 만났어요.',
-          image: '/timeline/2013.jpeg',
+          image: '/timeline/2013.jpg',
         },
         {
           title: '5주년',
@@ -440,7 +440,7 @@ export const translations: Record<Language, Translations> = {
         {
           title: 'First Meeting',
           description: 'We first met at university.',
-          image: '/timeline/2013.jpeg',
+          image: '/timeline/2013.jpg',
         },
         {
           title: 'Five Years Together',
