@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import PaperCard from '../components/PaperCard/PaperCard';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
 import './DirectionsSection.css';
@@ -27,13 +26,14 @@ const DirectionsSection: React.FC = () => {
 
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
-    >
-      <PaperCard texture="paper2" className="directions">
+    <div className="section-wrapper" style={{ backgroundColor: '#FFFFFF' }}>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.4, ease: 'easeOut' }}
+      >
+        <div className="directions">
       <h2 className="directions__title" lang={language}>{t.directions.title}</h2>
 
       <div className="directions__address">
@@ -137,8 +137,9 @@ const DirectionsSection: React.FC = () => {
           <li>{t.directions.car.parking}</li>
         </ul>
       </div>
-    </PaperCard>
-    </motion.div>
+        </div>
+      </motion.div>
+    </div>
   );
 };
 

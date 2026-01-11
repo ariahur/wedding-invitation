@@ -1,7 +1,7 @@
 .paper-card {
   background-color: #FAF8F3;
-  border-radius: 12px;
-  padding: 20px;
+  border-radius: 16px;
+  padding: 0;
   margin: 12px;
   box-shadow: 
     0 8px 32px rgba(0, 0, 0, 0.25),
@@ -9,6 +9,10 @@
     0 2px 8px rgba(0, 0, 0, 0.15);
   position: relative;
   overflow: hidden;
+}
+
+.paper-card.main-content-card {
+  padding: 0;
 }
 
 .paper-card::before {

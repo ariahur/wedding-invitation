@@ -1,0 +1,519 @@
+.about-us {
+  padding: 24px 20px;
+  background: linear-gradient(
+    to bottom right,
+    rgba(230, 216, 195, 0.9) 0%,
+    #E6D8C3 15%,
+    #F0E6D6 30%,
+    #F0E6D6 70%,
+    #E6D8C3 85%,
+    rgba(230, 216, 195, 0.9) 100%
+  );
+  margin-top: 0;
+}
+
+.about-us__title {
+  font-size: 28px;
+  font-weight: 400;
+  color: #1A2F4A;
+  margin-top: 8px;
+  margin-bottom: 24px;
+  padding: 12px 0;
+  text-align: center;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+  letter-spacing: 1px;
+  line-height: 1.4;
+}
+
+.about-us__title:lang(en) {
+  text-transform: uppercase;
+  font-size: 24px;
+  letter-spacing: 3px;
+  font-weight: 300;
+  font-family: "Lora", serif;
+}
+
+.about-us__intro {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.about-us__intro-text {
+  font-size: 15px;
+  color: #666;
+  margin-bottom: 8px;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+  line-height: 1.6;
+}
+
+.about-us__intro-text:lang(en) {
+  font-family: "Lora", serif;
+}
+
+.about-us__intro-subtitle {
+  font-size: 13px;
+  color: #1A2F4A;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+  line-height: 1.6;
+}
+
+.about-us__intro-subtitle:lang(en) {
+  font-family: "Lora", serif;
+}
+
+.about-us__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.about-us__card {
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.about-us__photo {
+  width: 200px;
+  height: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  background-color: #f5f5f5;
+}
+
+.about-us__photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.about-us__photo-placeholder {
+  width: 200px;
+  height: 200px;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.about-us__photo-emoji {
+  font-size: 64px;
+}
+
+.about-us__info {
+  text-align: center;
+  width: 100%;
+}
+
+.about-us__name {
+  margin: 0 0 12px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.about-us__name-label {
+  font-size: 13px;
+  color: #999;
+  font-weight: 500;
+  font-family: "Roboto", sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.about-us__name-text {
+  font-size: 20px;
+  color: #1A2F4A;
+  font-weight: 600;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+}
+
+.about-us__name-text:lang(en) {
+  font-family: "Lora", serif;
+}
+
+.about-us__keyword {
+  font-size: 11px;
+  color: #C9A77C;
+  font-weight: 600;
+  margin: 4px 0 8px 0;
+  font-family: "Roboto", sans-serif;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.about-us__parents {
+  font-size: 13px;
+  color: #666;
+  margin: 0 0 8px 0;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+  line-height: 1.6;
+}
+
+.about-us__parents:lang(en) {
+  font-family: "Lora", serif;
+}
+
+.about-us__birth {
+  font-size: 13px;
+  color: #666;
+  margin: 0 0 12px 0;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+  line-height: 1.6;
+}
+
+.about-us__birth:lang(en) {
+  font-family: "Lora", serif;
+}
+
+.about-us__description {
+  font-size: 13px;
+  color: #333;
+  margin: 0;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+  line-height: 1.6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.about-us__description:lang(en) {
+  font-family: "Lora", serif;
+}
+
+.about-us__emoji {
+  font-size: 16px;
+  line-height: 1;
+}
+
+@media (max-width: 430px) {
+  .about-us {
+    padding: 20px 16px;
+  }
+
+  .about-us__title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .about-us__title:lang(en) {
+    font-size: 20px;
+  }
+
+  .about-us__intro {
+    margin-bottom: 24px;
+  }
+
+  .about-us__intro-text {
+    font-size: 14px;
+  }
+
+  .about-us__intro-subtitle {
+    font-size: 12px;
+  }
+
+  .about-us__cards {
+    gap: 20px;
+  }
+
+  .about-us__card {
+    padding: 16px;
+  }
+
+  .about-us__photo,
+  .about-us__photo-placeholder {
+    width: 160px;
+    height: 160px;
+    margin-bottom: 16px;
+  }
+
+  .about-us__photo-emoji {
+    font-size: 48px;
+  }
+
+  .about-us__name-text {
+    font-size: 18px;
+  }
+}
+
+/* Contact Button */
+.about-us__contact-button-wrapper {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.about-us__contact-button {
+  background-color: #1A2F4A;
+  color: white;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(26, 47, 74, 0.2);
+}
+
+.about-us__contact-button:hover {
+  background-color: #2a3f5a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(26, 47, 74, 0.3);
+}
+
+.about-us__contact-button:active {
+  transform: translateY(0);
+}
+
+.about-us__contact-button:lang(en) {
+  font-family: "Lora", serif;
+}
+
+@media (max-width: 430px) {
+  .about-us__contact-button {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+}
+
+/* Contact Modal */
+.contact-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #1A2F4A;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+}
+
+.contact-modal {
+  background: linear-gradient(135deg, #1A2F4A 0%, #2a3f5a 100%);
+  border-radius: 16px;
+  padding: 24px 20px;
+  max-width: 400px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  z-index: 1001;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.contact-modal__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
+  width: 32px;
+  height: 32px;
+}
+
+.contact-modal__close:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.contact-modal__close .material-symbols-outlined {
+  font-size: 24px;
+}
+
+.contact-modal__title {
+  color: white;
+  font-size: 28px;
+  font-weight: 400;
+  text-align: center;
+  margin: 0 0 8px 0;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+  letter-spacing: 1px;
+  line-height: 1.4;
+}
+
+.contact-modal__title:lang(en) {
+  text-transform: uppercase;
+  font-size: 24px;
+  letter-spacing: 3px;
+  font-weight: 300;
+  font-family: "Lora", serif;
+}
+
+.contact-modal__sections {
+  margin-top: 24px;
+}
+
+.contact-modal__section {
+  margin-bottom: 24px;
+}
+
+.contact-modal__section:last-child {
+  margin-bottom: 0;
+}
+
+.contact-modal__section-title {
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.contact-modal__section-title:lang(en) {
+  font-family: "Lora", serif;
+}
+
+.contact-modal__section-subtitle {
+  font-size: 12px;
+  font-weight: 400;
+  opacity: 0.7;
+  letter-spacing: 1px;
+}
+
+.contact-modal__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.contact-modal__item {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: background-color 0.2s;
+}
+
+.contact-modal__item:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.contact-modal__item-label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  min-width: 80px;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+}
+
+.contact-modal__item-label:lang(en) {
+  font-family: "Lora", serif;
+}
+
+.contact-modal__item-name {
+  flex: 1;
+  font-size: 13px;
+  color: white;
+  font-weight: 500;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+  line-height: 1.6;
+}
+
+.contact-modal__item-name:lang(en) {
+  font-family: "Lora", serif;
+}
+
+.contact-modal__item-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.contact-modal__action-button {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0;
+}
+
+.contact-modal__action-button:hover {
+  background-color: rgba(201, 167, 124, 0.2);
+  border-color: #C9A77C;
+}
+
+.contact-modal__action-button .material-symbols-outlined {
+  font-size: 18px;
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+@media (max-width: 430px) {
+  .contact-modal {
+    padding: 24px 20px;
+    max-height: 95vh;
+  }
+
+  .contact-modal__title {
+    font-size: 20px;
+  }
+
+  .contact-modal__section-title {
+    font-size: 14px;
+  }
+
+  .contact-modal__item {
+    padding: 14px;
+    flex-wrap: wrap;
+  }
+
+  .contact-modal__item-label {
+    min-width: 70px;
+    font-size: 12px;
+  }
+
+  .contact-modal__item-name {
+    font-size: 14px;
+  }
+
+  .contact-modal__action-button {
+    width: 32px;
+    height: 32px;
+  }
+
+  .contact-modal__action-button .material-symbols-outlined {
+    font-size: 16px;
+  }
+}

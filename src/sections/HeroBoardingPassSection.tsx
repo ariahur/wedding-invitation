@@ -1,6 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import PaperCard from '../components/PaperCard/PaperCard';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
 import './HeroBoardingPassSection.css';
@@ -10,13 +9,18 @@ const HeroBoardingPassSection: React.FC = () => {
   const t = translations[language];
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
-    >
-      <PaperCard texture="paper1" className="boarding-pass" >
+    <div style={{ backgroundColor: '#FAF8F3' }}>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={language}
+          initial={{ opacity: 0, y: 10, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -10, scale: 0.98 }}
+          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+          className="boarding-pass-wrapper"
+          style={{ backgroundColor: '#FAF8F3' }}
+        >
+      <div className="boarding-pass" >
       <div className="boarding-pass__top-title">
         <span className="top-title-icon material-symbols-outlined">travel</span>
         <span className="top-title-text">{t.hero.topTitle}</span>
@@ -51,7 +55,7 @@ const HeroBoardingPassSection: React.FC = () => {
             {language === 'ko' ? (
               <div className="route-city-ko">{t.hero.origin.cityKo}</div>
             ) : (
-              <div className="route-city">{t.hero.origin.city}</div>
+            <div className="route-city">{t.hero.origin.city}</div>
             )}
           </div>
           <div className="route-center">
@@ -63,18 +67,18 @@ const HeroBoardingPassSection: React.FC = () => {
             {language === 'ko' ? (
               <div className="route-city-ko">{t.hero.destination.cityKo}</div>
             ) : (
-              <div className="route-city">{t.hero.destination.city}</div>
+            <div className="route-city">{t.hero.destination.city}</div>
             )}
           </div>
         </div>
 
         <div className="main-photo">
           <div className="couple-photo-container">
-            <img 
+          <img 
               src={`${process.env.PUBLIC_URL}/couple.jpg`}
-              alt="Couple"
+            alt="Couple"
               className="couple-photo-bg"
-            />
+          />
             <div className="couple-photo-overlay"></div>
           </div>
         </div>
@@ -169,8 +173,10 @@ const HeroBoardingPassSection: React.FC = () => {
           <div className="barcode-text">{t.hero.barcode}</div>
         </div>
       </div>
-    </PaperCard>
-    </motion.div>
+      </div>
+        </motion.div>
+      </AnimatePresence>
+    </div>
   );
 };
 

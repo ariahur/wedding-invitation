@@ -1,8 +1,19 @@
+.boarding-pass-wrapper {
+  padding: 0;
+  margin-bottom: 0;
+  background-color: #FAF8F3;
+}
+
 .boarding-pass {
   padding: 0;
   background: white;
   overflow: visible;
-  border-radius: 16px;
+  border-radius: 16px 16px 0 0;
+}
+
+.boarding-pass__footer {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .boarding-pass__top-title {
@@ -408,8 +419,8 @@
   margin: 0;
   padding: 20px;
   border-top: 1px solid #e0e0e0;
-  border-bottom-left-radius: 16px;
-  border-bottom-right-radius: 16px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
   position: relative;
 }
 

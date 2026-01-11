@@ -8,6 +8,34 @@
   position: relative;
 }
 
+.main-content-card {
+  margin: 12px;
+}
+
+.main-content-card > * {
+  margin-bottom: 0;
+}
+
+.section-wrapper {
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.section-wrapper:last-child {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  height: 168px;
+  overflow: hidden;
+}
+
+.section-wrapper:last-child .thank-you {
+  margin-bottom: 0;
+}
+
+.boarding-pass-wrapper {
+  margin-bottom: 0;
+}
+
 .app-header {
   display: flex;
   justify-content: flex-end;
@@ -98,7 +126,7 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
+  z-index: 100;
   transition: all 0.3s ease;
 }
 

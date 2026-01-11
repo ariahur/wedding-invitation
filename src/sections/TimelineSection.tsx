@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import PaperCard from '../components/PaperCard/PaperCard';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
 import './TimelineSection.css';
@@ -77,13 +76,14 @@ const TimelineSection: React.FC = () => {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
-    >
-      <PaperCard texture="paper2" className="timeline">
+    <div className="section-wrapper" style={{ backgroundColor: '#FFFFFF' }}>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.4, ease: 'easeOut' }}
+      >
+        <div className="timeline">
       <h2 className="timeline__title" lang={language}>{t.timeline.title}</h2>
       
       <div className="timeline__counter">
@@ -152,9 +152,10 @@ const TimelineSection: React.FC = () => {
             </div>
           );
         })}
+          </div>
       </div>
-    </PaperCard>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 };
 

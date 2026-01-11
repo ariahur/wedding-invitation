@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import PaperCard from '../components/PaperCard/PaperCard';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
 import './ThankYouSection.css';
@@ -10,13 +9,14 @@ const ThankYouSection: React.FC = () => {
   const t = translations[language];
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.4, ease: 'easeOut' }}
-    >
-      <PaperCard texture="paper3" className="thank-you">
+    <div className="section-wrapper" style={{ backgroundColor: '#FFFFFF' }}>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.4, ease: 'easeOut' }}
+      >
+        <div className="thank-you">
         <div 
           className="thank-you__background"
           style={{
@@ -25,14 +25,20 @@ const ThankYouSection: React.FC = () => {
         ></div>
         <div className="thank-you__content">
           {/* 감사 메시지 */}
-          <div className="thank-you__message">
+          <div className="thank-you__message" lang={language}>
             <p className="thank-you__line">
-              {language === 'ko' ? '감사합니다 ❤️' : 'Thank you ❤️'}
+              {t.thankYou.message.split('\n').map((line, index) => (
+                <React.Fragment key={index}>
+                  {line}
+                  {index < t.thankYou.message.split('\n').length - 1 && <br />}
+                </React.Fragment>
+              ))}
             </p>
           </div>
         </div>
-      </PaperCard>
-    </motion.div>
+      </div>
+      </motion.div>
+    </div>
   );
 };
 

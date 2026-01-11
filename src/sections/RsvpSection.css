@@ -1,6 +1,7 @@
 .rsvp {
-  padding: 24px;
+  padding: 24px 20px;
   background-color: #FFFFFF;
+  margin-top: 0;
 }
 
 .rsvp__title {

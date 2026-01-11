@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { motion } from 'framer-motion';
-import PaperCard from '../components/PaperCard/PaperCard';
 import { supabase } from '../lib/supabase';
 import { Attendance } from '../types/rsvp';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -101,14 +100,14 @@ const RsvpSection: React.FC = () => {
     try {
       // Supabase에 저장
       const payload = {
-        name: data.name,
-        phone: data.phone,
-        email: data.email || null,
-        attendance: data.attendance,
-        guest_count: data.attendance === 'attending' ? data.guestCount || 1 : null,
+            name: data.name,
+            phone: data.phone,
+            email: data.email || null,
+            attendance: data.attendance,
+            guest_count: data.attendance === 'attending' ? data.guestCount || 1 : null,
         has_children: data.hasChildren || null,
         children_ages: data.childrenAges || null,
-        note: data.note || null,
+            note: data.note || null,
       };
 
       const { error } = await supabase
@@ -168,13 +167,14 @@ const RsvpSection: React.FC = () => {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
-    >
-      <PaperCard texture="paper3" className="rsvp">
+    <div className="section-wrapper" style={{ backgroundColor: '#FFFFFF' }}>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.4, ease: 'easeOut' }}
+      >
+        <div className="rsvp">
       <h2 className="rsvp__title" lang={language}>{t.rsvp.title}</h2>
       <p className="rsvp__intro">
         {t.rsvp.intro.split('\n').map((line, index) => (
@@ -402,8 +402,9 @@ const RsvpSection: React.FC = () => {
               : t.rsvp.form.submitNotAttending}
         </button>
       </form>
-    </PaperCard>
-    </motion.div>
+        </div>
+      </motion.div>
+    </div>
   );
 };
 

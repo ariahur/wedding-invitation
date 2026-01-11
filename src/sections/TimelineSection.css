@@ -1,6 +1,7 @@
 .timeline {
-  padding: 24px;
+  padding: 24px 20px;
   background-color: #FFFFFF;
+  margin-top: 0;
 }
 
 .timeline__title {
@@ -26,7 +27,7 @@
 
 .timeline__counter {
   text-align: center;
-  margin: 0 -24px 24px -24px;
+  margin: 0 -20px 24px -20px;
   padding: 24px 16px;
   background: transparent;
   border-radius: 0;

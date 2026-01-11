@@ -90,6 +90,88 @@ export interface Translations {
     copyButton: string;
     copiedButton: string;
   };
+  aboutUs: {
+    title: string;
+    intro: string;
+    introSubtitle: string;
+    contactButton: string;
+    contactModal: {
+      title: string;
+      titleKo: string;
+      groom: {
+        label: string;
+        labels: {
+          groom: string;
+          father: string;
+          mother: string;
+        };
+        groom: {
+          name: string;
+          phone: string;
+          email: string;
+        };
+        father: {
+          name: string;
+          phone: string;
+          email: string;
+        };
+        mother: {
+          name: string;
+          phone: string;
+          email: string;
+        };
+      };
+      bride: {
+        label: string;
+        labels: {
+          bride: string;
+          father: string;
+          mother: string;
+        };
+        bride: {
+          name: string;
+          phone: string;
+          email: string;
+        };
+        father: {
+          name: string;
+          phone: string;
+          email: string;
+        };
+        mother: {
+          name: string;
+          phone: string;
+          email: string;
+        };
+      };
+    };
+    groom: {
+      name: string;
+      nameLabel: string;
+      keyword: string;
+      parents: {
+        father: string;
+        mother: string;
+      };
+      birth: string;
+      description: string;
+      emoji: string;
+      image?: string;
+    };
+    bride: {
+      name: string;
+      nameLabel: string;
+      keyword: string;
+      parents: {
+        father: string;
+        mother: string;
+      };
+      birth: string;
+      description: string;
+      emoji: string;
+      image?: string;
+    };
+  };
   rsvp: {
     title: string;
     intro: string;
@@ -117,6 +199,9 @@ export interface Translations {
       success: string;
       error: string;
     };
+  };
+  thankYou: {
+    message: string;
   };
 }
 
@@ -231,6 +316,88 @@ export const translations: Record<Language, Translations> = {
       copyButton: '주소 복사',
       copiedButton: '✓ 복사됨',
     },
+    aboutUs: {
+      title: '오늘의 비행 안내',
+      intro: '저희 커플을 소개합니다',
+      introSubtitle: '꿈을 향해 나아가는 사람과,\n지금을 성실히 살아가는 사람이 만나\n이 비행은 시작되었습니다.',
+      contactButton: '축하 연락하기',
+      contactModal: {
+        title: 'CONTACT',
+        titleKo: '연락하기',
+        groom: {
+          label: '신랑측',
+          labels: {
+            groom: '신랑',
+            father: '신랑 아버지',
+            mother: '신랑 어머니',
+          },
+          groom: {
+            name: '조준용',
+            phone: '010-0000-0000',
+            email: 'groom@example.com',
+          },
+          father: {
+            name: '조웅일',
+            phone: '010-0000-0000',
+            email: 'groom.father@example.com',
+          },
+          mother: {
+            name: '김미정',
+            phone: '010-0000-0000',
+            email: 'groom.mother@example.com',
+          },
+        },
+        bride: {
+          label: '신부측',
+          labels: {
+            bride: '신부',
+            father: '신부 아버지',
+            mother: '신부 어머니',
+          },
+          bride: {
+            name: '허다영',
+            phone: '010-0000-0000',
+            email: 'bride@example.com',
+          },
+          father: {
+            name: '허윤',
+            phone: '010-0000-0000',
+            email: 'bride.father@example.com',
+          },
+          mother: {
+            name: '황영식',
+            phone: '010-0000-0000',
+            email: 'bride.mother@example.com',
+          },
+        },
+      },
+      groom: {
+        name: '조준용',
+        nameLabel: '신랑',
+        keyword: 'Dreamer',
+        parents: {
+          father: '조웅일',
+          mother: '김미정',
+        },
+        birth: '1995년 6월 광주 출생',
+        description: '사람들 속에서 에너지를 얻고,\n상상하는 일을 즐기는 사람.\n늘 목표를 세우며\n다음 여정을 꿈꿔왔습니다.',
+        emoji: '🌍',
+        image: '/about/groom.jpg',
+      },
+      bride: {
+        name: '허다영',
+        nameLabel: '신부',
+        keyword: 'Navigator',
+        parents: {
+          father: '허윤',
+          mother: '황영식',
+        },
+        birth: '1992년 12월 서울 출생',
+        description: '집이라는 가장 편안한 곳을 아끼는 사람.\n지금의 삶을 소중히 여기며,\n하루하루를 성실히 살아왔습니다.',
+        emoji: '🏠',
+        image: '/about/bride.jpg',
+      },
+    },
     rsvp: {
       title: '탑승권 신청',
       intro: '참석 여부를 알려주시면 소중히 준비하겠습니다\n예식이 지정좌석제로 진행되어 참석 여부를\n12월 1일까지 회신해주시면 감사하겠습니다.',
@@ -258,6 +425,9 @@ export const translations: Record<Language, Translations> = {
         success: '탑승권 신청이 완료되었습니다.',
         error: '제출 중 오류가 발생했습니다. 다시 시도해주세요.',
       },
+    },
+    thankYou: {
+      message: '이 비행의 기록은,\n시간이 흐르며 조금씩 채워질 예정입니다.\n함께해 주셔서 감사합니다.',
     },
   },
   en: {
@@ -370,6 +540,88 @@ export const translations: Record<Language, Translations> = {
       copyButton: 'Copy Address',
       copiedButton: '✓ Copied',
     },
+    aboutUs: {
+      title: 'Flight Briefing',
+      intro: 'Introducing our couple',
+      introSubtitle: 'When one dreams of the future,\nand the other lives each day with care,\nthis flight begins.',
+      contactButton: 'Contact Us',
+      contactModal: {
+        title: 'CONTACT',
+        titleKo: 'Contact',
+        groom: {
+          label: 'GROOM',
+          labels: {
+            groom: 'Groom',
+            father: 'Groom\'s Father',
+            mother: 'Groom\'s Mother',
+          },
+          groom: {
+            name: 'Daniel Cho',
+            phone: '+82-10-0000-0000',
+            email: 'groom@example.com',
+          },
+          father: {
+            name: 'Wung Il Jo',
+            phone: '+82-10-0000-0000',
+            email: 'groom.father@example.com',
+          },
+          mother: {
+            name: 'Mi Jeong Kim',
+            phone: '+82-10-0000-0000',
+            email: 'groom.mother@example.com',
+          },
+        },
+        bride: {
+          label: 'BRIDE',
+          labels: {
+            bride: 'Bride',
+            father: 'Bride\'s Father',
+            mother: 'Bride\'s Mother',
+          },
+          bride: {
+            name: 'Aria Hur',
+            phone: '+82-10-0000-0000',
+            email: 'bride@example.com',
+          },
+          father: {
+            name: 'Yoon Hur',
+            phone: '+82-10-0000-0000',
+            email: 'bride.father@example.com',
+          },
+          mother: {
+            name: 'Young Sik Hwang',
+            phone: '+82-10-0000-0000',
+            email: 'bride.mother@example.com',
+          },
+        },
+      },
+      groom: {
+        name: 'Daniel Cho',
+        nameLabel: 'Groom',
+        keyword: 'Dreamer',
+        parents: {
+          father: 'Wung Il Jo',
+          mother: 'Mi Jeong Kim',
+        },
+        birth: 'Born in Gwangju, June 1995',
+        description: 'Finding energy among people,\nand joy in imagination.\nAlways setting goals,\ndreaming of the next journey.',
+        emoji: '🌍',
+        image: '/about/groom.jpg',
+      },
+      bride: {
+        name: 'Aria Hur',
+        nameLabel: 'Bride',
+        keyword: 'Navigator',
+        parents: {
+          father: 'Yoon Hur',
+          mother: 'Young Sik Hwang',
+        },
+        birth: 'Born in Seoul, December 1992',
+        description: 'Cherishing the comfort of home.\nValuing the life she lives today,\nand living each day with sincerity.',
+        emoji: '🏠',
+        image: '/about/bride.jpg',
+      },
+    },
     rsvp: {
       title: 'boarding pass rsvp',
       intro: 'We sincerely thank you for taking the time\nto complete the form below.\nAs the ceremony will be held with assigned seating,\nwe would appreciate your RSVP by December 1st.',
@@ -397,6 +649,9 @@ export const translations: Record<Language, Translations> = {
         success: 'Your boarding pass request has been submitted.',
         error: 'An error occurred while submitting. Please try again.',
       },
+    },
+    thankYou: {
+      message: 'This flight log will continue to grow,\nas time goes on.\nThank you for being part of our journey.',
     },
   },
 };

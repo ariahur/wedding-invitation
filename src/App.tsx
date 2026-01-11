@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, Navigate, useParams, useNavigate } from 'react-router-dom';
 import HeroBoardingPassSection from './sections/HeroBoardingPassSection';
+import AboutUsSection from './sections/AboutUsSection';
 import TimelineSection from './sections/TimelineSection';
 import DirectionsSection from './sections/DirectionsSection';
 import RsvpSection from './sections/RsvpSection';
 import ThankYouSection from './sections/ThankYouSection';
 import LoadingScreen from './components/LoadingScreen/LoadingScreen';
+import PaperCard from './components/PaperCard/PaperCard';
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import { Language } from './types/language';
 import { translations } from './data/translations';
@@ -133,11 +135,14 @@ const WeddingInvitation: React.FC = () => {
         <div className="app-header">
           <LanguageToggle language={language} />
         </div>
-        <HeroBoardingPassSection />
-        <TimelineSection />
-        <DirectionsSection />
-        <RsvpSection />
-        <ThankYouSection />
+        <PaperCard texture="paper1" className="main-content-card">
+          <HeroBoardingPassSection />
+          <AboutUsSection />
+          <TimelineSection />
+          <DirectionsSection />
+          <RsvpSection />
+          <ThankYouSection />
+        </PaperCard>
         
         {showScrollTop && (
           <button 
