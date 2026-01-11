@@ -61,17 +61,6 @@ const AboutUsSection: React.FC = () => {
         <div className="about-us">
           <h2 className="about-us__title" lang={language}>{t.aboutUs.title}</h2>
           
-          <div className="about-us__intro">
-            <p className="about-us__intro-subtitle" lang={language}>
-              {t.aboutUs.introSubtitle.split('\n').map((line, index) => (
-                <React.Fragment key={index}>
-                  {line}
-                  {index < t.aboutUs.introSubtitle.split('\n').length - 1 && <br />}
-                </React.Fragment>
-              ))}
-            </p>
-          </div>
-
           <div className="about-us__cards">
             {/* 신랑 카드 */}
             <div className="about-us__card">

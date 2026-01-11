@@ -140,7 +140,7 @@
 
 .airline-name {
   font-family: "Roboto", sans-serif;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: bold;
   letter-spacing: 1px;
   margin-bottom: 4px;
@@ -163,7 +163,7 @@
 }
 
 .airline-flight-number {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: bold;
   letter-spacing: 2px;
   color: #C9A77C;
@@ -217,7 +217,7 @@
 
 .route-city {
   font-family: "Roboto", sans-serif;
-  font-size: 13px;
+  font-size: 12px;
   color: white;
   margin-bottom: 2px;
   opacity: 0.95;
@@ -225,7 +225,7 @@
 
 .route-city-ko {
   font-family: "Roboto", sans-serif;
-  font-size: 13px;
+  font-size: 12px;
   color: white;
   opacity: 0.85;
 }
@@ -320,7 +320,7 @@
 }
 
 .couple-line {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   color: #333;
 }
@@ -334,7 +334,7 @@
 
 .message-title {
   font-family: "Gowun Dodum", "Lora", sans-serif;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   font-style: normal;
   color: #1A2F4A;
@@ -351,7 +351,7 @@
   font-weight: 400;
   font-style: normal;
   text-align: center;
-  font-size: 13px;
+  font-size: 12px;
   line-height: 2;
   color: #333;
 }
@@ -392,20 +392,20 @@
 }
 
 .detail-label {
-  font-size: 13px;
+  font-size: 12px;
   color: #999;
   margin-bottom: 4px;
   font-weight: 500;
 }
 
 .detail-value {
-  font-size: 13px;
+  font-size: 12px;
   color: #333;
   font-weight: 500;
 }
 
 .detail-value-block {
-  font-size: 13px;
+  font-size: 12px;
   color: #333;
   line-height: 1.6;
 }
@@ -780,7 +780,7 @@
   }
 
   .boarding-pass__message {
-    font-size: 13px;
+    font-size: 12px;
     padding: 16px;
   }
 
