@@ -382,7 +382,7 @@ export const translations: Record<Language, Translations> = {
         birth: '1995년 6월 광주 출생',
         description: '사람들 속에서 에너지를 얻고,\n상상하는 일을 즐기는 사람.\n늘 목표를 세우며\n다음 여정을 꿈꿔왔습니다.',
         emoji: '🌍',
-        image: '/about/groom.jpg',
+        image: '/about/groom.jpeg',
       },
       bride: {
         name: '허다영',
@@ -606,7 +606,7 @@ export const translations: Record<Language, Translations> = {
         birth: 'Born in Gwangju, June 1995',
         description: 'Finding energy among people,\nand joy in imagination.\nAlways setting goals,\ndreaming of the next journey.',
         emoji: '🌍',
-        image: '/about/groom.jpg',
+        image: '/about/groom.jpeg',
       },
       bride: {
         name: 'Aria Hur',

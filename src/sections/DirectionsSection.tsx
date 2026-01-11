@@ -26,7 +26,7 @@ const DirectionsSection: React.FC = () => {
 
 
   return (
-    <div className="section-wrapper" style={{ backgroundColor: '#FFFFFF' }}>
+    <div className="section-wrapper" style={{ backgroundColor: '#E6D8C3' }}>
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
