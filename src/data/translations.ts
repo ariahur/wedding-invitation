@@ -395,7 +395,7 @@ export const translations: Record<Language, Translations> = {
         birth: '1992년 12월 서울 출생',
         description: '집이라는 가장 편안한 곳을 아끼는 사람.\n지금의 삶을 소중히 여기며,\n하루하루를 성실히 살아왔습니다.',
         emoji: '🏠',
-        image: '/about/bride.jpg',
+        image: '/about/bride.JPG',
       },
     },
     rsvp: {
@@ -619,7 +619,7 @@ export const translations: Record<Language, Translations> = {
         birth: 'Born in Seoul, December 1992',
         description: 'Cherishing the comfort of home.\nValuing the life she lives today,\nand living each day with sincerity.',
         emoji: '🏠',
-        image: '/about/bride.jpg',
+        image: '/about/bride.JPG',
       },
     },
     rsvp: {

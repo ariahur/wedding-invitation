@@ -76,13 +76,25 @@ const AboutUsSection: React.FC = () => {
             {/* 신랑 카드 */}
             <div className="about-us__card">
               {t.aboutUs.groom.image ? (
-                <div className="about-us__photo">
-                  <img 
-                    src={`${process.env.PUBLIC_URL}${t.aboutUs.groom.image}`}
-                    alt={t.aboutUs.groom.name}
-                    className="about-us__photo-img"
-                  />
-                </div>
+                <>
+                  <div className="about-us__photo">
+                    <img 
+                      src={t.aboutUs.groom.image}
+                      alt={t.aboutUs.groom.name}
+                      className="about-us__photo-img"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        const photoDiv = target.parentElement;
+                        const placeholder = photoDiv?.parentElement?.querySelector('.about-us__photo-placeholder') as HTMLElement;
+                        if (photoDiv) photoDiv.style.display = 'none';
+                        if (placeholder) placeholder.style.display = 'flex';
+                      }}
+                    />
+                  </div>
+                  <div className="about-us__photo-placeholder" style={{ display: 'none' }}>
+                    <span className="about-us__photo-emoji">{t.aboutUs.groom.emoji}</span>
+                  </div>
+                </>
               ) : (
                 <div className="about-us__photo-placeholder">
                   <span className="about-us__photo-emoji">{t.aboutUs.groom.emoji}</span>
@@ -109,13 +121,25 @@ const AboutUsSection: React.FC = () => {
             {/* 신부 카드 */}
             <div className="about-us__card">
               {t.aboutUs.bride.image ? (
-                <div className="about-us__photo">
-                  <img 
-                    src={`${process.env.PUBLIC_URL}${t.aboutUs.bride.image}`}
-                    alt={t.aboutUs.bride.name}
-                    className="about-us__photo-img"
-                  />
-                </div>
+                <>
+                  <div className="about-us__photo">
+                    <img 
+                      src={t.aboutUs.bride.image}
+                      alt={t.aboutUs.bride.name}
+                      className="about-us__photo-img"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        const photoDiv = target.parentElement;
+                        const placeholder = photoDiv?.parentElement?.querySelector('.about-us__photo-placeholder') as HTMLElement;
+                        if (photoDiv) photoDiv.style.display = 'none';
+                        if (placeholder) placeholder.style.display = 'flex';
+                      }}
+                    />
+                  </div>
+                  <div className="about-us__photo-placeholder" style={{ display: 'none' }}>
+                    <span className="about-us__photo-emoji">{t.aboutUs.bride.emoji}</span>
+                  </div>
+                </>
               ) : (
                 <div className="about-us__photo-placeholder">
                   <span className="about-us__photo-emoji">{t.aboutUs.bride.emoji}</span>
