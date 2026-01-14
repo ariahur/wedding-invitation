@@ -333,17 +333,17 @@ export const translations: Record<Language, Translations> = {
           },
           groom: {
             name: '조준용',
-            phone: '010-0000-0000',
+            phone: '+61-0430-135-117',
             email: 'groom@example.com',
           },
           father: {
             name: '조웅일',
-            phone: '010-0000-0000',
+            phone: '+61-0430-185-337',
             email: 'groom.father@example.com',
           },
           mother: {
             name: '김미정',
-            phone: '010-0000-0000',
+            phone: '+61-0411-363-054',
             email: 'groom.mother@example.com',
           },
         },
@@ -356,17 +356,17 @@ export const translations: Record<Language, Translations> = {
           },
           bride: {
             name: '허다영',
-            phone: '010-0000-0000',
+            phone: '+82-010-4015-8986',
             email: 'bride@example.com',
           },
           father: {
             name: '허윤',
-            phone: '010-0000-0000',
+            phone: '+82-010-3735-0100',
             email: 'bride.father@example.com',
           },
           mother: {
             name: '황영식',
-            phone: '010-0000-0000',
+            phone: '+82-010-3118-8986',
             email: 'bride.mother@example.com',
           },
         },
@@ -557,17 +557,17 @@ export const translations: Record<Language, Translations> = {
           },
           groom: {
             name: 'Daniel Cho',
-            phone: '+82-10-0000-0000',
+            phone: '+61-0430-135-117',
             email: 'groom@example.com',
           },
           father: {
             name: 'Wung Il Jo',
-            phone: '+82-10-0000-0000',
+            phone: '+61-0430-185-337',
             email: 'groom.father@example.com',
           },
           mother: {
             name: 'Mi Jeong Kim',
-            phone: '+82-10-0000-0000',
+            phone: '+61-0411-363-054',
             email: 'groom.mother@example.com',
           },
         },
@@ -580,17 +580,17 @@ export const translations: Record<Language, Translations> = {
           },
           bride: {
             name: 'Aria Hur',
-            phone: '+82-10-0000-0000',
+            phone: '+82-010-4015-8986',
             email: 'bride@example.com',
           },
           father: {
             name: 'Yoon Hur',
-            phone: '+82-10-0000-0000',
+            phone: '+82-010-3735-0100',
             email: 'bride.father@example.com',
           },
           mother: {
             name: 'Young Sik Hwang',
-            phone: '+82-10-0000-0000',
+            phone: '+82-010-3118-8986',
             email: 'bride.mother@example.com',
           },
         },
