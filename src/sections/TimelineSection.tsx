@@ -5,6 +5,8 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
 import './TimelineSection.css';
 
+const startDate = new Date('2013-06-02T00:00:00');
+
 const TimelineSection: React.FC = () => {
   const language = useLanguage();
   const t = translations[language];
@@ -18,8 +20,6 @@ const TimelineSection: React.FC = () => {
     minutes: 0,
     seconds: 0,
   });
-
-  const startDate = new Date('2013-06-02T00:00:00');
 
   useEffect(() => {
     if (selectedImage) {
