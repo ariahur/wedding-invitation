@@ -8,9 +8,8 @@ import RsvpSection from './sections/RsvpSection';
 import ThankYouSection from './sections/ThankYouSection';
 import LoadingScreen from './components/LoadingScreen/LoadingScreen';
 import PaperCard from './components/PaperCard/PaperCard';
-import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
+import { LanguageProvider } from './contexts/LanguageContext';
 import { Language } from './types/language';
-import { translations } from './data/translations';
 import './App.css';
 
 const updateMetaTag = (property: string, content: string) => {

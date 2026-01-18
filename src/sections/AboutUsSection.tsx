@@ -46,10 +46,6 @@ const AboutUsSection: React.FC = () => {
     window.location.href = `tel:${phone.replace(/[^0-9+]/g, '')}`;
   };
 
-  const handleEmailClick = (email: string) => {
-    window.location.href = `mailto:${email}`;
-  };
-
   return (
     <div className="section-wrapper" style={{ backgroundColor: '#E6D8C3' }}>
       <motion.div

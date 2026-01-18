@@ -10,8 +10,6 @@ import { translations } from '../data/translations';
 import './RsvpSection.css';
 
 const createRsvpSchema = (language: 'ko' | 'en') => {
-  const t = translations[language].rsvp.form;
-  
   return z.object({
     name: z.string().min(1, language === 'ko' ? '성함을 입력해주세요' : 'Please enter your name').max(30, language === 'ko' ? '성함은 30자 이하로 입력해주세요' : 'Name must be 30 characters or less'),
     phone: z.string().min(10, language === 'ko' ? '연락처를 올바르게 입력해주세요' : 'Please enter a valid phone number'),
