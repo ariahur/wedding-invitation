@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { createPortal } from 'react-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
 import './TimelineSection.css';
@@ -7,6 +8,8 @@ import './TimelineSection.css';
 const TimelineSection: React.FC = () => {
   const language = useLanguage();
   const t = translations[language];
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const scrollPositionRef = React.useRef(0);
   const [timeTogether, setTimeTogether] = useState({
     years: 0,
     months: 0,
@@ -17,6 +20,29 @@ const TimelineSection: React.FC = () => {
   });
 
   const startDate = new Date('2013-06-02T00:00:00');
+
+  useEffect(() => {
+    if (selectedImage) {
+      scrollPositionRef.current = window.pageYOffset || document.documentElement.scrollTop;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollPositionRef.current}px`;
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+    } else {
+      const scrollY = scrollPositionRef.current;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.width = '';
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      window.scrollTo(0, scrollY);
+    }
+  }, [selectedImage]);
 
   useEffect(() => {
     const updateTime = () => {
@@ -48,6 +74,16 @@ const TimelineSection: React.FC = () => {
 
     return () => clearInterval(interval);
   }, []);
+
+  const handleImageClick = (imageUrl: string) => {
+    if (imageUrl) {
+      setSelectedImage(imageUrl);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setSelectedImage(null);
+  };
 
   const formatTimeString = () => {
     if (language === 'ko') {
@@ -107,9 +143,11 @@ const TimelineSection: React.FC = () => {
               <div className="timeline__event-image">
                 {event.image ? (
                   <img 
-                        src={event.image}
+                    src={event.image}
                     alt={event.title}
                     className="event-image"
+                    onClick={() => handleImageClick(event.image!)}
+                    style={{ cursor: 'pointer' }}
                   />
                 ) : (
                   <div className="event-image-placeholder">
@@ -139,6 +177,8 @@ const TimelineSection: React.FC = () => {
                         src={event.image}
                         alt={event.title}
                         className="event-image"
+                        onClick={() => handleImageClick(event.image!)}
+                        style={{ cursor: 'pointer' }}
                       />
                     ) : (
                       <div className="event-image-placeholder">
@@ -155,6 +195,44 @@ const TimelineSection: React.FC = () => {
           </div>
       </div>
       </motion.div>
+
+      {typeof document !== 'undefined' && createPortal(
+        <AnimatePresence>
+          {selectedImage && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="timeline-image-modal-overlay"
+              onClick={handleCloseModal}
+            >
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="timeline-image-modal"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button 
+                  className="timeline-image-modal__close"
+                  onClick={handleCloseModal}
+                  aria-label="Close"
+                >
+                  <span className="material-symbols-outlined">close</span>
+                </button>
+                <img 
+                  src={selectedImage}
+                  alt="Timeline event"
+                  className="timeline-image-modal__image"
+                />
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </div>
   );
 };
