@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -9,7 +9,7 @@ const AboutUsSection: React.FC = () => {
   const language = useLanguage();
   const t = translations[language];
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-  const scrollPositionRef = React.useRef(0);
+  const scrollPositionRef = useRef(0);
 
   useEffect(() => {
     if (isContactModalOpen) {
@@ -47,7 +47,7 @@ const AboutUsSection: React.FC = () => {
   };
 
   return (
-    <div className="section-wrapper" style={{ backgroundColor: '#E6D8C3' }}>
+    <div className="section-wrapper" style={{ backgroundColor: '#F0E8DC' }}>
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}

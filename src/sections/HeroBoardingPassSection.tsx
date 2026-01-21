@@ -18,7 +18,6 @@ const HeroBoardingPassSection: React.FC = () => {
           exit={{ opacity: 0, y: -10, scale: 0.98 }}
           transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
           className="boarding-pass-wrapper"
-          style={{ backgroundColor: '#FAF8F3' }}
         >
       <div className="boarding-pass" >
       <div className="boarding-pass__top-title">

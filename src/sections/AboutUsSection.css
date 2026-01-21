@@ -2,12 +2,22 @@
   padding: 24px 20px;
   background: linear-gradient(
     to bottom right,
-    rgba(230, 216, 195, 0.9) 0%,
-    #E6D8C3 15%,
-    #F0E6D6 30%,
-    #F0E6D6 70%,
-    #E6D8C3 85%,
-    rgba(230, 216, 195, 0.9) 100%
+    rgba(230, 216, 195, 0.95) 0%,
+    #E6D8C3 5%,
+    #EADCC8 10%,
+    #EEE2D0 15%,
+    #F0E6D6 20%,
+    #F2E8DA 25%,
+    #F3E9DC 30%,
+    #F4EBDE 35%,
+    #F4EBDE 65%,
+    #F3E9DC 70%,
+    #F2E8DA 75%,
+    #F0E6D6 80%,
+    #EEE2D0 85%,
+    #EADCC8 90%,
+    #E6D8C3 95%,
+    rgba(230, 216, 195, 0.95) 100%
   );
   margin-top: 0;
 }

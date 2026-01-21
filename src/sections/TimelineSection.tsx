@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -11,7 +11,8 @@ const TimelineSection: React.FC = () => {
   const language = useLanguage();
   const t = translations[language];
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const scrollPositionRef = React.useRef(0);
+  const scrollPositionRef = useRef(0);
+  const timelineRef = useRef<HTMLDivElement>(null);
   const [timeTogether, setTimeTogether] = useState({
     years: 0,
     months: 0,
@@ -128,15 +129,31 @@ const TimelineSection: React.FC = () => {
         </div>
       </div>
 
-      <div className="timeline__events">
+      <div className="timeline__events" ref={timelineRef}>
+        {/* 타임라인 선 - 스크롤에 따라 그려지는 효과 */}
+        <motion.div 
+          className="timeline__line-container"
+          initial={{ scaleY: 0 }}
+          whileInView={{ scaleY: 1 }}
+          viewport={{ once: false, amount: 0.1 }}
+          style={{ transformOrigin: "top" }}
+          transition={{ duration: 2, ease: "easeInOut" }}
+        >
+          <div className="timeline__line" />
+        </motion.div>
+
         {t.timeline.events.map((event, index) => {
           // 홀수번째(1,3,5): 사진 왼쪽, 글 오른쪽
           // 짝수번째(2,4): 사진 오른쪽, 글 왼쪽
           const isOdd = (index + 1) % 2 === 1; // 홀수번째
           return (
-          <div 
+          <motion.div 
             key={index} 
-              className={`timeline__event ${isOdd ? 'timeline__event--left' : 'timeline__event--right'}`}
+            className={`timeline__event ${isOdd ? 'timeline__event--left' : 'timeline__event--right'}`}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
           >
               {isOdd ? (
                 <>
@@ -189,7 +206,7 @@ const TimelineSection: React.FC = () => {
                   </div>
                 </>
               )}
-            </div>
+            </motion.div>
           );
         })}
           </div>

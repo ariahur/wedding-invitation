@@ -67,7 +67,7 @@ const RsvpSection: React.FC = () => {
   const noteTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   // 불참 선택 시 guestCount 초기화
-  React.useEffect(() => {
+  useEffect(() => {
     if (attendance === 'not_attending') {
       setValue('guestCount', null);
       setValue('hasChildren', 'no');
