@@ -61,12 +61,17 @@
   font-family: "Dancing Script", cursive;
   font-size: 56px;
   font-weight: 300;
-  color: #1A2F4A;
   display: inline-block;
   transform-origin: center;
   will-change: transform, opacity;
+  /* 그라데이션 텍스트 */
+  background: linear-gradient(135deg, #1A2F4A 0%, #1A2F4A 5%, #C9A77C 50%, #E6D8C3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
   /* 손글씨 느낌을 위한 약간의 불규칙성 */
-  text-shadow: 1px 1px 2px rgba(26, 47, 74, 0.1);
+  text-shadow: none;
   letter-spacing: 1px;
 }
 
@@ -75,12 +80,17 @@
   font-size: 56px;
   font-weight: 300;
   font-style: normal;
-  color: #1A2F4A;
   letter-spacing: 1.5px;
   line-height: 1.6;
   word-wrap: break-word;
   min-height: 70px;
-  text-shadow: 1px 1px 2px rgba(26, 47, 74, 0.1);
+  /* 그라데이션 텍스트 */
+  background: linear-gradient(135deg, #1A2F4A 0%, #1A2F4A 5%, #C9A77C 50%, #E6D8C3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  text-shadow: none;
 }
 
 @keyframes fadeOut {

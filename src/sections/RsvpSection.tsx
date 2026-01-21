@@ -148,9 +148,9 @@ const RsvpSection: React.FC = () => {
         name: '',
         phone: '',
         email: '',
-        attendance: undefined,
+        attendance: 'attending',
         guestCount: null,
-        hasChildren: undefined,
+        hasChildren: 'no',
         childrenAges: '',
         note: '',
         honeypot: '',
@@ -389,15 +389,17 @@ const RsvpSection: React.FC = () => {
 
         <button
           type="submit"
-          disabled={isSubmitting}
+          disabled={isSubmitting || submitStatus === 'success'}
           className="form-submit"
           lang={language}
         >
           {isSubmitting 
             ? t.rsvp.form.submitting 
-            : attendance === 'attending' 
-              ? t.rsvp.form.submit 
-              : t.rsvp.form.submitNotAttending}
+            : submitStatus === 'success'
+              ? t.rsvp.form.submit
+              : attendance === 'attending' 
+                ? t.rsvp.form.submit 
+                : t.rsvp.form.submitNotAttending}
         </button>
       </form>
         </div>
