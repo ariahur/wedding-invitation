@@ -79,7 +79,6 @@ const HeroBoardingPassSection: React.FC = () => {
             alt="Couple"
               className="couple-photo-bg"
           />
-            <div className="couple-photo-overlay"></div>
           </div>
         </div>
       </div>
