@@ -30,7 +30,7 @@ const LoadingScreen: React.FC = () => {
         id: i,
         x: Math.random() * 100, // 0-100%
         y: Math.random() * 100, // 0-100%
-        size: Math.random() * 6 + 4, // 4-10px (더 크게)
+        size: Math.random() * 8 + 10, // 10-18px (별 크기)
         delay: Math.random() * 1.5, // 0-1.5초 지연
         duration: Math.random() * 1.5 + 2, // 2-3.5초 애니메이션
       });
@@ -98,8 +98,7 @@ const LoadingScreen: React.FC = () => {
               style={{
                 left: `${star.x}%`,
                 top: `${star.y}%`,
-                width: `${star.size}px`,
-                height: `${star.size}px`,
+                fontSize: `${star.size}px`,
               }}
               initial={{ opacity: 0, scale: 0 }}
               animate={{
