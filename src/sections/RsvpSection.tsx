@@ -172,6 +172,7 @@ const RsvpSection: React.FC = () => {
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.4, ease: 'easeOut' }}
       >
+        <div className="section-divider"></div>
         <div className="rsvp">
       <h2 className="rsvp__title" lang={language}>{t.rsvp.title}</h2>
       <p className="rsvp__intro">

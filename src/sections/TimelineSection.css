@@ -4,6 +4,22 @@
   margin-top: 0;
 }
 
+.section-divider {
+  height: 4px;
+  background: linear-gradient(
+    to right,
+    rgba(201, 167, 124, 0.6) 0%,
+    #C9A77C 10%,
+    #E6D8C3 25%,
+    #E6D8C3 75%,
+    #C9A77C 90%,
+    rgba(201, 167, 124, 0.6) 100%
+  );
+  box-shadow: 0 1px 2px rgba(201, 167, 124, 0.2);
+  margin: 0;
+  width: 100%;
+}
+
 .timeline__title {
   font-size: 28px;
   font-weight: 400;
@@ -48,8 +64,8 @@
 
 .counter-number {
   font-size: 18px;
-  color: #666;
-  font-weight: 400;
+  color: #B8956A; /* 카멜 - 자연스러운 조합 */
+  font-weight: 500;
   font-family: "Lora", "Playfair Display", serif;
   letter-spacing: 0;
 }
@@ -64,7 +80,7 @@
   left: 50%;
   top: 0;
   bottom: 0;
-  width: 2px;
+  width: 1.5px;
   height: 100%;
   transform: translateX(-50%);
   z-index: 1;
@@ -77,10 +93,13 @@
   height: 100%;
   background: linear-gradient(
     to bottom,
-    #C9A77C 0%,
-    #C9A77C 100%
+    rgba(156, 175, 136, 0.3) 0%,
+    #9CAF88 20%,
+    #9CAF88 80%,
+    rgba(156, 175, 136, 0.3) 100%
   );
   border-radius: 1px;
+  box-shadow: 0 0 4px rgba(156, 175, 136, 0.2);
 }
 
 .timeline__event {
@@ -96,12 +115,20 @@
   position: absolute;
   left: 50%;
   top: 20px;
-  width: 10px;
-  height: 10px;
-  background: #C9A77C;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border: 2px solid #9CAF88;
   border-radius: 50%;
   z-index: 2;
   transform: translateX(-50%);
+  box-shadow: 0 2px 6px rgba(156, 175, 136, 0.4);
+  transition: all 0.3s ease;
+}
+
+.timeline__event:hover::before {
+  transform: translateX(-50%) scale(1.2);
+  box-shadow: 0 3px 10px rgba(156, 175, 136, 0.5);
 }
 
 .timeline__event--left {
@@ -137,8 +164,16 @@
   border-radius: 12px;
   overflow: hidden;
   margin: 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(156, 175, 136, 0.2);
+  border: 2px solid rgba(156, 175, 136, 0.2);
   flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.timeline__event-image:hover {
+  border-color: rgba(156, 175, 136, 0.4);
+  box-shadow: 0 6px 16px rgba(156, 175, 136, 0.3);
+  transform: scale(1.02);
 }
 
 .timeline__event--left .timeline__event-image {
@@ -203,17 +238,43 @@
 
 .event-label {
   display: inline-block;
-  background: #C9A77C;
+  background: linear-gradient(135deg, #B8956A 0%, #C9A77C 50%, #D4B896 100%);
   color: white;
-  padding: 5px 12px;
+  padding: 6px 14px;
   border-radius: 20px;
-  border: 1.5px solid #C9A77C;
+  border: 1.5px solid rgba(184, 149, 106, 0.3);
   font-size: 11px;
   font-weight: 600;
   margin-bottom: 10px;
   width: fit-content;
   margin-left: 0;
   margin-right: auto;
+  box-shadow: 0 2px 6px rgba(184, 149, 106, 0.25);
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.event-label::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.event-label:hover::before {
+  left: 100%;
+}
+
+.event-label:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(184, 149, 106, 0.35);
+  background: linear-gradient(135deg, #C9A77C 0%, #D4B896 50%, #E6D8C3 100%);
 }
 
 .timeline__event--right .event-label {
@@ -304,7 +365,8 @@
     transform: translateX(-50%);
     width: 8px;
     height: 8px;
-    background: #C9A77C;
+    background: white;
+    border: 2px solid #9CAF88;
   }
 
   .timeline__event-image {

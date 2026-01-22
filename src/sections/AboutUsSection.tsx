@@ -47,13 +47,14 @@ const AboutUsSection: React.FC = () => {
   };
 
   return (
-    <div className="section-wrapper" style={{ backgroundColor: '#F0E8DC' }}>
+    <div className="section-wrapper">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.4, ease: 'easeOut' }}
       >
+        <div className="section-divider"></div>
         <div className="about-us">
           <h2 className="about-us__title" lang={language}>{t.aboutUs.title}</h2>
           

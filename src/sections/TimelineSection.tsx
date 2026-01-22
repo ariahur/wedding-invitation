@@ -120,6 +120,7 @@ const TimelineSection: React.FC = () => {
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.4, ease: 'easeOut' }}
       >
+        <div className="section-divider"></div>
         <div className="timeline">
       <h2 className="timeline__title" lang={language}>{t.timeline.title}</h2>
       
@@ -135,9 +136,9 @@ const TimelineSection: React.FC = () => {
           className="timeline__line-container"
           initial={{ scaleY: 0 }}
           whileInView={{ scaleY: 1 }}
-          viewport={{ once: false, amount: 0.1 }}
+          viewport={{ once: false, amount: 0.5 }}
           style={{ transformOrigin: "top" }}
-          transition={{ duration: 2, ease: "easeInOut" }}
+          transition={{ duration: 3, ease: "easeInOut" }}
         >
           <div className="timeline__line" />
         </motion.div>
