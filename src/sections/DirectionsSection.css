@@ -1,3 +1,10 @@
+.directions__block-divider {
+  height: 1px;
+  background: rgba(26, 47, 74, 0.08);
+  margin: 16px 0;
+  border: none;
+}
+
 .directions {
   padding: 24px 20px;
   /* background: linear-gradient(
@@ -22,21 +29,7 @@
   margin-top: 0;
 }
 
-.section-divider {
-  height: 4px;
-  background: linear-gradient(
-    to right,
-    rgba(201, 167, 124, 0.6) 0%,
-    #C9A77C 10%,
-    #E6D8C3 25%,
-    #E6D8C3 75%,
-    #C9A77C 90%,
-    rgba(201, 167, 124, 0.6) 100%
-  );
-  box-shadow: 0 1px 2px rgba(201, 167, 124, 0.2);
-  margin: 0;
-  width: 100%;
-}
+/* Section divider is defined in App.css .paper-container .section-divider */
 
 .directions__title {
   font-size: 28px;

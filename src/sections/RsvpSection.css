@@ -1,24 +1,17 @@
+.rsvp-form-divider {
+  height: 1px;
+  background: rgba(26, 47, 74, 0.08);
+  margin: 8px 0 16px;
+  border: none;
+}
+
 .rsvp {
   padding: 24px 20px;
-  background-color: #FFFFFF;
+  background-color: transparent;
   margin-top: 0;
 }
 
-.section-divider {
-  height: 4px;
-  background: linear-gradient(
-    to right,
-    rgba(201, 167, 124, 0.6) 0%,
-    #C9A77C 10%,
-    #E6D8C3 25%,
-    #E6D8C3 75%,
-    #C9A77C 90%,
-    rgba(201, 167, 124, 0.6) 100%
-  );
-  box-shadow: 0 1px 2px rgba(201, 167, 124, 0.2);
-  margin: 0;
-  width: 100%;
-}
+/* Section divider is defined in App.css .paper-container .section-divider */
 
 .rsvp__title {
   font-size: 28px;
@@ -361,7 +354,7 @@
 
 .form-submit:hover:not(:disabled) {
   background: rgba(26, 47, 74, 0.05);
-  border-color: #1A2F4A; /* 남색 보더 유지 */
+  border-color: #1A2F4A; /* Maintain navy border */
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(26, 47, 74, 0.2);
 }

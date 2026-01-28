@@ -1,24 +1,10 @@
 .timeline {
   padding: 24px 20px;
-  background-color: #FFFFFF;
+  background-color: transparent;
   margin-top: 0;
 }
 
-.section-divider {
-  height: 4px;
-  background: linear-gradient(
-    to right,
-    rgba(201, 167, 124, 0.6) 0%,
-    #C9A77C 10%,
-    #E6D8C3 25%,
-    #E6D8C3 75%,
-    #C9A77C 90%,
-    rgba(201, 167, 124, 0.6) 100%
-  );
-  box-shadow: 0 1px 2px rgba(201, 167, 124, 0.2);
-  margin: 0;
-  width: 100%;
-}
+/* Section divider is defined in App.css .paper-container .section-divider */
 
 .timeline__title {
   font-size: 28px;
@@ -64,7 +50,7 @@
 
 .counter-number {
   font-size: 18px;
-  color: #B8956A; /* 카멜 - 자연스러운 조합 */
+  color: #B8956A; /* Camel - natural color combination */
   font-weight: 500;
   font-family: "Lora", "Playfair Display", serif;
   letter-spacing: 0;
@@ -81,11 +67,10 @@
   top: 0;
   bottom: 0;
   width: 1.5px;
-  height: 100%;
   transform: translateX(-50%);
   z-index: 1;
   pointer-events: none;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .timeline__line {
@@ -93,13 +78,13 @@
   height: 100%;
   background: linear-gradient(
     to bottom,
-    rgba(156, 175, 136, 0.3) 0%,
-    #9CAF88 20%,
-    #9CAF88 80%,
-    rgba(156, 175, 136, 0.3) 100%
+    rgba(224, 224, 224, 0.3) 0%,
+    #e0e0e0 20%,
+    #e0e0e0 80%,
+    rgba(224, 224, 224, 0.3) 100%
   );
   border-radius: 1px;
-  box-shadow: 0 0 4px rgba(156, 175, 136, 0.2);
+  box-shadow: 0 0 4px rgba(224, 224, 224, 0.2);
 }
 
 .timeline__event {
@@ -118,17 +103,17 @@
   width: 8px;
   height: 8px;
   background: white;
-  border: 2px solid #9CAF88;
+  border: 2px solid #e0e0e0;
   border-radius: 50%;
   z-index: 2;
   transform: translateX(-50%);
-  box-shadow: 0 2px 6px rgba(156, 175, 136, 0.4);
+  box-shadow: 0 2px 6px rgba(224, 224, 224, 0.4);
   transition: all 0.3s ease;
 }
 
 .timeline__event:hover::before {
   transform: translateX(-50%) scale(1.2);
-  box-shadow: 0 3px 10px rgba(156, 175, 136, 0.5);
+  box-shadow: 0 3px 10px rgba(224, 224, 224, 0.5);
 }
 
 .timeline__event--left {
@@ -164,15 +149,15 @@
   border-radius: 12px;
   overflow: hidden;
   margin: 0;
-  box-shadow: 0 4px 12px rgba(156, 175, 136, 0.2);
-  border: 2px solid rgba(156, 175, 136, 0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(224, 224, 224, 0.35);
   flex-shrink: 0;
   transition: all 0.3s ease;
 }
 
 .timeline__event-image:hover {
-  border-color: rgba(156, 175, 136, 0.4);
-  box-shadow: 0 6px 16px rgba(156, 175, 136, 0.3);
+  border-color: rgba(224, 224, 224, 0.4);
+  box-shadow: 0 6px 16px rgba(224, 224, 224, 0.3);
   transform: scale(1.02);
 }
 
@@ -191,6 +176,16 @@
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+/* 2013 photo: show left side more */
+.event-image--pos-left {
+  object-position: 35% 50%;
+}
+
+/* 2018 photo: show right side more */
+.event-image--pos-right {
+  object-position: 65% 50%;
 }
 
 .event-image-placeholder {
@@ -366,7 +361,7 @@
     width: 8px;
     height: 8px;
     background: white;
-    border: 2px solid #9CAF88;
+    border: 2px solid #e0e0e0;
   }
 
   .timeline__event-image {

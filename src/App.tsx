@@ -13,7 +13,7 @@ import { Language } from './types/language';
 import './App.css';
 
 const updateMetaTag = (property: string, content: string) => {
-  // Open Graph 태그
+  // Open Graph tags
   if (property.startsWith('og:')) {
     let element = document.querySelector(`meta[property="${property}"]`);
     if (!element) {
@@ -23,7 +23,7 @@ const updateMetaTag = (property: string, content: string) => {
     }
     element.setAttribute('content', content);
   }
-  // Twitter Card 태그
+  // Twitter Card tags
   else if (property.startsWith('twitter:')) {
     let element = document.querySelector(`meta[name="${property}"]`);
     if (!element) {
@@ -33,7 +33,7 @@ const updateMetaTag = (property: string, content: string) => {
     }
     element.setAttribute('content', content);
   }
-  // 일반 메타 태그
+  // Standard meta tags
   else {
     let element = document.querySelector(`meta[name="${property}"]`);
     if (!element) {
@@ -75,9 +75,9 @@ const WeddingInvitation: React.FC = () => {
   useEffect(() => {
     const baseUrl = window.location.origin;
     const currentUrl = `${baseUrl}/${language}`;
-    const imageUrl = `${baseUrl}/couple.jpg`;
+    const imageUrl = `${baseUrl}/hero/hero-couple.jpg`;
     
-    // 메타 태그 설정 (국문/영문 동일)
+    // Set meta tags (same for both languages)
     const title = '조준용(Daniel) ❤️ 허다영(Aria)';
     const description = '2027/02/20 15:00';
     
@@ -105,7 +105,7 @@ const WeddingInvitation: React.FC = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 4000); // 4초 후 로딩 완료
+    }, 4000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -136,10 +136,12 @@ const WeddingInvitation: React.FC = () => {
         </div>
         <PaperCard texture="paper1" className="main-content-card">
           <HeroBoardingPassSection />
-          <AboutUsSection />
-          <TimelineSection />
-          <DirectionsSection />
-          <RsvpSection />
+          <div className="paper-container">
+            <AboutUsSection />
+            <TimelineSection />
+            <DirectionsSection />
+            <RsvpSection />
+          </div>
           <ThankYouSection />
         </PaperCard>
         

@@ -2,6 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
+import { renderMultilineText } from '../utils/textUtils';
 import './HeroBoardingPassSection.css';
 
 const HeroBoardingPassSection: React.FC = () => {
@@ -74,7 +75,7 @@ const HeroBoardingPassSection: React.FC = () => {
         <div className="main-photo">
           <div className="couple-photo-container">
           <img 
-              src={`${process.env.PUBLIC_URL}/couple.jpg`}
+              src={`${process.env.PUBLIC_URL}/hero/hero-couple.jpg`}
             alt="Couple"
               className="couple-photo-bg"
           />
@@ -85,12 +86,7 @@ const HeroBoardingPassSection: React.FC = () => {
       <div className="boarding-pass__message" lang={language}>
         <h3 className="message-title">{t.hero.invitationTitle}</h3>
         <div className="message-content">
-          {t.hero.message.split('\n').map((line, index) => (
-            <React.Fragment key={index}>
-              {line}
-              {index < t.hero.message.split('\n').length - 1 && <br />}
-            </React.Fragment>
-          ))}
+          {renderMultilineText(t.hero.message)}
         </div>
       </div>
 
@@ -150,12 +146,7 @@ const HeroBoardingPassSection: React.FC = () => {
           <span className="detail-label">{t.hero.details.venue}</span>
           <div className="detail-value-block">
             <div>{t.directions.venue}</div>
-            <div>{t.hero.details.address.split('\n').map((line, index) => (
-            <React.Fragment key={index}>
-              {line}
-              {index < t.hero.details.address.split('\n').length - 1 && <br />}
-            </React.Fragment>
-          ))}</div>
+            <div>{renderMultilineText(t.hero.details.address)}</div>
             <div>{t.hero.details.floor}</div>
           </div>
         </div>

@@ -1,38 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
+import { useScrollLock } from '../hooks/useScrollLock';
+import { sectionFadeInProps } from '../utils/animations';
+import { handleImageError } from '../utils/imageErrorHandler';
+import { renderMultilineText } from '../utils/textUtils';
 import './AboutUsSection.css';
 
 const AboutUsSection: React.FC = () => {
   const language = useLanguage();
   const t = translations[language];
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-  const scrollPositionRef = useRef(0);
 
-  useEffect(() => {
-    if (isContactModalOpen) {
-      scrollPositionRef.current = window.pageYOffset || document.documentElement.scrollTop;
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollPositionRef.current}px`;
-      document.body.style.left = '0';
-      document.body.style.right = '0';
-      document.body.style.width = '100%';
-      document.body.style.overflow = 'hidden';
-      document.documentElement.style.overflow = 'hidden';
-    } else {
-      const scrollY = scrollPositionRef.current;
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.left = '';
-      document.body.style.right = '';
-      document.body.style.width = '';
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
-      window.scrollTo(0, scrollY);
-    }
-  }, [isContactModalOpen]);
+  useScrollLock(isContactModalOpen);
 
   const handleContactClick = () => {
     setIsContactModalOpen(true);
@@ -48,19 +30,13 @@ const AboutUsSection: React.FC = () => {
 
   return (
     <div className="section-wrapper">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.4, ease: 'easeOut' }}
-      >
-        <div className="section-divider"></div>
+      <motion.div {...sectionFadeInProps}>
         <div className="about-us">
-          <h2 className="about-us__title" lang={language}>{t.aboutUs.title}</h2>
-          
-          <div className="about-us__cards">
-            {/* 신랑 카드 */}
-            <div className="about-us__card">
+            <h2 className="about-us__title" lang={language}>{t.aboutUs.title}</h2>
+
+            <div className="about-us__cards">
+              {/* Groom */}
+              <div className="about-us__card">
               {t.aboutUs.groom.image ? (
                 <>
                   <div className="about-us__photo">
@@ -68,13 +44,7 @@ const AboutUsSection: React.FC = () => {
                       src={t.aboutUs.groom.image}
                       alt={t.aboutUs.groom.name}
                       className="about-us__photo-img"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        const photoDiv = target.parentElement;
-                        const placeholder = photoDiv?.parentElement?.querySelector('.about-us__photo-placeholder') as HTMLElement;
-                        if (photoDiv) photoDiv.style.display = 'none';
-                        if (placeholder) placeholder.style.display = 'flex';
-                      }}
+                      onError={handleImageError}
                     />
                   </div>
                   <div className="about-us__photo-placeholder" style={{ display: 'none' }}>
@@ -94,17 +64,14 @@ const AboutUsSection: React.FC = () => {
                 <p className="about-us__keyword">{t.aboutUs.groom.keyword}</p>
                 <p className="about-us__birth">{t.aboutUs.groom.birth}</p>
                 <p className="about-us__description">
-                  {t.aboutUs.groom.description.split('\n').map((line, index) => (
-                    <React.Fragment key={index}>
-                      {line}
-                      {index < t.aboutUs.groom.description.split('\n').length - 1 && <br />}
-                    </React.Fragment>
-                  ))}
+                  {renderMultilineText(t.aboutUs.groom.description)}
                 </p>
               </div>
             </div>
 
-            {/* 신부 카드 */}
+            <div className="about-us__block-divider" aria-hidden="true" />
+
+            {/* Bride */}
             <div className="about-us__card">
               {t.aboutUs.bride.image ? (
                 <>
@@ -113,13 +80,7 @@ const AboutUsSection: React.FC = () => {
                       src={t.aboutUs.bride.image}
                       alt={t.aboutUs.bride.name}
                       className="about-us__photo-img"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        const photoDiv = target.parentElement;
-                        const placeholder = photoDiv?.parentElement?.querySelector('.about-us__photo-placeholder') as HTMLElement;
-                        if (photoDiv) photoDiv.style.display = 'none';
-                        if (placeholder) placeholder.style.display = 'flex';
-                      }}
+                      onError={handleImageError}
                     />
                   </div>
                   <div className="about-us__photo-placeholder" style={{ display: 'none' }}>
@@ -139,26 +100,21 @@ const AboutUsSection: React.FC = () => {
                 <p className="about-us__keyword">{t.aboutUs.bride.keyword}</p>
                 <p className="about-us__birth">{t.aboutUs.bride.birth}</p>
                 <p className="about-us__description">
-                  {t.aboutUs.bride.description.split('\n').map((line, index) => (
-                    <React.Fragment key={index}>
-                      {line}
-                      {index < t.aboutUs.bride.description.split('\n').length - 1 && <br />}
-                    </React.Fragment>
-                  ))}
+                  {renderMultilineText(t.aboutUs.bride.description)}
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="about-us__contact-button-wrapper">
-            <button 
-              className="about-us__contact-button"
-              onClick={handleContactClick}
-            >
-              {t.aboutUs.contactButton}
-            </button>
+            <div className="about-us__contact-button-wrapper">
+              <button 
+                className="about-us__contact-button"
+                onClick={handleContactClick}
+              >
+                {t.aboutUs.contactButton}
+              </button>
+            </div>
           </div>
-        </div>
       </motion.div>
 
       {typeof document !== 'undefined' && createPortal(
@@ -193,7 +149,7 @@ const AboutUsSection: React.FC = () => {
               </h2>
 
               <div className="contact-modal__sections">
-                {/* 신랑측 */}
+                {/* Groom's side */}
                 <div className="contact-modal__section">
                   <h3 className="contact-modal__section-title" lang={language}>
                     {t.aboutUs.contactModal.groom.label}
@@ -244,7 +200,7 @@ const AboutUsSection: React.FC = () => {
                   </div>
                 </div>
 
-                {/* 신부측 */}
+                {/* Bride's side */}
                 <div className="contact-modal__section">
                   <h3 className="contact-modal__section-title" lang={language}>
                     {t.aboutUs.contactModal.bride.label}

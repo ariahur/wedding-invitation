@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
+import { useScrollLock } from '../hooks/useScrollLock';
+import { sectionFadeInProps } from '../utils/animations';
 import './TimelineSection.css';
 
 const startDate = new Date('2013-06-02T00:00:00');
@@ -11,8 +13,6 @@ const TimelineSection: React.FC = () => {
   const language = useLanguage();
   const t = translations[language];
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const scrollPositionRef = useRef(0);
-  const timelineRef = useRef<HTMLDivElement>(null);
   const [timeTogether, setTimeTogether] = useState({
     years: 0,
     months: 0,
@@ -22,28 +22,7 @@ const TimelineSection: React.FC = () => {
     seconds: 0,
   });
 
-  useEffect(() => {
-    if (selectedImage) {
-      scrollPositionRef.current = window.pageYOffset || document.documentElement.scrollTop;
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollPositionRef.current}px`;
-      document.body.style.left = '0';
-      document.body.style.right = '0';
-      document.body.style.width = '100%';
-      document.body.style.overflow = 'hidden';
-      document.documentElement.style.overflow = 'hidden';
-    } else {
-      const scrollY = scrollPositionRef.current;
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.left = '';
-      document.body.style.right = '';
-      document.body.style.width = '';
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
-      window.scrollTo(0, scrollY);
-    }
-  }, [selectedImage]);
+  useScrollLock(!!selectedImage);
 
   useEffect(() => {
     const updateTime = () => {
@@ -113,16 +92,12 @@ const TimelineSection: React.FC = () => {
   };
 
   return (
-    <div className="section-wrapper" style={{ backgroundColor: '#FFFFFF' }}>
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.4, ease: 'easeOut' }}
-      >
-        <div className="section-divider"></div>
+    <div className="section-wrapper section-wrapper--white">
+      <div className="section-divider"></div>
+      <div className="section-wave" aria-hidden="true" />
+      <motion.div {...sectionFadeInProps}>
         <div className="timeline">
-      <h2 className="timeline__title" lang={language}>{t.timeline.title}</h2>
+          <h2 className="timeline__title" lang={language}>{t.timeline.title}</h2>
       
       <div className="timeline__counter">
         <div className="counter-text">
@@ -130,13 +105,13 @@ const TimelineSection: React.FC = () => {
         </div>
       </div>
 
-      <div className="timeline__events" ref={timelineRef}>
-        {/* 타임라인 선 - 스크롤에 따라 그려지는 효과 */}
+      <div className="timeline__events">
+        {/* Timeline line - animated on scroll */}
         <motion.div 
           className="timeline__line-container"
           initial={{ scaleY: 0 }}
           whileInView={{ scaleY: 1 }}
-          viewport={{ once: false, amount: 0.5 }}
+          viewport={{ once: true, amount: 0.1 }}
           style={{ transformOrigin: "top" }}
           transition={{ duration: 3, ease: "easeInOut" }}
         >
@@ -144,9 +119,9 @@ const TimelineSection: React.FC = () => {
         </motion.div>
 
         {t.timeline.events.map((event, index) => {
-          // 홀수번째(1,3,5): 사진 왼쪽, 글 오른쪽
-          // 짝수번째(2,4): 사진 오른쪽, 글 왼쪽
-          const isOdd = (index + 1) % 2 === 1; // 홀수번째
+          // Odd indices (1,3,5): image left, text right
+          // Even indices (2,4): image right, text left
+          const isOdd = (index + 1) % 2 === 1;
           return (
           <motion.div 
             key={index} 
@@ -163,7 +138,7 @@ const TimelineSection: React.FC = () => {
                   <img 
                     src={event.image}
                     alt={event.title}
-                    className="event-image"
+                    className={`event-image${(event.image.includes('2013') || event.image.includes('2025')) ? ' event-image--pos-left' : ''}${event.image.includes('2018') ? ' event-image--pos-right' : ''}`}
                     onClick={() => handleImageClick(event.image!)}
                     style={{ cursor: 'pointer' }}
                   />
@@ -194,7 +169,7 @@ const TimelineSection: React.FC = () => {
                       <img 
                         src={event.image}
                         alt={event.title}
-                        className="event-image"
+                        className={`event-image${(event.image.includes('2013') || event.image.includes('2025')) ? ' event-image--pos-left' : ''}${event.image.includes('2018') ? ' event-image--pos-right' : ''}`}
                         onClick={() => handleImageClick(event.image!)}
                         style={{ cursor: 'pointer' }}
                       />
@@ -211,7 +186,7 @@ const TimelineSection: React.FC = () => {
           );
         })}
           </div>
-      </div>
+        </div>
       </motion.div>
 
       {typeof document !== 'undefined' && createPortal(

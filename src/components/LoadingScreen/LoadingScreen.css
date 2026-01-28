@@ -64,13 +64,13 @@
   display: inline-block;
   transform-origin: center;
   will-change: transform, opacity;
-  /* 그라데이션 텍스트 */
+  /* Gradient text */
   background: linear-gradient(135deg, #1A2F4A 0%, #1A2F4A 5%, #C9A77C 50%, #E6D8C3 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
-  /* 손글씨 느낌을 위한 약간의 불규칙성 */
+  /* Slight irregularity for handwritten feel */
   text-shadow: none;
   letter-spacing: 1px;
 }
@@ -84,7 +84,7 @@
   line-height: 1.6;
   word-wrap: break-word;
   min-height: 70px;
-  /* 그라데이션 텍스트 */
+  /* Gradient text */
   background: linear-gradient(135deg, #1A2F4A 0%, #1A2F4A 5%, #C9A77C 50%, #E6D8C3 100%);
   -webkit-background-clip: text;
   background-clip: text;

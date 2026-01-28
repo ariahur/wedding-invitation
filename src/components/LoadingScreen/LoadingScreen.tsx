@@ -4,7 +4,7 @@ import { useLanguage } from '../../contexts/LanguageContext';
 import { translations } from '../../data/translations';
 import './LoadingScreen.css';
 
-// 별 파티클 타입
+// Star particle type
 interface Star {
   id: number;
   x: number;
@@ -20,7 +20,7 @@ const LoadingScreen: React.FC = () => {
   const message = t.loading.message;
   const [stars, setStars] = useState<Star[]>([]);
 
-  // 별 파티클 생성 (15개)
+  // Create star particles (15 stars)
   useEffect(() => {
     const starCount = 15;
     const newStars: Star[] = [];
@@ -30,36 +30,36 @@ const LoadingScreen: React.FC = () => {
         id: i,
         x: Math.random() * 100, // 0-100%
         y: Math.random() * 100, // 0-100%
-        size: Math.random() * 8 + 10, // 10-18px (별 크기)
-        delay: Math.random() * 1.5, // 0-1.5초 지연
-        duration: Math.random() * 1.5 + 2, // 2-3.5초 애니메이션
+        size: Math.random() * 8 + 10, // 10-18px (star size)
+        delay: Math.random() * 1.5, // 0-1.5s delay
+        duration: Math.random() * 1.5 + 2, // 2-3.5s animation
       });
     }
     
     setStars(newStars);
   }, []);
   
-  // 메시지를 3줄로 분리: "We're", "getting", "married!"
+  // Split message into 3 lines: "We're", "getting", "married!"
   const words = message.split(' ');
   const lines = [
     words[0] || '',      // "We're"
     words[1] || '',      // "getting"
-    words.slice(2).join(' ') || ''  // "married!" (나머지 단어들)
+    words.slice(2).join(' ') || ''  // "married!" (remaining words)
   ].filter(line => line.length > 0);
 
-  // 모든 글자를 하나의 배열로 평탄화하되, 줄 정보 유지
+  // Flatten all characters into one array while maintaining line information
   const allCharacters: Array<{ char: string; lineIndex: number; isNewLine: boolean }> = [];
   lines.forEach((line, lineIndex) => {
     line.split('').forEach((char) => {
       allCharacters.push({ char, lineIndex, isNewLine: false });
     });
-    // 줄 끝에 줄바꿈 마커 추가 (마지막 줄 제외)
+    // Add line break marker at end of line (except last line)
     if (lineIndex < lines.length - 1) {
       allCharacters.push({ char: '\n', lineIndex, isNewLine: true });
     }
   });
 
-  // 전체 컨테이너 애니메이션 - 한 글자씩 순차적으로
+  // Container animation - sequentially character by character
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -88,7 +88,7 @@ const LoadingScreen: React.FC = () => {
 
   return (
     <div className="loading-screen">
-      {/* 별 파티클 배경 */}
+      {/* Star particle background */}
       <div className="stars-container">
         <AnimatePresence>
           {stars.map((star) => (

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
+import { sectionFadeInProps } from '../utils/animations';
 import './DirectionsSection.css';
 
 const DirectionsSection: React.FC = () => {
@@ -23,23 +24,17 @@ const DirectionsSection: React.FC = () => {
     }
   };
 
-
-
   return (
-    <div className="section-wrapper">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.4, ease: 'easeOut' }}
-      >
-        <div className="section-divider"></div>
+    <div className="section-wrapper section-wrapper--white">
+      <div className="section-divider"></div>
+      <div className="section-wave" aria-hidden="true" />
+      <motion.div {...sectionFadeInProps}>
         <div className="directions">
-      <h2 className="directions__title" lang={language}>{t.directions.title}</h2>
+          <h2 className="directions__title" lang={language}>{t.directions.title}</h2>
 
-      <div className="directions__address">
-        <div className="address-content">
-          <div className="address-venue">
+          <div className="directions__address">
+            <div className="address-content">
+              <div className="address-venue">
             {t.directions.venue}
             <a 
               href={`tel:${t.directions.tel.replace(/[^0-9-]/g, '')}`}
@@ -49,12 +44,12 @@ const DirectionsSection: React.FC = () => {
               <span className="material-symbols-outlined">call</span>
             </a>
           </div>
-          <div className="address-text">{t.directions.address}</div>
-          <div className="address-text">{t.directions.floor}</div>
-        </div>
-        
-        {/* 지도 영역 */}
-        <div className="directions__map">
+              <div className="address-text">{t.directions.address}</div>
+              <div className="address-text">{t.directions.floor}</div>
+            </div>
+            <div className="directions__block-divider" aria-hidden="true" />
+            {/* Map area */}
+            <div className="directions__map">
           {language === 'ko' ? (
             <iframe
               src={`${process.env.PUBLIC_URL}/kakao-map.html`}

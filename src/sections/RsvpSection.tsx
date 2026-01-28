@@ -7,6 +7,8 @@ import { supabase } from '../lib/supabase';
 import { Attendance } from '../types/rsvp';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
+import { sectionFadeInProps } from '../utils/animations';
+import { renderMultilineText } from '../utils/textUtils';
 import './RsvpSection.css';
 
 const createRsvpSchema = (language: 'ko' | 'en') => {
@@ -66,7 +68,7 @@ const RsvpSection: React.FC = () => {
   const noteValue = watch('note');
   const noteTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  // 불참 선택 시 guestCount 초기화
+  // Reset guestCount when not attending is selected
   useEffect(() => {
     if (attendance === 'not_attending') {
       setValue('guestCount', null);
@@ -96,7 +98,7 @@ const RsvpSection: React.FC = () => {
     setErrorMessage('');
 
     try {
-      // Supabase에 저장
+      // Save to Supabase
       const payload = {
             name: data.name,
             phone: data.phone,
@@ -116,7 +118,7 @@ const RsvpSection: React.FC = () => {
         throw error;
       }
 
-      // Google Sheets에 추가 (선택적, 실패해도 계속 진행)
+      // Add to Google Sheets (optional, continue even if it fails)
       const googleSheetsUrl = process.env.REACT_APP_GOOGLE_SHEETS_WEB_APP_URL;
       if (googleSheetsUrl) {
         try {
@@ -139,7 +141,7 @@ const RsvpSection: React.FC = () => {
             body: JSON.stringify(sheetsPayload),
           });
         } catch (sheetsError) {
-          // Google Sheets 저장 실패는 무시하고 계속 진행
+          // Ignore Google Sheets save failure and continue
         }
       }
 
@@ -165,23 +167,14 @@ const RsvpSection: React.FC = () => {
   };
 
   return (
-    <div className="section-wrapper" style={{ backgroundColor: '#FFFFFF' }}>
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.4, ease: 'easeOut' }}
-      >
-        <div className="section-divider"></div>
+    <div className="section-wrapper section-wrapper--white">
+      <div className="section-divider"></div>
+      <div className="section-wave" aria-hidden="true" />
+      <motion.div {...sectionFadeInProps}>
         <div className="rsvp">
-      <h2 className="rsvp__title" lang={language}>{t.rsvp.title}</h2>
+          <h2 className="rsvp__title" lang={language}>{t.rsvp.title}</h2>
       <p className="rsvp__intro">
-        {t.rsvp.intro.split('\n').map((line, index) => (
-          <React.Fragment key={index}>
-            {line}
-            {index < t.rsvp.intro.split('\n').length - 1 && <br />}
-          </React.Fragment>
-        ))}
+        {renderMultilineText(t.rsvp.intro)}
       </p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="rsvp__form">
@@ -230,6 +223,8 @@ const RsvpSection: React.FC = () => {
           )}
         </div>
 
+        <div className="rsvp-form-divider" aria-hidden="true" />
+
         <div className="form-group">
           <label htmlFor="email" className="form-label">
             {t.rsvp.form.email} {t.rsvp.form.emailOptional}
@@ -247,6 +242,8 @@ const RsvpSection: React.FC = () => {
             <span className="form-error">{errors.email.message}</span>
           )}
         </div>
+
+        <div className="rsvp-form-divider" aria-hidden="true" />
 
         <div className="form-group form-group--column">
           <label className="form-label">
@@ -299,12 +296,7 @@ const RsvpSection: React.FC = () => {
               <span className="form-error">{errors.guestCount.message}</span>
             )}
             <span className="form-hint">
-              {t.rsvp.form.guestCountHint.split('\n').map((line, index) => (
-                <React.Fragment key={index}>
-                  {line}
-                  {index < t.rsvp.form.guestCountHint.split('\n').length - 1 && <br />}
-                </React.Fragment>
-              ))}
+              {renderMultilineText(t.rsvp.form.guestCountHint)}
             </span>
           </div>
         )}

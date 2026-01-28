@@ -1,14 +1,17 @@
 .thank-you {
   padding: 0;
-  background-color: #FFFFFF;
+  background-color: transparent;
   position: relative;
   overflow: hidden;
   margin-top: 0;
-  border-radius: 0 0 16px 16px;
+  border-radius: 0 0 18px 18px;
   height: 168px;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.04), 0 -1px 4px rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(26, 47, 74, 0.06);
+  border-top: none;
 }
 
 .thank-you__background {
@@ -18,7 +21,7 @@
   right: 0;
   bottom: 0;
   background-size: cover;
-  background-position: center;
+  background-position: 50% 65%;
   background-repeat: no-repeat;
   opacity: 0.3;
   z-index: 0;
