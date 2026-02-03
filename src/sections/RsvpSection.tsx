@@ -223,8 +223,6 @@ const RsvpSection: React.FC = () => {
           )}
         </div>
 
-        <div className="rsvp-form-divider" aria-hidden="true" />
-
         <div className="form-group">
           <label htmlFor="email" className="form-label">
             {t.rsvp.form.email} {t.rsvp.form.emailOptional}
@@ -242,8 +240,6 @@ const RsvpSection: React.FC = () => {
             <span className="form-error">{errors.email.message}</span>
           )}
         </div>
-
-        <div className="rsvp-form-divider" aria-hidden="true" />
 
         <div className="form-group form-group--column">
           <label className="form-label">

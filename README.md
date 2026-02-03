@@ -124,6 +124,15 @@ npx serve -s build
    - `REACT_APP_SUPABASE_ANON_KEY`
 3. 빌드·배포는 푸시 시 자동 수행 (Build Command: `npm run build`, Output: `build`)
 
+### Supabase Keepalive (일시정지 방지)
+
+Supabase 무료 플랜은 며칠간 요청이 없으면 프로젝트가 일시정지됩니다. 이를 방지하기 위해 Vercel Cron이 **매일 UTC 자정(한국시간 09:00)**에 `rsvp_responses` 테이블을 조회합니다.
+
+- **API**: `api/supabase-keepalive.ts` — `rsvp_responses`에서 `id` 1건만 조회
+- **Cron**: `vercel.json`에 `0 0 * * *` 스케줄 설정
+
+**필수**: Keepalive가 동작하려면 Supabase에서 `rsvp_responses`에 SELECT 정책이 있어야 합니다. `database_update.sql`의 마지막 정책을 Supabase SQL Editor에서 실행하세요.
+
 ## 주요 기능
 
 - **로딩 화면** — "We're getting married!" 문자 애니메이션, 별 파티클, 골드·베이지 그라데이션
