@@ -62,7 +62,7 @@ const AboutUsSection: React.FC = () => {
                   <span className="about-us__name-text">{t.aboutUs.groom.name}</span>
                 </h3>
                 <p className="about-us__keyword">{t.aboutUs.groom.keyword}</p>
-                <p className="about-us__birth">{t.aboutUs.groom.birth}</p>
+                {/* <p className="about-us__birth">{t.aboutUs.groom.birth}</p> */}
                 <p className="about-us__description">
                   {renderMultilineText(t.aboutUs.groom.description)}
                 </p>
@@ -98,7 +98,7 @@ const AboutUsSection: React.FC = () => {
                   <span className="about-us__name-text">{t.aboutUs.bride.name}</span>
                 </h3>
                 <p className="about-us__keyword">{t.aboutUs.bride.keyword}</p>
-                <p className="about-us__birth">{t.aboutUs.bride.birth}</p>
+                {/* <p className="about-us__birth">{t.aboutUs.bride.birth}</p> */}
                 <p className="about-us__description">
                   {renderMultilineText(t.aboutUs.bride.description)}
                 </p>
