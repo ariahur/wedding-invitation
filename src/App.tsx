@@ -120,6 +120,17 @@ const WeddingInvitation: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  /* Prevent context menu (long-press save) on images */
+  useEffect(() => {
+    const handleContextMenu = (e: MouseEvent) => {
+      if (e.target instanceof HTMLImageElement) {
+        e.preventDefault();
+      }
+    };
+    document.addEventListener('contextmenu', handleContextMenu);
+    return () => document.removeEventListener('contextmenu', handleContextMenu);
+  }, []);
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,

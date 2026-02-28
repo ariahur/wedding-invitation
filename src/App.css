@@ -1,3 +1,13 @@
+/* Prevent image save on long-press (mobile) */
+.App img {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  user-drag: none;
+  pointer-events: auto;
+}
+
 .App {
   min-height: 100vh;
   width: 100%;
