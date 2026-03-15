@@ -1,6 +1,6 @@
 # Google Sheets 연동 설정 가이드
 
-RSVP 폼 제출 시 Google Sheets에 자동으로 데이터가 추가되도록 설정하는 방법입니다.
+RSVP 폼 제출 시 **Google Sheets에만** 데이터가 저장됩니다. 아래 설정이 없으면 RSVP 제출이 동작하지 않습니다.
 
 ## 1. Google Sheets 준비
 
@@ -71,7 +71,6 @@ Google Apps Script 웹 앱은 CORS를 지원하므로 일반적으로 문제가 
 
 ## 참고사항
 
-- Google Sheets 저장은 선택적입니다. 실패해도 Supabase 저장은 계속 진행됩니다.
-- Google Sheets 저장 실패는 콘솔에 경고로만 표시되며, 사용자에게는 오류가 표시되지 않습니다.
-- 환경 변수가 설정되지 않으면 Google Sheets 저장은 건너뜁니다.
+- RSVP 데이터는 Google Sheets만 사용합니다. `REACT_APP_GOOGLE_SHEETS_WEB_APP_URL`이 설정되지 않으면 제출 시 오류가 표시됩니다.
+- Vercel 등에 배포할 때도 동일한 환경 변수를 설정해야 합니다.
 

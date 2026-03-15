@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { motion } from 'framer-motion';
-import { supabase } from '../lib/supabase';
 import { Attendance } from '../types/rsvp';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
@@ -98,51 +97,31 @@ const RsvpSection: React.FC = () => {
     setErrorMessage('');
 
     try {
-      // Save to Supabase
-      const payload = {
-            name: data.name,
-            phone: data.phone,
-            email: data.email || null,
-            attendance: data.attendance,
-            guest_count: data.attendance === 'attending' ? data.guestCount || 1 : null,
-        has_children: data.hasChildren || null,
-        children_ages: data.childrenAges || null,
-            note: data.note || null,
-      };
-
-      const { error } = await supabase
-        .from('rsvp_responses')
-        .insert([payload]);
-
-      if (error) {
-        throw error;
+      const googleSheetsUrl = process.env.REACT_APP_GOOGLE_SHEETS_WEB_APP_URL;
+      if (!googleSheetsUrl) {
+        throw new Error(language === 'ko' ? 'Google 스프레드시트 연동이 설정되지 않았습니다. .env에 REACT_APP_GOOGLE_SHEETS_WEB_APP_URL을 추가해주세요.' : 'Google Sheets is not configured. Add REACT_APP_GOOGLE_SHEETS_WEB_APP_URL to .env.');
       }
 
-      // Add to Google Sheets (optional, continue even if it fails)
-      const googleSheetsUrl = process.env.REACT_APP_GOOGLE_SHEETS_WEB_APP_URL;
-      if (googleSheetsUrl) {
-        try {
-          const sheetsPayload = {
-            name: data.name,
-            phone: data.phone,
-            email: data.email || '',
-            attendance: data.attendance,
-            guestCount: data.attendance === 'attending' ? data.guestCount || 1 : null,
-            hasChildren: data.hasChildren || '',
-            childrenAges: data.childrenAges || '',
-            note: data.note || '',
-          };
-          
-          await fetch(googleSheetsUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'text/plain',
-            },
-            body: JSON.stringify(sheetsPayload),
-          });
-        } catch (sheetsError) {
-          // Ignore Google Sheets save failure and continue
-        }
+      const sheetsPayload = {
+        name: data.name,
+        phone: data.phone,
+        email: data.email || '',
+        attendance: data.attendance,
+        guestCount: data.attendance === 'attending' ? data.guestCount || 1 : null,
+        hasChildren: data.hasChildren || '',
+        childrenAges: data.childrenAges || '',
+        note: data.note || '',
+      };
+
+      const res = await fetch(googleSheetsUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(sheetsPayload),
+      });
+
+      const result = await res.json().catch(() => ({}));
+      if (!res.ok || result.success === false) {
+        throw new Error(result.error || t.rsvp.form.error);
       }
 
       setSubmitStatus('success');

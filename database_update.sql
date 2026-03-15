@@ -1,4 +1,5 @@
--- RSVP 테이블에 어린이/영유아 관련 필드 추가
+-- [더 이상 사용하지 않음] RSVP는 Google Sheets만 사용합니다.
+-- 참고용으로 보관: RSVP 테이블에 어린이/영유아 관련 필드 추가 (Supabase 사용 시)
 -- Supabase 대시보드의 SQL Editor에서 실행하세요
 
 -- hasChildren 컬럼 추가 (어린이/영유아 참석 여부)

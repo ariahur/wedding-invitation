@@ -18,7 +18,7 @@ npm start
 브라우저 캐시를 삭제하고 강력 새로고침(Ctrl+Shift+R 또는 Cmd+Shift+R)을 시도하세요.
 
 ### 5. 환경변수 확인
-`.env` 파일이 있는지, 그리고 Supabase 환경변수가 설정되어 있는지 확인하세요.
+`.env` 파일에 `REACT_APP_GOOGLE_SHEETS_WEB_APP_URL`이 설정되어 있는지 확인하세요.
 (환경변수가 없어도 화면은 보여야 합니다. RSVP 제출만 작동하지 않습니다.)
 
 ### 6. 빌드 확인
