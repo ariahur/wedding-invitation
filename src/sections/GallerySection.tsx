@@ -7,13 +7,27 @@ import { useScrollLock } from '../hooks/useScrollLock';
 import { sectionFadeInProps } from '../utils/animations';
 import {
   buildGalleryBlocks,
-  galleryImageUrl,
+  fallbackSrc,
   galleryImages,
+  srcSet,
   GalleryBlock,
 } from '../data/gallery';
 import './GallerySection.css';
 
 const SWIPE_THRESHOLD = 48;
+const GROUP = 'gallery';
+
+/**
+ * 타일이 실제로 차지하는 너비. 브라우저가 srcset 중 알맞은 한 장을 고르는 기준이라
+ * 레이아웃(App.css의 430px 컨테이너)과 어긋나면 필요 이상으로 큰 사진을 받는다.
+ */
+const TILE_SIZES: Record<string, string> = {
+  'gallery__tile--tall': '(max-width: 430px) 54vw, 232px',
+  'gallery__tile--stacked': '(max-width: 430px) 46vw, 198px',
+  'gallery__block--trio': '(max-width: 430px) 33vw, 143px',
+  'gallery__block--pair': '(max-width: 430px) 50vw, 215px',
+  'gallery__block--full': '(max-width: 430px) 100vw, 430px',
+};
 
 const GallerySection: React.FC = () => {
   const language = useLanguage();
@@ -54,6 +68,19 @@ const GallerySection: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [openIndex, close, go]);
 
+  // 좌우로 넘길 사진을 미리 받아둬야 스와이프가 끊기지 않는다
+  useEffect(() => {
+    if (openIndex === null || total < 2) return;
+
+    [1, -1].forEach((delta) => {
+      const image = galleryImages[(openIndex + delta + total) % total];
+      const preload = new Image();
+      preload.sizes = '(max-width: 500px) 100vw, 500px';
+      preload.srcset = srcSet(image, GROUP);
+      preload.src = fallbackSrc(image, GROUP);
+    });
+  }, [openIndex, total]);
+
   const handleTouchStart = (event: React.TouchEvent) => {
     const touch = event.touches[0];
     touchStartRef.current = { x: touch.clientX, y: touch.clientY };
@@ -74,26 +101,37 @@ const GallerySection: React.FC = () => {
     }
   };
 
-  const renderTile = (index: number, className: string) => (
-    <button
-      key={index}
-      type="button"
-      className={`gallery__tile ${className}`}
-      onClick={() => setOpenIndex(index)}
-      aria-label={`${t.gallery.photoLabel} ${index + 1}`}
-    >
-      <img
-        src={galleryImageUrl(galleryImages[index])}
-        alt={`${t.gallery.photoLabel} ${index + 1}`}
-        className="gallery__tile-image"
-        loading="lazy"
-        decoding="async"
-      />
-    </button>
-  );
+  const renderTile = (index: number, className: string, sizes: string) => {
+    const image = galleryImages[index];
+
+    return (
+      <button
+        key={index}
+        type="button"
+        className={`gallery__tile ${className}`}
+        onClick={() => setOpenIndex(index)}
+        aria-label={`${t.gallery.photoLabel} ${index + 1}`}
+        // 사진이 도착하기 전까지 흐릿한 미리보기로 자리를 채운다
+        style={{ backgroundImage: `url(${image.placeholder})` }}
+      >
+        <img
+          src={fallbackSrc(image, GROUP)}
+          srcSet={srcSet(image, GROUP)}
+          sizes={sizes}
+          width={image.width}
+          height={image.height}
+          alt={`${t.gallery.photoLabel} ${index + 1}`}
+          className="gallery__tile-image"
+          loading="lazy"
+          decoding="async"
+        />
+      </button>
+    );
+  };
 
   const renderBlock = (block: GalleryBlock, blockIndex: number) => {
     const [first, ...rest] = block.indexes;
+    const blockSizes = TILE_SIZES[`gallery__block--${block.type}`];
 
     return (
       <motion.div
@@ -106,17 +144,21 @@ const GallerySection: React.FC = () => {
       >
         {block.type === 'feature-left' || block.type === 'feature-right' ? (
           <>
-            {renderTile(first, 'gallery__tile--tall')}
+            {renderTile(first, 'gallery__tile--tall', TILE_SIZES['gallery__tile--tall'])}
             <div className="gallery__stack">
-              {rest.map((index) => renderTile(index, 'gallery__tile--stacked'))}
+              {rest.map((index) =>
+                renderTile(index, 'gallery__tile--stacked', TILE_SIZES['gallery__tile--stacked'])
+              )}
             </div>
           </>
         ) : (
-          block.indexes.map((index) => renderTile(index, ''))
+          block.indexes.map((index) => renderTile(index, '', blockSizes))
         )}
       </motion.div>
     );
   };
+
+  const openImage = openIndex === null ? null : galleryImages[openIndex];
 
   return (
     <div className="section-wrapper section-wrapper--white">
@@ -138,7 +180,7 @@ const GallerySection: React.FC = () => {
       {typeof document !== 'undefined' &&
         createPortal(
           <AnimatePresence>
-            {openIndex !== null && (
+            {openIndex !== null && openImage && (
               <motion.div
                 className="gallery-lightbox"
                 initial={{ opacity: 0 }}
@@ -164,7 +206,11 @@ const GallerySection: React.FC = () => {
                   <AnimatePresence mode="wait" initial={false} custom={swipeDirection}>
                     <motion.img
                       key={openIndex}
-                      src={galleryImageUrl(galleryImages[openIndex])}
+                      src={fallbackSrc(openImage, GROUP)}
+                      srcSet={srcSet(openImage, GROUP)}
+                      sizes="(max-width: 500px) 100vw, 500px"
+                      width={openImage.width}
+                      height={openImage.height}
                       alt={`${t.gallery.photoLabel} ${openIndex + 1}`}
                       className="gallery-lightbox__image"
                       custom={swipeDirection}

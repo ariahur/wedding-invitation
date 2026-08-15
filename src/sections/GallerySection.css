@@ -93,7 +93,10 @@
   border: none;
   border-radius: 6px;
   overflow: hidden;
-  background: rgba(26, 47, 74, 0.06);
+  /* 사진이 도착하기 전에는 인라인 style로 넣은 흐릿한 미리보기가 깔린다 */
+  background-color: rgba(26, 47, 74, 0.06);
+  background-size: cover;
+  background-position: center;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }

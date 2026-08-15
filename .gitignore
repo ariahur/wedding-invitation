@@ -11,6 +11,10 @@
 # production
 /build
 
+# 원본 사진 (장당 5~7MB). npm run images 로 public/ 에 웹용 사본을 만들어 쓴다.
+# 원본 자체는 저장소가 아니라 별도(로컬/클라우드)에 보관할 것.
+/assets/originals
+
 # misc
 .DS_Store
 .env.local

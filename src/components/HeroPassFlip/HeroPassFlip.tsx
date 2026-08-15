@@ -4,6 +4,7 @@ import { translations } from '../../data/translations';
 import { HERO_PASS_ELEMENT_ID, useRsvpTicket } from '../../contexts/RsvpTicketContext';
 import { renderMultilineText } from '../../utils/textUtils';
 import { phoneLast4 } from '../../utils/rsvpStorage';
+import { fallbackSrc, heroImage, srcSet } from '../../data/gallery';
 import './HeroPassFlip.css';
 
 /**
@@ -35,11 +36,19 @@ const HeroPassFlip: React.FC = () => {
       <div className={`hero-flip__inner ${isFlipped ? 'hero-flip__inner--flipped' : ''}`}>
         {/* 앞면: 커플 사진 */}
         <div className="hero-flip__face hero-flip__face--front" aria-hidden={isFlipped}>
-          <img
-            src={`${process.env.PUBLIC_URL}/hero/hero.jpg`}
-            alt="Couple"
-            className="hero-flip__photo"
-          />
+          {heroImage && (
+            <img
+              src={fallbackSrc(heroImage, 'hero')}
+              srcSet={srcSet(heroImage, 'hero')}
+              sizes="(max-width: 430px) 100vw, 430px"
+              width={heroImage.width}
+              height={heroImage.height}
+              alt="Couple"
+              className="hero-flip__photo"
+              // 첫 화면에 보이는 사진이라 지연 없이 먼저 받는다
+              decoding="async"
+            />
+          )}
           {canFlip && (
             <button
               type="button"
