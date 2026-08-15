@@ -48,8 +48,9 @@ export const buildGalleryBlocks = (images: string[]): GalleryBlock[] => {
 
   while (cursor < images.length) {
     const { type, size } = BLOCK_PATTERN[step % BLOCK_PATTERN.length];
-    const remaining = images.length - cursor;
-    const indexes = Array.from({ length: Math.min(size, remaining) }, (_, i) => cursor + i);
+    const start = cursor;
+    const remaining = images.length - start;
+    const indexes = Array.from({ length: Math.min(size, remaining) }, (_, i) => start + i);
 
     blocks.push(indexes.length < size ? tailBlock(indexes) : { type, indexes });
 
