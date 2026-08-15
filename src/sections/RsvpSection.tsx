@@ -2,12 +2,16 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { motion } from 'framer-motion';
-import { Attendance } from '../types/rsvp';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Attendance, RsvpTicket as RsvpTicketData } from '../types/rsvp';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
 import { sectionFadeInProps } from '../utils/animations';
 import { renderMultilineText } from '../utils/textUtils';
+import { useRsvpTicket } from '../contexts/RsvpTicketContext';
+import { submitRsvp } from '../utils/rsvpApi';
+import RsvpIssuedPanel from '../components/RsvpIssuedPanel/RsvpIssuedPanel';
+import RsvpLookupModal from '../components/RsvpLookupModal/RsvpLookupModal';
 import './RsvpSection.css';
 
 const createRsvpSchema = (language: 'ko' | 'en') => {
@@ -41,8 +45,17 @@ const RsvpSection: React.FC = () => {
   const language = useLanguage();
   const t = translations[language];
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+  const [isLookupOpen, setIsLookupOpen] = useState(false);
+  const {
+    ticket,
+    variant: ticketVariant,
+    applyTicket: applyTicketToApp,
+    setPassRevealed,
+    revealPass,
+  } = useRsvpTicket();
 
   const rsvpSchema = createRsvpSchema(language);
 
@@ -84,7 +97,46 @@ const RsvpSection: React.FC = () => {
       const scrollHeight = textarea.scrollHeight;
       textarea.style.height = `${Math.min(scrollHeight, 200)}px`;
     }
-  }, [noteValue]);
+  }, [noteValue, isEditing, ticket]);
+
+  const showTicket = ticket !== null && !isEditing;
+
+  const applyTicket = (nextTicket: RsvpTicketData, variant: 'issued' | 'saved') => {
+    applyTicketToApp(nextTicket, variant);
+    setIsEditing(false);
+  };
+
+  const handleEdit = () => {
+    if (!ticket) return;
+
+    reset({
+      name: ticket.name,
+      phone: ticket.phone,
+      email: ticket.email || '',
+      attendance: ticket.attendance,
+      guestCount: ticket.attendance === 'attending' ? ticket.guestCount ?? 1 : null,
+      hasChildren: ticket.hasChildren || 'no',
+      childrenAges: ticket.childrenAges || '',
+      note: ticket.note || '',
+      honeypot: '',
+    });
+    setSubmitStatus('idle');
+    setErrorMessage('');
+    setIsEditing(true);
+    // 수정 중에는 히어로 사진도 원래대로 되돌린다
+    setPassRevealed(false);
+  };
+
+  const handleCancelEdit = () => {
+    setSubmitStatus('idle');
+    setErrorMessage('');
+    setIsEditing(false);
+  };
+
+  const handleFound = (found: RsvpTicketData) => {
+    setIsLookupOpen(false);
+    applyTicket(found, 'saved');
+  };
 
   const onSubmit = async (data: z.infer<typeof rsvpSchema>) => {
     // Honeypot check
@@ -96,35 +148,22 @@ const RsvpSection: React.FC = () => {
     setSubmitStatus('idle');
     setErrorMessage('');
 
+    const nextTicket: RsvpTicketData = {
+      name: data.name,
+      phone: data.phone,
+      email: data.email || '',
+      attendance: data.attendance,
+      guestCount: data.attendance === 'attending' ? data.guestCount || 1 : null,
+      hasChildren: data.hasChildren || 'no',
+      childrenAges: data.childrenAges || '',
+      note: data.note || '',
+      submittedAt: ticket?.submittedAt || new Date().toISOString(),
+    };
+
     try {
-      const googleSheetsUrl = process.env.REACT_APP_GOOGLE_SHEETS_WEB_APP_URL;
-      if (!googleSheetsUrl) {
-        throw new Error(language === 'ko' ? 'Google 스프레드시트 연동이 설정되지 않았습니다. .env에 REACT_APP_GOOGLE_SHEETS_WEB_APP_URL을 추가해주세요.' : 'Google Sheets is not configured. Add REACT_APP_GOOGLE_SHEETS_WEB_APP_URL to .env.');
-      }
+      await submitRsvp(language, nextTicket, t.rsvp.form.error);
 
-      const sheetsPayload = {
-        name: data.name,
-        phone: data.phone,
-        email: data.email || '',
-        attendance: data.attendance,
-        guestCount: data.attendance === 'attending' ? data.guestCount || 1 : null,
-        hasChildren: data.hasChildren || '',
-        childrenAges: data.childrenAges || '',
-        note: data.note || '',
-      };
-
-      const res = await fetch(googleSheetsUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify(sheetsPayload),
-      });
-
-      const result = await res.json().catch(() => ({}));
-      if (!res.ok || result.success === false) {
-        throw new Error(result.error || t.rsvp.form.error);
-      }
-
-      setSubmitStatus('success');
+      applyTicket(nextTicket, 'issued');
       reset({
         name: '',
         phone: '',
@@ -156,7 +195,43 @@ const RsvpSection: React.FC = () => {
         {renderMultilineText(t.rsvp.intro)}
       </p>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="rsvp__form">
+      <AnimatePresence mode="wait" initial={false}>
+        {showTicket ? (
+          <RsvpIssuedPanel
+            key="ticket"
+            ticket={ticket}
+            variant={ticketVariant}
+            onView={revealPass}
+            onEdit={handleEdit}
+          />
+        ) : (
+          <motion.div
+            key="form"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+          >
+            <div className="rsvp-lookup-banner">
+              <div className="rsvp-lookup-banner__text">
+                <span className="rsvp-lookup-banner__label">
+                  {isEditing ? t.rsvp.lookup.editingLabel : t.rsvp.lookup.bannerLabel}
+                </span>
+                <span className="rsvp-lookup-banner__title" lang={language}>
+                  {isEditing ? t.rsvp.lookup.editingTitle : t.rsvp.lookup.bannerTitle}
+                </span>
+              </div>
+              <button
+                type="button"
+                className="rsvp-lookup-banner__button"
+                onClick={isEditing ? handleCancelEdit : () => setIsLookupOpen(true)}
+                lang={language}
+              >
+                {isEditing ? t.rsvp.lookup.editingButton : t.rsvp.lookup.bannerButton}
+              </button>
+            </div>
+
+            <form onSubmit={handleSubmit(onSubmit)} className="rsvp__form">
         {/* Honeypot field */}
         <input
           type="text"
@@ -343,12 +418,6 @@ const RsvpSection: React.FC = () => {
           </div>
         </div>
 
-        {submitStatus === 'success' && (
-          <div className="form-message form-message--success">
-            {t.rsvp.form.success}
-          </div>
-        )}
-
         {submitStatus === 'error' && (
           <div className="form-message form-message--error">
             {errorMessage}
@@ -357,21 +426,28 @@ const RsvpSection: React.FC = () => {
 
         <button
           type="submit"
-          disabled={isSubmitting || submitStatus === 'success'}
+          disabled={isSubmitting}
           className="form-submit"
           lang={language}
         >
-          {isSubmitting 
-            ? t.rsvp.form.submitting 
-            : submitStatus === 'success'
+          {isSubmitting
+            ? t.rsvp.form.submitting
+            : attendance === 'attending'
               ? t.rsvp.form.submit
-              : attendance === 'attending' 
-                ? t.rsvp.form.submit 
-                : t.rsvp.form.submitNotAttending}
+              : t.rsvp.form.submitNotAttending}
         </button>
-      </form>
+            </form>
+          </motion.div>
+        )}
+      </AnimatePresence>
         </div>
       </motion.div>
+
+      <RsvpLookupModal
+        isOpen={isLookupOpen}
+        onClose={() => setIsLookupOpen(false)}
+        onFound={handleFound}
+      />
     </div>
   );
 };

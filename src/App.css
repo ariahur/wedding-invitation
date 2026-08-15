@@ -90,6 +90,7 @@
 /* Section padding maintained in each section CSS (24px 20px), only background is transparent */
 .paper-container .about-us,
 .paper-container .timeline,
+.paper-container .gallery,
 .paper-container .directions,
 .paper-container .rsvp {
   margin-top: 0;

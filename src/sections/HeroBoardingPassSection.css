@@ -259,20 +259,7 @@
   width: calc(100% + 40px);
 }
 
-.couple-photo-container {
-  position: relative;
-  width: 100%;
-  height: 256px;
-  overflow: hidden;
-  background: transparent;
-}
-
-.couple-photo-bg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
+/* 사진 영역(뒤집히는 탑승권)은 HeroPassFlip.css 참고 */
 
 .boarding-pass__couple {
   background: #FFFFFF;

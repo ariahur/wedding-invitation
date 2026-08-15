@@ -53,6 +53,69 @@
   font-weight: 500;
 }
 
+/* 이미 신청한 사용자를 위한 탑승권 조회 안내 */
+.rsvp-lookup-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 18px;
+  margin-bottom: 24px;
+  background: #1A2F4A;
+  border-radius: 12px;
+}
+
+.rsvp-lookup-banner__text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.rsvp-lookup-banner__label {
+  font-family: "Roboto", sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.rsvp-lookup-banner__title {
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+  font-size: 14px;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  word-break: keep-all;
+}
+
+.rsvp-lookup-banner__title:lang(en) {
+  font-family: "Lora", serif;
+  font-size: 13px;
+}
+
+.rsvp-lookup-banner__button {
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+  flex-shrink: 0;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: #ffffff;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.rsvp-lookup-banner__button:lang(en) {
+  font-family: "Lora", serif;
+}
+
+.rsvp-lookup-banner__button:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #C9A77C;
+}
+
 .rsvp__form {
   display: flex;
   flex-direction: column;
@@ -389,6 +452,20 @@
   .form-textarea {
     padding: 10px 14px;
     font-size: 12px;
+  }
+
+  .rsvp-lookup-banner {
+    padding: 14px 16px;
+    gap: 12px;
+  }
+
+  .rsvp-lookup-banner__title {
+    font-size: 13px;
+  }
+
+  .rsvp-lookup-banner__button {
+    padding: 9px 12px;
+    font-size: 11px;
   }
 }
 

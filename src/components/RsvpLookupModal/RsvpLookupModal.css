@@ -1,0 +1,157 @@
+.rsvp-lookup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(26, 47, 74, 0.75);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+}
+
+.rsvp-lookup-modal {
+  background: linear-gradient(135deg, #1A2F4A 0%, #2a3f5a 100%);
+  border-radius: 16px;
+  padding: 28px 20px 24px;
+  max-width: 400px;
+  width: 100%;
+  position: relative;
+  z-index: 1001;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.rsvp-lookup-modal__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
+  width: 32px;
+  height: 32px;
+}
+
+.rsvp-lookup-modal__close:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.rsvp-lookup-modal__close .material-symbols-outlined {
+  font-size: 22px;
+}
+
+.rsvp-lookup-modal__label {
+  font-family: "Roboto", sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.5);
+  padding-right: 32px;
+}
+
+.rsvp-lookup-modal__title {
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  margin: 10px 0 0;
+  padding-right: 32px;
+  word-break: keep-all;
+}
+
+.rsvp-lookup-modal__title:lang(en) {
+  font-family: "Lora", serif;
+  font-size: 16px;
+}
+
+.rsvp-lookup-modal__form {
+  margin-top: 22px;
+}
+
+.rsvp-lookup-modal__fields {
+  display: flex;
+  gap: 10px;
+}
+
+.rsvp-lookup-modal__input {
+  flex: 1;
+  min-width: 0;
+  padding: 14px 14px;
+  font-family: inherit;
+  font-size: 13px;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.rsvp-lookup-modal__input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.rsvp-lookup-modal__input:focus {
+  outline: none;
+  border-color: #C9A77C;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.rsvp-lookup-modal__hint,
+.rsvp-lookup-modal__error {
+  font-size: 11px;
+  line-height: 1.7;
+  margin: 14px 0 0;
+  word-break: keep-all;
+}
+
+.rsvp-lookup-modal__hint {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.rsvp-lookup-modal__error {
+  color: #E8A598;
+}
+
+.rsvp-lookup-modal__submit {
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+  width: 100%;
+  margin-top: 18px;
+  padding: 15px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+  background: #C9A77C;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.rsvp-lookup-modal__submit:lang(en) {
+  font-family: "Lora", serif;
+}
+
+.rsvp-lookup-modal__submit:hover:not(:disabled) {
+  background: #D4B896;
+}
+
+.rsvp-lookup-modal__submit:disabled {
+  background: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.4);
+  cursor: not-allowed;
+}
