@@ -29,7 +29,7 @@ const JPEG_QUALITY = 78;
 /** 로딩 중 자리를 채우는 흐릿한 미리보기의 가로 픽셀 */
 const PLACEHOLDER_WIDTH = 16;
 
-const GROUPS = ['gallery', 'hero'];
+const GROUPS = ['gallery', 'hero', 'about', 'timeline', 'footer'];
 
 /** 변환 결과 파일명 규칙 — 정리(prune) 대상을 가려낼 때도 쓴다 */
 const OUTPUT_PATTERN = /-[0-9a-f]{8}-\d+\.(webp|jpg)$/;
@@ -56,9 +56,10 @@ const processImage = async (sourcePath, outDir, stem) => {
   const pipeline = sharp(sourcePath).rotate(); // EXIF 회전 정보를 픽셀에 반영
   const { width, height } = await pipeline.metadata();
 
-  // 원본보다 크게 늘리지 않는다
-  const widths = WIDTHS.filter((w) => w <= width);
-  if (widths.length === 0) widths.push(width);
+  // 원본보다 크게 늘리지 않되, 원본이 작으면 그 크기 그대로도 한 장 남겨
+  // 가장 큰 화면에서 필요 이상으로 흐려지지 않게 한다
+  const widths = WIDTHS.filter((w) => w < width);
+  widths.push(Math.min(width, WIDTHS[WIDTHS.length - 1]));
 
   let generated = 0;
 

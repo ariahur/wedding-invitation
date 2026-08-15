@@ -5,9 +5,13 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { sectionFadeInProps } from '../utils/animations';
+import { imageProps } from '../data/images';
 import './TimelineSection.css';
 
 const startDate = new Date('2013-06-02T00:00:00');
+
+/** .timeline__event-image 는 최대 120px */
+const THUMB_SIZES = '120px';
 
 const TimelineSection: React.FC = () => {
   const language = useLanguage();
@@ -135,12 +139,14 @@ const TimelineSection: React.FC = () => {
                 <>
               <div className="timeline__event-image">
                 {event.image ? (
-                  <img 
-                    src={event.image}
+                  <img
+                    {...imageProps(event.image, THUMB_SIZES)}
                     alt={event.title}
                     className={`event-image${(event.image.includes('2013') || event.image.includes('2025')) ? ' event-image--pos-left' : ''}${event.image.includes('2018') ? ' event-image--pos-right' : ''}`}
                     onClick={() => handleImageClick(event.image!)}
                     style={{ cursor: 'pointer' }}
+                    loading="lazy"
+                    decoding="async"
                   />
                 ) : (
                   <div className="event-image-placeholder">
@@ -166,12 +172,14 @@ const TimelineSection: React.FC = () => {
               </div>
                   <div className="timeline__event-image">
                     {event.image ? (
-                      <img 
-                        src={event.image}
+                      <img
+                        {...imageProps(event.image, THUMB_SIZES)}
                         alt={event.title}
                         className={`event-image${(event.image.includes('2013') || event.image.includes('2025')) ? ' event-image--pos-left' : ''}${event.image.includes('2018') ? ' event-image--pos-right' : ''}`}
                         onClick={() => handleImageClick(event.image!)}
                         style={{ cursor: 'pointer' }}
+                        loading="lazy"
+                        decoding="async"
                       />
                     ) : (
                       <div className="event-image-placeholder">
@@ -215,8 +223,8 @@ const TimelineSection: React.FC = () => {
                 >
                   <span className="material-symbols-outlined">close</span>
                 </button>
-                <img 
-                  src={selectedImage}
+                <img
+                  {...imageProps(selectedImage, '100vw')}
                   alt="Timeline event"
                   className="timeline-image-modal__image"
                 />

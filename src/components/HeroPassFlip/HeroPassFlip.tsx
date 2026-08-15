@@ -4,7 +4,7 @@ import { translations } from '../../data/translations';
 import { HERO_PASS_ELEMENT_ID, useRsvpTicket } from '../../contexts/RsvpTicketContext';
 import { renderMultilineText } from '../../utils/textUtils';
 import { phoneLast4 } from '../../utils/rsvpStorage';
-import { fallbackSrc, heroImage, srcSet } from '../../data/gallery';
+import { imageProps } from '../../data/images';
 import './HeroPassFlip.css';
 
 /**
@@ -12,6 +12,9 @@ import './HeroPassFlip.css';
  * 탑승권이 발급된 손님(이 기기에 저장/조회된 손님)에게는
  * 사진을 누르면 뒤집히며 탑승권 뒷면이 나타난다.
  */
+/** 430px 컨테이너를 가로로 꽉 채우는 사진 */
+const heroPhoto = imageProps('hero/hero', '(max-width: 430px) 100vw, 430px');
+
 const HeroPassFlip: React.FC = () => {
   const language = useLanguage();
   const t = translations[language];
@@ -36,13 +39,9 @@ const HeroPassFlip: React.FC = () => {
       <div className={`hero-flip__inner ${isFlipped ? 'hero-flip__inner--flipped' : ''}`}>
         {/* 앞면: 커플 사진 */}
         <div className="hero-flip__face hero-flip__face--front" aria-hidden={isFlipped}>
-          {heroImage && (
+          {heroPhoto && (
             <img
-              src={fallbackSrc(heroImage, 'hero')}
-              srcSet={srcSet(heroImage, 'hero')}
-              sizes="(max-width: 430px) 100vw, 430px"
-              width={heroImage.width}
-              height={heroImage.height}
+              {...heroPhoto}
               alt="Couple"
               className="hero-flip__photo"
               // 첫 화면에 보이는 사진이라 지연 없이 먼저 받는다

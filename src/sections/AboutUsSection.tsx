@@ -6,13 +6,20 @@ import { translations } from '../data/translations';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { sectionFadeInProps } from '../utils/animations';
 import { handleImageError } from '../utils/imageErrorHandler';
+import { imageProps } from '../data/images';
 import { renderMultilineText } from '../utils/textUtils';
 import './AboutUsSection.css';
+
+/** .about-us__photo 는 200px, 좁은 화면에서는 160px */
+const PHOTO_SIZES = '(max-width: 430px) 160px, 200px';
 
 const AboutUsSection: React.FC = () => {
   const language = useLanguage();
   const t = translations[language];
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+
+  const groomPhoto = imageProps(t.aboutUs.groom.image, PHOTO_SIZES);
+  const bridePhoto = imageProps(t.aboutUs.bride.image, PHOTO_SIZES);
 
   useScrollLock(isContactModalOpen);
 
@@ -37,13 +44,15 @@ const AboutUsSection: React.FC = () => {
             <div className="about-us__cards">
               {/* Groom */}
               <div className="about-us__card">
-              {t.aboutUs.groom.image ? (
+              {groomPhoto ? (
                 <>
                   <div className="about-us__photo">
-                    <img 
-                      src={t.aboutUs.groom.image}
+                    <img
+                      {...groomPhoto}
                       alt={t.aboutUs.groom.name}
                       className="about-us__photo-img"
+                      loading="lazy"
+                      decoding="async"
                       onError={handleImageError}
                     />
                   </div>
@@ -73,13 +82,15 @@ const AboutUsSection: React.FC = () => {
 
             {/* Bride */}
             <div className="about-us__card">
-              {t.aboutUs.bride.image ? (
+              {bridePhoto ? (
                 <>
                   <div className="about-us__photo">
-                    <img 
-                      src={t.aboutUs.bride.image}
+                    <img
+                      {...bridePhoto}
                       alt={t.aboutUs.bride.name}
                       className="about-us__photo-img"
+                      loading="lazy"
+                      decoding="async"
                       onError={handleImageError}
                     />
                   </div>

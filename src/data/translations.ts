@@ -287,30 +287,30 @@ export const translations: Record<Language, Translations> = {
         {
           title: "첫만남",
           description: "저희는 대학교에서\n처음 만났어요.",
-          image: "/timeline/2013.png",
+          image: "timeline/2013",
         },
         {
           title: "5주년",
           description: "스무 살의 시작부터\n20대의 청춘을 함께 보냈어요.",
-          image: "/timeline/2018.png",
+          image: "timeline/2018",
         },
         {
           title: "장거리 시작",
           description:
             "2019년 1월,\n우리는 장거리 연애를 시작했어요.\n떨어져 있어도 마음만은 늘 가까웠어요.",
-          image: "/timeline/2019.png",
+          image: "timeline/2019",
         },
         {
           title: "10주년",
           description:
             "다시 같은 곳에서,\n우리는 재회를 넘어\n결혼을 결심했어요.",
-          image: "/timeline/2025.jpeg",
+          image: "timeline/2025",
         },
         {
           title: "Wedding Day",
           description:
             "이제 부부로서\n새로운 시작을 합니다.\n저희의 하루를 함께 축하해주세요.",
-          image: "/timeline/2027.jpeg",
+          image: "timeline/2027",
         },
       ],
     },
@@ -463,7 +463,7 @@ export const translations: Record<Language, Translations> = {
         description:
           "사람들 속에서 에너지를 얻고,\n상상하는 일을 즐기는 사람.\n늘 목표를 세우며\n다음 여정을 꿈꿔왔습니다.",
         emoji: "🌍",
-        image: "/about/groom.jpg",
+        image: "about/groom",
       },
       bride: {
         name: "허다영",
@@ -477,7 +477,7 @@ export const translations: Record<Language, Translations> = {
         description:
           "지금의 삶을 차분히 바라보고\n하루하루를 성실히 살아온 사람.\n흔들리는 순간에도 방향을 잃지 않고\n오늘의 여정을 안전하게 이끌어왔습니다.",
         emoji: "🏠",
-        image: "/about/bride.JPG",
+        image: "about/bride",
       },
     },
     rsvp: {
@@ -589,31 +589,31 @@ export const translations: Record<Language, Translations> = {
         {
           title: "First Meeting",
           description: "We first met at university.",
-          image: "/timeline/2013.png",
+          image: "timeline/2013",
         },
         {
           title: "Five Years Together",
           description:
             "From the beginning of our twenties,\nwe shared many days and grew together.",
-          image: "/timeline/2018.png",
+          image: "timeline/2018",
         },
         {
           title: "Long Distance",
           description:
             "Then, in January 2019, distance unexpectedly became part of our journey,\nbut we stayed close in the ways that mattered.",
-          image: "/timeline/2019.png",
+          image: "timeline/2019",
         },
         {
           title: "Ten Years Later",
           description:
             "After many turns and a few tears,\nwe chose to spend our lives together.",
-          image: "/timeline/2025.jpeg",
+          image: "timeline/2025",
         },
         {
           title: "Wedding Day",
           description:
             "Now, as husband and wife, we begin a new journey.\nPlease join us in celebrating our first steps together.",
-          image: "/timeline/2027.jpeg",
+          image: "timeline/2027",
         },
       ],
     },
@@ -766,7 +766,7 @@ export const translations: Record<Language, Translations> = {
         description:
           "Finding energy among people,\nand joy in imagination.\nAlways setting goals,\ndreaming of the next journey.",
         emoji: "🌍",
-        image: "/about/groom.jpg",
+        image: "about/groom",
       },
       bride: {
         name: "Aria Hur",
@@ -780,7 +780,7 @@ export const translations: Record<Language, Translations> = {
         description:
           "Someone who looks at life with calm and clarity,\nand lives each day with sincerity.\nEven in unsteady moments,\nalways guiding today's journey with care.",
         emoji: "🏠",
-        image: "/about/bride.JPG",
+        image: "about/bride",
       },
     },
     rsvp: {

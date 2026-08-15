@@ -5,13 +5,8 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { sectionFadeInProps } from '../utils/animations';
-import {
-  buildGalleryBlocks,
-  fallbackSrc,
-  galleryImages,
-  srcSet,
-  GalleryBlock,
-} from '../data/gallery';
+import { buildGalleryBlocks, galleryImages, GalleryBlock } from '../data/gallery';
+import { fallbackSrc, srcSet } from '../data/images';
 import './GallerySection.css';
 
 const SWIPE_THRESHOLD = 48;
