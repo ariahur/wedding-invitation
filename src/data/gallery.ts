@@ -35,24 +35,26 @@ export const isLandscape = (image: ResponsiveImage): boolean => image.width > im
 const packBlocks = (images: ResponsiveImage[]): GalleryBlock[] => {
   const shape = images.map((image) => (isLandscape(image) ? 'L' : 'P'));
   const blocks: GalleryBlock[] = [];
+
+  const at = (cursor: number, offset: number) => shape[cursor + offset];
+  const span = (cursor: number, count: number) =>
+    Array.from({ length: count }, (_, i) => cursor + i);
+
   let cursor = 0;
 
   while (cursor < images.length) {
-    const at = (offset: number) => shape[cursor + offset];
-    const span = (count: number) => Array.from({ length: count }, (_, i) => cursor + i);
-
     let block: GalleryBlock;
 
-    if (at(0) === 'P' && at(1) === 'L' && at(2) === 'L') {
-      block = { type: 'feature-left', indexes: span(3) };
-    } else if (at(0) === 'P' && at(1) === 'P' && at(2) === 'P') {
-      block = { type: 'trio', indexes: span(3) };
-    } else if (at(0) === 'L' && at(1) === 'L') {
-      block = { type: 'duo', indexes: span(2) };
-    } else if (at(0) === 'P' && at(1) === 'P') {
-      block = { type: 'pair', indexes: span(2) };
+    if (at(cursor, 0) === 'P' && at(cursor, 1) === 'L' && at(cursor, 2) === 'L') {
+      block = { type: 'feature-left', indexes: span(cursor, 3) };
+    } else if (at(cursor, 0) === 'P' && at(cursor, 1) === 'P' && at(cursor, 2) === 'P') {
+      block = { type: 'trio', indexes: span(cursor, 3) };
+    } else if (at(cursor, 0) === 'L' && at(cursor, 1) === 'L') {
+      block = { type: 'duo', indexes: span(cursor, 2) };
+    } else if (at(cursor, 0) === 'P' && at(cursor, 1) === 'P') {
+      block = { type: 'pair', indexes: span(cursor, 2) };
     } else {
-      block = { type: 'full', indexes: span(1) };
+      block = { type: 'full', indexes: span(cursor, 1) };
     }
 
     blocks.push(block);
