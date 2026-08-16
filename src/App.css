@@ -31,12 +31,11 @@
   margin-bottom: 0;
 }
 
-/* Footer (ThankYou) height and overflow restriction - applies only to last direct child of main-content-card */
+/* Footer (ThankYou) - applies only to last direct child of main-content-card.
+   높이는 .thank-you 가 직접 잡는다 */
 .main-content-card > .section-wrapper:last-child {
   padding-bottom: 0;
   margin-bottom: 0;
-  height: 168px;
-  overflow: hidden;
 }
 
 /* Continuous Paper Container: REQUEST.md - bottom sections as one paper strip */

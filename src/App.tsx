@@ -6,6 +6,7 @@ import TimelineSection from './sections/TimelineSection';
 import GallerySection from './sections/GallerySection';
 import DirectionsSection from './sections/DirectionsSection';
 import RsvpSection from './sections/RsvpSection';
+import PhotoDropSection from './sections/PhotoDropSection';
 import ThankYouSection from './sections/ThankYouSection';
 import LoadingScreen from './components/LoadingScreen/LoadingScreen';
 import PaperCard from './components/PaperCard/PaperCard';
@@ -156,6 +157,7 @@ const WeddingInvitation: React.FC = () => {
               <GallerySection />
               <DirectionsSection />
               <RsvpSection />
+              <PhotoDropSection />
             </div>
             <ThankYouSection />
           </PaperCard>

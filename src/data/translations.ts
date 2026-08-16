@@ -198,7 +198,6 @@ export interface Translations {
       modalTitle: string;
       namePlaceholder: string;
       phonePlaceholder: string;
-      hint: string;
       submit: string;
       submitting: string;
       notFound: string;
@@ -261,6 +260,58 @@ export interface Translations {
       submitting: string;
       success: string;
       error: string;
+    };
+  };
+  /** 사진 수하물 접수 카운터 */
+  photoDrop: {
+    title: string;
+    intro: string;
+    /** 예식 전: 카운터 오픈 예정 안내 */
+    closed: {
+      label: string;
+      title: string;
+      message: string;
+      countdown: string;
+    };
+    /** 접수 기간 종료 후 */
+    archived: {
+      label: string;
+      title: string;
+      message: string;
+    };
+    open: {
+      label: string;
+      passengerPrefix: string;
+      nameLabel: string;
+      namePlaceholder: string;
+      dropTitle: string;
+      dropHint: string;
+      counter: string;
+      removeLabel: string;
+      messageLabel: string;
+      messageOptional: string;
+      messagePlaceholder: string;
+      submit: string;
+      submitting: string;
+      needName: string;
+      noFiles: string;
+      tooMany: string;
+      tooLarge: string;
+      invalidType: string;
+      partial: string;
+      error: string;
+    };
+    /** 접수 완료 후 발급되는 수하물 태그 */
+    tag: {
+      label: string;
+      status: string;
+      passenger: string;
+      items: string;
+      itemsUnit: string;
+      accepted: string;
+      flight: string;
+      message: string;
+      addMore: string;
     };
   };
   thankYou: {
@@ -495,7 +546,6 @@ export const translations: Record<Language, Translations> = {
         modalTitle: "신청하신 정보로 조회해 주세요",
         namePlaceholder: "성함",
         phonePlaceholder: "연락처 뒤 4자리",
-        hint: "조회하시면 이 기기에 저장되어\n다음부터는 바로 탑승권이 보여요.",
         submit: "조회하기",
         submitting: "조회 중...",
         notFound:
@@ -566,9 +616,61 @@ export const translations: Record<Language, Translations> = {
         error: "제출 중 오류가 발생했습니다. 다시 시도해주세요.",
       },
     },
+    photoDrop: {
+      title: "수하물 접수",
+      intro:
+        "여러분의 시선으로 담긴 그날을 부쳐주세요\n두 사람이 미처 보지 못한 순간들을\n소중히 받아 간직하겠습니다.",
+      closed: {
+        label: "BAGGAGE DROP · CLOSED",
+        title: "카운터는 예식 당일 열립니다",
+        message:
+          "2027년 2월 20일, 식이 시작되면\n이곳에서 사진을 받을 수 있어요.\n그날 찍으신 사진을 부쳐주세요.",
+        countdown: "카운터 오픈까지 {days}일",
+      },
+      archived: {
+        label: "BAGGAGE DROP · CLOSED",
+        title: "사진 접수가 마감되었습니다",
+        message:
+          "보내주신 사진 하나하나\n따뜻하게 잘 받았습니다.\n덕분에 그날을 더 오래 간직하게 되었어요.",
+      },
+      open: {
+        label: "BAGGAGE DROP",
+        passengerPrefix: "{name}님 이름으로 접수합니다",
+        nameLabel: "성함",
+        namePlaceholder: "홍길동",
+        dropTitle: "사진 고르기",
+        dropHint: "한 번에 최대 {max}장까지 부칠 수 있어요",
+        counter: "{count} / {max}장",
+        removeLabel: "사진 빼기",
+        messageLabel: "한마디",
+        messageOptional: "(선택)",
+        messagePlaceholder: "사진과 함께 전하고 싶은 말씀이 있다면 남겨주세요",
+        submit: "수하물 부치기",
+        submitting: "부치는 중... {done}/{total}장",
+        needName: "성함을 입력해주세요",
+        noFiles: "부치실 사진을 먼저 골라주세요",
+        tooMany: "한 번에 최대 {max}장까지 부칠 수 있어요",
+        tooLarge: "너무 큰 사진은 제외했어요 (한 장당 20MB까지)",
+        invalidType: "사진 파일만 부칠 수 있어요",
+        partial: "{done}장은 접수되었지만 {failed}장은 실패했어요. 남은 사진을 다시 부쳐주세요.",
+        error: "접수 중 오류가 발생했습니다. 다시 시도해주세요.",
+      },
+      tag: {
+        label: "BAGGAGE CLAIM",
+        status: "ACCEPTED",
+        passenger: "PASSENGER",
+        items: "ITEMS",
+        itemsUnit: "장",
+        accepted: "ACCEPTED",
+        flight: "FLIGHT",
+        message:
+          "사진 잘 받았습니다.\n두 사람이 천천히 꺼내보며\n그날을 오래 간직할게요.",
+        addMore: "사진 더 부치기",
+      },
+    },
     thankYou: {
       message:
-        "이 비행의 기록은,\n시간이 흐르며 조금씩 채워질 예정입니다.\n함께해 주셔서 감사합니다.",
+        "귀한 시간 내어주신 모든 분들께\n진심으로 감사드립니다.\n평생 잊지 못할 소중한 순간으로\n간직하겠습니다.",
     },
   },
   en: {
@@ -798,7 +900,6 @@ export const translations: Record<Language, Translations> = {
         modalTitle: "Please enter the details you submitted",
         namePlaceholder: "Full name",
         phonePlaceholder: "Last 3 digits",
-        hint: "Once found, it will be saved on this device\nso your pass appears right away next time.",
         submit: "Retrieve",
         submitting: "Searching...",
         notFound:
@@ -869,9 +970,61 @@ export const translations: Record<Language, Translations> = {
         error: "An error occurred while submitting. Please try again.",
       },
     },
+    photoDrop: {
+      title: "baggage drop",
+      intro:
+        "Send us the day as you saw it.\nWe would love to keep the moments\nthe two of us never got to see.",
+      closed: {
+        label: "BAGGAGE DROP · CLOSED",
+        title: "The counter opens on the day",
+        message:
+          "From 20 February 2027, once the ceremony begins,\nyou can drop your photos off right here.\nWe'll be waiting for them.",
+        countdown: "OPENS IN {days} DAYS",
+      },
+      archived: {
+        label: "BAGGAGE DROP · CLOSED",
+        title: "The counter has closed",
+        message:
+          "Every photo you sent has arrived safely.\nThank you for helping us hold on\nto that day a little longer.",
+      },
+      open: {
+        label: "BAGGAGE DROP",
+        passengerPrefix: "Checking in as {name}",
+        nameLabel: "Name",
+        namePlaceholder: "John Doe",
+        dropTitle: "Choose photos",
+        dropHint: "Up to {max} photos at a time",
+        counter: "{count} / {max}",
+        removeLabel: "Remove photo",
+        messageLabel: "A note",
+        messageOptional: "(optional)",
+        messagePlaceholder: "Add a few words to go with your photos",
+        submit: "Drop off baggage",
+        submitting: "Dropping off... {done}/{total}",
+        needName: "Please enter your name",
+        noFiles: "Please choose the photos you'd like to send",
+        tooMany: "You can send up to {max} photos at a time",
+        tooLarge: "Some photos were too large and were skipped (20MB max each)",
+        invalidType: "Only image files can be dropped off",
+        partial: "{done} arrived, but {failed} failed. Please try the remaining ones again.",
+        error: "Something went wrong. Please try again.",
+      },
+      tag: {
+        label: "BAGGAGE CLAIM",
+        status: "ACCEPTED",
+        passenger: "PASSENGER",
+        items: "ITEMS",
+        itemsUnit: "PHOTOS",
+        accepted: "ACCEPTED",
+        flight: "FLIGHT",
+        message:
+          "Your photos have arrived.\nWe'll look through them slowly,\nand keep that day close for a long time.",
+        addMore: "Drop off more photos",
+      },
+    },
     thankYou: {
       message:
-        "This flight log will continue to grow,\nas time goes on.\nThank you for being part of our journey.",
+        "Our heartfelt thanks to everyone\nwho took the time to be with us.\nWe will treasure this day\nas a moment we'll never forget.",
     },
   },
 };

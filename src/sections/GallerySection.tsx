@@ -5,7 +5,13 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { sectionFadeInProps } from '../utils/animations';
-import { buildGalleryBlocks, galleryImages, GalleryBlock } from '../data/gallery';
+import {
+  blockHeightRatio,
+  buildGalleryPages,
+  galleryImages,
+  pagesHeightRatio,
+  GalleryBlock,
+} from '../data/gallery';
 import { fallbackSrc, srcSet } from '../data/images';
 import './GallerySection.css';
 
@@ -21,6 +27,7 @@ const TILE_SIZES: Record<string, string> = {
   'gallery__tile--stacked': '(max-width: 430px) 46vw, 198px',
   'gallery__block--trio': '(max-width: 430px) 33vw, 143px',
   'gallery__block--pair': '(max-width: 430px) 50vw, 215px',
+  'gallery__block--duo': '(max-width: 430px) 50vw, 215px',
   'gallery__block--full': '(max-width: 430px) 100vw, 430px',
 };
 
@@ -31,8 +38,11 @@ const GallerySection: React.FC = () => {
   const [swipeDirection, setSwipeDirection] = useState(1);
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
 
-  const blocks = useMemo(() => buildGalleryBlocks(galleryImages), []);
+  const pages = useMemo(() => buildGalleryPages(galleryImages), []);
+  const heightRatio = useMemo(() => pagesHeightRatio(pages, galleryImages), [pages]);
   const total = galleryImages.length;
+  const [pageIndex, setPageIndex] = useState(0);
+  const pagesRef = useRef<HTMLDivElement | null>(null);
 
   useScrollLock(openIndex !== null);
 
@@ -96,6 +106,32 @@ const GallerySection: React.FC = () => {
     }
   };
 
+  /**
+   * 페이지 하나가 차지하는 가로 폭(간격 포함).
+   * 스크롤 컨테이너에 좌우 패딩이 있어 clientWidth와 다르므로 실제 두 페이지 간격을 잰다.
+   */
+  const pageStep = () => {
+    const track = pagesRef.current;
+    if (!track) return 0;
+
+    const [first, second] = Array.from(track.children) as HTMLElement[];
+    if (!second) return track.clientWidth;
+
+    return second.offsetLeft - first.offsetLeft;
+  };
+
+  const handlePagesScroll = () => {
+    const track = pagesRef.current;
+    const step = pageStep();
+    if (!track || step <= 0) return;
+
+    setPageIndex(Math.round(track.scrollLeft / step));
+  };
+
+  const goToPage = (index: number) => {
+    pagesRef.current?.scrollTo({ left: index * pageStep(), behavior: 'smooth' });
+  };
+
   const renderTile = (index: number, className: string, sizes: string) => {
     const image = galleryImages[index];
 
@@ -129,13 +165,11 @@ const GallerySection: React.FC = () => {
     const blockSizes = TILE_SIZES[`gallery__block--${block.type}`];
 
     return (
-      <motion.div
+      <div
         key={blockIndex}
         className={`gallery__block gallery__block--${block.type}`}
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.5, ease: 'easeOut' }}
+        // 페이지 높이를 블록끼리 원래 비율대로 나눠 갖는다
+        style={{ flexGrow: blockHeightRatio(block, galleryImages) }}
       >
         {block.type === 'feature-left' || block.type === 'feature-right' ? (
           <>
@@ -149,7 +183,7 @@ const GallerySection: React.FC = () => {
         ) : (
           block.indexes.map((index) => renderTile(index, '', blockSizes))
         )}
-      </motion.div>
+      </div>
     );
   };
 
@@ -168,7 +202,41 @@ const GallerySection: React.FC = () => {
             {t.gallery.subtitle}
           </p>
 
-          <div className="gallery__blocks">{blocks.map(renderBlock)}</div>
+          <motion.div
+            className="gallery__pages"
+            ref={pagesRef}
+            onScroll={handlePagesScroll}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
+          >
+            {pages.map((blocks, index) => (
+              <div
+                key={index}
+                className="gallery__page"
+                // 모든 페이지가 같은 높이를 갖도록 가장 높은 페이지 비율로 고정한다
+                style={{ aspectRatio: `1 / ${heightRatio}` }}
+              >
+                {blocks.map(renderBlock)}
+              </div>
+            ))}
+          </motion.div>
+
+          {pages.length > 1 && (
+            <div className="gallery__dots">
+              {pages.map((_, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  className={`gallery__dot ${index === pageIndex ? 'gallery__dot--active' : ''}`}
+                  onClick={() => goToPage(index)}
+                  aria-label={`${index + 1} / ${pages.length}`}
+                  aria-current={index === pageIndex}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </motion.div>
 

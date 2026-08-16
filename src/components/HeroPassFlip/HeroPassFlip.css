@@ -153,9 +153,11 @@
   color: #c9a77c;
 }
 
+/* 3분할 리듬: 1행은 승객(2칸) + 좌석(1칸), 2행은 날짜/탑승/게이트가 한 칸씩.
+   좌석과 게이트가 같은 세로선에서 시작한다. */
 .hero-pass__grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px 10px;
 }
 
@@ -167,7 +169,7 @@
 }
 
 .hero-pass__field--wide {
-  grid-column: span 3;
+  grid-column: span 2;
 }
 
 .hero-pass__field-label {

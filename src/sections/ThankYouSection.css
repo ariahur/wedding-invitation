@@ -1,40 +1,36 @@
 .thank-you {
   padding: 0;
-  background-color: transparent;
+  /* 본문 배경(#FAF8F3)과 같은 색조에서 채도만 올린 톤 */
+  background-color: #F2E9DA;
   position: relative;
   overflow: hidden;
   margin-top: 0;
   border-radius: 0 0 18px 18px;
-  height: 168px;
+  height: 200px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.04), 0 -1px 4px rgba(0, 0, 0, 0.02);
+  flex-direction: column;
   border: 1px solid rgba(26, 47, 74, 0.06);
   border-top: none;
 }
 
-.thank-you__background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-size: cover;
-  background-position: 50% 65%;
-  background-repeat: no-repeat;
-  opacity: 0.3;
-  z-index: 0;
+/* 위쪽 종이 배경(#FAF8F3)이 물결 모양으로 흘러내려 푸터와 나뉜다.
+   다른 섹션의 .section-wave와 같은 곡선을 쓴다. */
+.thank-you__wave {
+  flex: none;
+  width: 100%;
+  height: 56px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 56' preserveAspectRatio='none'%3E%3Cpath fill='%23FAF8F3' d='M0,0v28q150,28,300,0t300,0t300,0t300,0l0,-28H0z'/%3E%3C/svg%3E") no-repeat center top;
+  background-size: 100% 100%;
 }
 
 .thank-you__content {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
   z-index: 1;
-  height: 100%;
   padding: 0 20px;
 }
 
@@ -65,15 +61,15 @@
 
 @media (max-width: 430px) {
   .thank-you {
-    height: 168px;
+    height: 200px;
   }
 
   .thank-you__line {
-    font-size: 10px;
+    font-size: 11px;
   }
 
   .thank-you__line:lang(en) {
-    font-size: 10px;
+    font-size: 11px;
   }
 }
 

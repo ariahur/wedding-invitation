@@ -29,7 +29,7 @@ const JPEG_QUALITY = 78;
 /** 로딩 중 자리를 채우는 흐릿한 미리보기의 가로 픽셀 */
 const PLACEHOLDER_WIDTH = 16;
 
-const GROUPS = ['gallery', 'hero', 'about', 'timeline', 'footer'];
+const GROUPS = ['gallery', 'hero', 'about', 'timeline'];
 
 /** 변환 결과 파일명 규칙 — 정리(prune) 대상을 가려낼 때도 쓴다 */
 const OUTPUT_PATTERN = /-[0-9a-f]{8}-\d+\.(webp|jpg)$/;

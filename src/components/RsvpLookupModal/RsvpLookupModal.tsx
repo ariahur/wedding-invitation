@@ -140,10 +140,8 @@ const RsvpLookupModal: React.FC<RsvpLookupModalProps> = ({ isOpen, onClose, onFo
                 />
               </div>
 
-              {errorMessage ? (
+              {errorMessage && (
                 <p className="rsvp-lookup-modal__error">{renderMultilineText(errorMessage)}</p>
-              ) : (
-                <p className="rsvp-lookup-modal__hint">{renderMultilineText(lookupText.hint)}</p>
               )}
 
               <button

@@ -40,15 +40,12 @@
 
 /* ── 모자이크 그리드 ────────────────────────── */
 
-.gallery__blocks {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
+/* 높이는 페이지가 나눠준다 (flex-grow는 블록 비율에 따라 인라인으로 붙는다) */
 .gallery__block {
   display: grid;
   gap: 10px;
+  flex-basis: 0;
+  min-height: 0;
 }
 
 .gallery__block--feature-left {
@@ -68,7 +65,8 @@
   grid-template-columns: repeat(3, 1fr);
 }
 
-.gallery__block--pair {
+.gallery__block--pair,
+.gallery__block--duo {
   grid-template-columns: repeat(2, 1fr);
 }
 
@@ -83,12 +81,71 @@
   min-height: 0;
 }
 
+/* ── 가로 페이지 넘김 ───────────────────────── */
+
+.gallery__pages {
+  display: flex;
+  gap: 12px;
+  /* .gallery의 좌우 패딩(20px)을 뚫고 나갔다가 안쪽에서 되돌린다.
+     그래야 다음 페이지가 화면 끝에 살짝 걸쳐 보이며 넘길 수 있다는 게 드러난다. */
+  margin: 0 -20px;
+  padding: 0 20px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 20px;
+  -webkit-overflow-scrolling: touch;
+  /* 사진 밑에 스크롤바가 깔리면 모자이크와 결이 어긋난다 */
+  scrollbar-width: none;
+}
+
+.gallery__pages::-webkit-scrollbar {
+  display: none;
+}
+
+.gallery__page {
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  scroll-snap-align: start;
+}
+
+/* ── 페이지 표시 점 ─────────────────────────── */
+
+.gallery__dots {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 16px;
+}
+
+.gallery__dot {
+  width: 6px;
+  height: 6px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(26, 47, 74, 0.2);
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.25s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.gallery__dot--active {
+  background: #c9a77c;
+  transform: scale(1.25);
+}
+
 /* ── 타일 ───────────────────────────────────── */
 
 .gallery__tile {
   position: relative;
   display: block;
   width: 100%;
+  /* 그리드 칸을 그대로 채운다 — 높이는 블록이 정한다 */
+  height: 100%;
+  min-height: 0;
   padding: 0;
   border: none;
   border-radius: 6px;
@@ -101,25 +158,10 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.gallery__tile--tall {
-  aspect-ratio: 3 / 4;
-}
-
+/* 타일 높이는 블록이 정한다. 블록별 비율은 data/gallery.ts의 blockHeightRatio가
+   들고 있고, 그 값이 곧 페이지 높이를 나누는 flex 가중치다. */
 .gallery__tile--stacked {
-  height: 100%;
   min-height: 0;
-}
-
-.gallery__block--trio .gallery__tile {
-  aspect-ratio: 3 / 4;
-}
-
-.gallery__block--pair .gallery__tile {
-  aspect-ratio: 4 / 5;
-}
-
-.gallery__block--full .gallery__tile {
-  aspect-ratio: 3 / 2;
 }
 
 .gallery__tile-image {
@@ -249,9 +291,9 @@
 }
 
 @media (max-width: 430px) {
-  .gallery__blocks,
   .gallery__block,
-  .gallery__stack {
+  .gallery__stack,
+  .gallery__page {
     gap: 8px;
   }
 
