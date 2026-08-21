@@ -1,0 +1,8 @@
+{
+  // 프로젝트는 CRA(react-scripts 5) + TypeScript 5.9 고정이다.
+  // 에디터가 번들한 TypeScript 7 미리보기로 검사하면
+  // CRA가 강제하는 "moduleResolution": "node" 가 deprecated 오류로 뜬다.
+  // 빌드와 동일한 워크스페이스 TS 버전을 쓰도록 고정한다.
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
+}

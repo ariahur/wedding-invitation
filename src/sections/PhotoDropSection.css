@@ -317,6 +317,16 @@
   }
 }
 
+@media (max-width: 430px) {
+  .photo-drop__title {
+    font-size: 24px;
+  }
+
+  .photo-drop__title:lang(en) {
+    font-size: 20px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .photo-drop__thumb-spinner {
     animation-duration: 2s;

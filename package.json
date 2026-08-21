@@ -1,6 +1,6 @@
 {
   "name": "wedding-invitation",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
@@ -11,15 +11,12 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
-    "@types/react-router-dom": "^5.3.3",
-    "ajv": "^8.17.1",
     "framer-motion": "^12.23.26",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.69.0",
     "react-router-dom": "^7.11.0",
     "react-scripts": "^5.0.1",
-    "react-typed": "^2.0.12",
     "zod": "^4.3.4"
   },
   "devDependencies": {
