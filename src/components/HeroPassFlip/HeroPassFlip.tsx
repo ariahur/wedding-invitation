@@ -90,11 +90,13 @@ const HeroPassFlip: React.FC = () => {
                         {passengerName}
                       </span>
                     </span>
-                    <span className="hero-pass__field">
-                      <span className="hero-pass__field-label">{ticketText.seats}</span>
-                      <span className="hero-pass__field-value">{ticket.guestCount || 1}</span>
+                    <span className="hero-pass__field hero-pass__field--wide">
+                      <span className="hero-pass__field-label">{ticketText.flight}</span>
+                      <span className="hero-pass__field-value hero-pass__field-value--mono">
+                        {ticketText.flightValue}
+                      </span>
                     </span>
-                    <span className="hero-pass__field">
+                    <span className="hero-pass__field hero-pass__field--wide">
                       <span className="hero-pass__field-label">{ticketText.date}</span>
                       <span className="hero-pass__field-value hero-pass__field-value--mono">
                         {ticketText.dateValue}
@@ -114,12 +116,12 @@ const HeroPassFlip: React.FC = () => {
                     </span>
                   </span>
 
-                  <span className="hero-pass__barcode">
-                    <span className="hero-pass__barcode-lines" aria-hidden="true" />
-                    <span className="hero-pass__barcode-text">
-                      {t.hero.flight} · {phoneLast4(ticket.phone) || '0000'} · {t.hero.origin.code}
-                      <span aria-hidden="true">→</span>
-                      {t.hero.destination.code}
+                  {/* 바코드는 앞면 footer 에 이미 있어 여기서는 절취선 스텁으로 마감한다 */}
+                  <span className="hero-pass__stub">
+                    <span className="hero-pass__perforation" aria-hidden="true" />
+                    <span className="hero-pass__stub-text">
+                      {t.hero.airline} · {ticketText.seq}{' '}
+                      {phoneLast4(ticket.phone) || '0000'}
                     </span>
                   </span>
                 </span>

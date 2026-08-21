@@ -7,6 +7,7 @@ import { Attendance, RsvpTicket as RsvpTicketData } from '../types/rsvp';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
 import { sectionFadeInProps } from '../utils/animations';
+import { autoResizeTextarea } from '../utils/autoResizeTextarea';
 import { renderMultilineText } from '../utils/textUtils';
 import { useRsvpTicket } from '../contexts/RsvpTicketContext';
 import { submitRsvp } from '../utils/rsvpApi';
@@ -89,15 +90,15 @@ const RsvpSection: React.FC = () => {
     }
   }, [attendance, setValue]);
 
-  // Auto-resize textarea
+  // Auto-resize textarea (placeholder 가 두 줄 이상으로 접히는 경우까지 높이를 확보한다)
   useEffect(() => {
-    const textarea = noteTextareaRef.current;
-    if (textarea) {
-      textarea.style.height = 'auto';
-      const scrollHeight = textarea.scrollHeight;
-      textarea.style.height = `${Math.min(scrollHeight, 200)}px`;
-    }
-  }, [noteValue, isEditing, ticket]);
+    const resize = () => autoResizeTextarea(noteTextareaRef.current, 200);
+    resize();
+    // 화면 폭이 바뀌거나 웹폰트가 늦게 적용되면 줄 수가 달라진다
+    window.addEventListener('resize', resize);
+    document.fonts?.ready.then(resize);
+    return () => window.removeEventListener('resize', resize);
+  }, [noteValue, isEditing, ticket, language]);
 
   const showTicket = ticket !== null && !isEditing;
 

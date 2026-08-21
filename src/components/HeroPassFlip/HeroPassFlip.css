@@ -59,8 +59,11 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+/* 좌우 여백은 .boarding-pass__main 의 padding(20px)과 같게 유지한다.
+   그래야 뒤집힌 탑승권의 좌우 끝이 위쪽 SYD → ICN 구역과 맞는다. */
 .hero-flip__surface--back {
   justify-content: space-between;
+  gap: 12px;
   padding: 18px 20px 14px;
   background: linear-gradient(160deg, #1a2f4a 0%, #16283f 100%);
 }
@@ -122,7 +125,9 @@
 
 .hero-pass {
   display: flex;
+  flex: 1;
   flex-direction: column;
+  justify-content: space-between;
   gap: 14px;
   width: 100%;
   min-width: 0;
@@ -153,11 +158,11 @@
   color: #c9a77c;
 }
 
-/* 3분할 리듬: 1행은 승객(2칸) + 좌석(1칸), 2행은 날짜/탑승/게이트가 한 칸씩.
-   좌석과 게이트가 같은 세로선에서 시작한다. */
+/* 4분할 리듬: 1행은 승객(2칸) + 장소(2칸), 2행은 날짜(2칸) + 탑승 + 게이트.
+   승객과 날짜가 같은 세로선에서 시작한다. */
 .hero-pass__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 12px 10px;
 }
 
@@ -195,36 +200,28 @@
   letter-spacing: 0.5px;
 }
 
-.hero-pass__barcode {
+/* 실제 탑승권 스텁처럼 절취선으로 아래를 끊고 발권 정보를 한 줄 남긴다.
+   점선 패턴은 RsvpTicket / BagTag 의 __perforation 과 같은 규격(6px 선 + 6px 공백). */
+.hero-pass__stub {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 6px;
+  gap: 10px;
 }
 
-.hero-pass__barcode-lines {
-  display: block;
-  height: 26px;
-  width: 100%;
-  max-width: 200px;
-  background-image: repeating-linear-gradient(
-    90deg,
-    #ffffff 0px,
-    #ffffff 2px,
-    transparent 2px,
-    transparent 4px,
-    #ffffff 4px,
-    #ffffff 5px,
-    transparent 5px,
-    transparent 8px,
-    #ffffff 8px,
-    #ffffff 11px,
-    transparent 11px,
-    transparent 13px
+.hero-pass__perforation {
+  height: 1px;
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.25) 0,
+    rgba(255, 255, 255, 0.25) 6px,
+    transparent 6px,
+    transparent 12px
   );
-  opacity: 0.35;
+  background-size: 12px 1px;
+  background-repeat: repeat-x;
 }
 
+.hero-pass__stub-text,
 .hero-pass__barcode-text {
   font-family: "Roboto", sans-serif;
   font-size: 9px;
@@ -258,7 +255,7 @@
 
 @media (max-width: 430px) {
   .hero-flip__surface--back {
-    padding: 16px 16px 12px;
+    padding: 16px 20px 12px;
   }
 
   .hero-pass {
@@ -271,10 +268,6 @@
 
   .hero-pass__field-value--mono {
     font-size: 12px;
-  }
-
-  .hero-pass__barcode-lines {
-    height: 22px;
   }
 }
 

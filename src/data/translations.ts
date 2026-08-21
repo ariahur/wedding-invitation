@@ -210,10 +210,13 @@ export interface Translations {
       passenger: string;
       passengerSuffix: string;
       seats: string;
+      flight: string;
       date: string;
       boarding: string;
       gate: string;
       classLabel: string;
+      seq: string;
+      flightValue: string;
       dateValue: string;
       boardingValue: string;
       gateValue: string;
@@ -559,10 +562,13 @@ export const translations: Record<Language, Translations> = {
         passenger: "PASSENGER",
         passengerSuffix: "외 {count}명",
         seats: "SEATS",
+        flight: "FLIGHT",
         date: "DATE",
         boarding: "BOARDING",
         gate: "GATE",
         classLabel: "CLASS",
+        seq: "SEQ",
+        flightValue: "GRAND HILL CONVENTION",
         dateValue: "20 FEB 2027",
         boardingValue: "15:00",
         gateValue: "1F",
@@ -617,7 +623,7 @@ export const translations: Record<Language, Translations> = {
       },
     },
     photoDrop: {
-      title: "수하물 접수",
+      title: "사진 수화물 접수",
       intro:
         "여러분의 시선으로 담긴 그날을 부쳐주세요\n두 사람이 미처 보지 못한 순간들을\n소중히 받아 간직하겠습니다.",
       closed: {
@@ -913,10 +919,13 @@ export const translations: Record<Language, Translations> = {
         passenger: "PASSENGER",
         passengerSuffix: "+{count} guest(s)",
         seats: "SEATS",
+        flight: "FLIGHT",
         date: "DATE",
         boarding: "BOARDING",
         gate: "GATE",
         classLabel: "CLASS",
+        seq: "SEQ",
+        flightValue: "GRAND HILL CONVENTION",
         dateValue: "20 FEB 2027",
         boardingValue: "15:00",
         gateValue: "1F",

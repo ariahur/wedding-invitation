@@ -5,6 +5,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { useRsvpTicket } from '../contexts/RsvpTicketContext';
 import { translations } from '../data/translations';
 import { sectionFadeInProps } from '../utils/animations';
+import { autoResizeTextarea } from '../utils/autoResizeTextarea';
 import { renderMultilineText } from '../utils/textUtils';
 import { phoneLast4 } from '../utils/rsvpStorage';
 import { getCounterStatus, getDaysUntilOpen } from '../utils/photoDropSchedule';
@@ -62,12 +63,13 @@ const PhotoDropSection: React.FC = () => {
 
   // 메시지 textarea 자동 높이 조절 (RSVP 전달사항과 동일한 동작)
   useEffect(() => {
-    const textarea = messageRef.current;
-    if (textarea) {
-      textarea.style.height = 'auto';
-      textarea.style.height = `${Math.min(textarea.scrollHeight, 160)}px`;
-    }
-  }, [message]);
+    const resize = () => autoResizeTextarea(messageRef.current, 160);
+    resize();
+    // 화면 폭이 바뀌거나 웹폰트가 늦게 적용되면 placeholder 줄 수가 달라진다
+    window.addEventListener('resize', resize);
+    document.fonts?.ready.then(resize);
+    return () => window.removeEventListener('resize', resize);
+  }, [message, language, bagTag, isAddingMore]);
 
   /** 탑승권이 있으면 이름을 자동으로 채운다 */
   const ticketName = ticket?.name || '';
