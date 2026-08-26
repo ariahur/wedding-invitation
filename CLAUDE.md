@@ -8,13 +8,14 @@ Next.js가 **아니다** — 루트의 `app/`, `next.config.ts` 는 미사용 �
 
 ## 공통 정책
 
-아래 세 문서는 세션마다 자동으로 로드된다. 작업 전에 해당 절을 확인하고 그대로 따른다.
+아래 두 문서는 세션마다 자동으로 로드된다. 작업 전에 해당 절을 확인하고 그대로 따른다.
 
 @.claude/rules/project-conventions.md
 
-@.claude/rules/section-style-guide.md
-
 @.claude/rules/theme-concept.md
+
+섹션 스타일 규격(타이틀·간격·JSX 골격·반응형)은 `src/sections/CLAUDE.md` 에 있고,
+`src/sections/` 아래를 작업할 때 자동으로 로드된다. `src/App.css` 만 고칠 때는 직접 열어 확인한다.
 
 특히:
 - 섹션의 타이틀/간격/색상/반응형을 수정할 때는 **한 섹션만 고치지 말고 전 섹션에 동일하게** 반영한다.

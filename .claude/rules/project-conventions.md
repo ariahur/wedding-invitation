@@ -51,7 +51,7 @@ react-scripts 5 + react-router-dom 7 조합이 peer dependency 충돌을 낸다.
 - 사용자에게 보이는 문구는 **`src/data/translations.ts` 한 곳에만** 둔다. 컴포넌트에 문자열 하드코딩 금지.
 - `Translations` 인터페이스에 필드를 추가하면 `translations: Record<Language, Translations>` 의 **ko / en 양쪽을 모두 채워야** 타입이 통과한다.
 - 섹션에서는 `const language = useLanguage()` 로 읽고, 문구 요소에 `lang={language}` 를 붙인다.
-  → CSS의 `:lang(en)` 셀렉터가 전부 이 속성에 의존한다 (`section-style-guide.md` 2절 참고).
+  → CSS의 `:lang(en)` 셀렉터가 전부 이 속성에 의존한다 (`src/sections/CLAUDE.md` 2절 참고).
 
 ## 5. 이미지 파이프라인
 
