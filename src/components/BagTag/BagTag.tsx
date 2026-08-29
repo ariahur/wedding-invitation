@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { BagTag as BagTagData } from '../../types/photoDrop';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { translations } from '../../data/translations';
-import { renderMultilineText } from '../../utils/textUtils';
 import { useFitText } from '../../hooks/useFitText';
 import './BagTag.css';
 
@@ -99,10 +98,6 @@ const BagTag: React.FC<BagTagProps> = ({ tag, onAddMore }) => {
           </div>
         </div>
       </div>
-
-      <p className="bag-tag__message" lang={language}>
-        {renderMultilineText(tagText.message)}
-      </p>
 
       <button type="button" className="bag-tag__add-more" onClick={onAddMore} lang={language}>
         {tagText.addMore}

@@ -4,7 +4,6 @@ import { RsvpTicket as RsvpTicketData } from '../../types/rsvp';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { translations } from '../../data/translations';
 import { TicketVariant } from '../../contexts/RsvpTicketContext';
-import { renderMultilineText } from '../../utils/textUtils';
 import './RsvpIssuedPanel.css';
 
 interface RsvpIssuedPanelProps {
@@ -45,10 +44,6 @@ const RsvpIssuedPanel: React.FC<RsvpIssuedPanelProps> = ({ ticket, variant, onVi
       <h3 className="rsvp-issued__title" lang={language}>
         {title}
       </h3>
-
-      <p className="rsvp-issued__message" lang={language}>
-        {renderMultilineText(panel.message)}
-      </p>
 
       <button type="button" className="rsvp-issued__view" onClick={onView} lang={language}>
         <span className="rsvp-issued__view-icon material-symbols-outlined">travel</span>

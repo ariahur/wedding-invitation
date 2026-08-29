@@ -238,7 +238,6 @@ export interface Translations {
         issuedTitle: string;
         savedTitle: string;
         absentTitle: string;
-        message: string;
         viewButton: string;
       };
     };
@@ -315,7 +314,6 @@ export interface Translations {
       itemsUnit: string;
       accepted: string;
       flight: string;
-      message: string;
       addMore: string;
     };
   };
@@ -594,8 +592,6 @@ export const translations: Record<Language, Translations> = {
           issuedTitle: "탑승권이 발급되었습니다",
           savedTitle: "이미 발급된 탑승권이 있어요",
           absentTitle: "다음 비행을 기약할게요",
-          message:
-            "청첩장 맨 위 사진을 누르면\n언제든 탑승권을 확인하실 수 있어요.",
           viewButton: "탑승권 보러 가기",
         },
       },
@@ -673,8 +669,6 @@ export const translations: Record<Language, Translations> = {
         itemsUnit: "장",
         accepted: "ACCEPTED",
         flight: "FLIGHT",
-        message:
-          "사진 잘 받았습니다.\n두 사람이 천천히 꺼내보며\n그날을 오래 간직할게요.",
         addMore: "사진 더 부치기",
       },
     },
@@ -953,8 +947,6 @@ export const translations: Record<Language, Translations> = {
           issuedTitle: "Your boarding pass has been issued",
           savedTitle: "Your boarding pass is already issued",
           absentTitle: "We hope to see you on the next flight",
-          message:
-            "Tap the photo at the top of the invitation\nto see your boarding pass anytime.",
           viewButton: "Go to my boarding pass",
         },
       },
@@ -1032,8 +1024,6 @@ export const translations: Record<Language, Translations> = {
         itemsUnit: "PHOTOS",
         accepted: "ACCEPTED",
         flight: "FLIGHT",
-        message:
-          "Your photos have arrived.\nWe'll look through them slowly,\nand keep that day close for a long time.",
         addMore: "Drop off more photos",
       },
     },
