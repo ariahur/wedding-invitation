@@ -4,6 +4,7 @@ import { BagTag as BagTagData } from '../../types/photoDrop';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { translations } from '../../data/translations';
 import { renderMultilineText } from '../../utils/textUtils';
+import { useFitText } from '../../hooks/useFitText';
 import './BagTag.css';
 
 interface BagTagProps {
@@ -34,6 +35,8 @@ const BagTag: React.FC<BagTagProps> = ({ tag, onAddMore }) => {
   const language = useLanguage();
   const t = translations[language];
   const tagText = t.photoDrop.tag;
+  // 태그 번호는 어떤 기기/글자 크기에서도 한 줄에 들어가도록 폭에 맞춰 축소한다
+  const tagNoRef = useFitText<HTMLDivElement>(tag.tagNo, { max: 24, min: 12 });
 
   return (
     <motion.div
@@ -50,7 +53,9 @@ const BagTag: React.FC<BagTagProps> = ({ tag, onAddMore }) => {
             <span className="bag-tag__label">{tagText.label}</span>
             <span className="bag-tag__status">{tagText.status}</span>
           </div>
-          <div className="bag-tag__number">{tag.tagNo}</div>
+          <div className="bag-tag__number" ref={tagNoRef}>
+            {tag.tagNo}
+          </div>
           <div className="bag-tag__route">
             <span className="bag-tag__route-code">{t.hero.origin.code}</span>
             <span className="bag-tag__route-icon material-symbols-outlined">luggage</span>

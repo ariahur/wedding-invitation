@@ -67,7 +67,9 @@ export interface Translations {
     };
     footer: {
       gate: string;
+      gateValue: string;
       boarding: string;
+      boardingValue: string;
     };
     barcode: string;
     flip: {
@@ -413,8 +415,10 @@ export const translations: Record<Language, Translations> = {
         floor: "1층 플로리아",
       },
       footer: {
-        gate: "GATE 1F",
-        boarding: "BOARDING 15:00",
+        gate: "GATE",
+        gateValue: "1F",
+        boarding: "BOARDING",
+        boardingValue: "15:00",
       },
       barcode: "<WEDDING2027022014KJ08PS>",
       flip: {
@@ -770,8 +774,10 @@ export const translations: Record<Language, Translations> = {
         floor: "1F Floria",
       },
       footer: {
-        gate: "GATE 1F",
-        boarding: "BOARDING 15:00",
+        gate: "GATE",
+        gateValue: "1F",
+        boarding: "BOARDING",
+        boardingValue: "15:00",
       },
       barcode: "<WEDDING2027022014KJ08PS>",
       flip: {
