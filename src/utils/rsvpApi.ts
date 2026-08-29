@@ -7,7 +7,8 @@ export const submitRsvp = async (
   ticket: RsvpTicket,
   fallbackError: string
 ): Promise<void> => {
-  await callWebApp(language, { action: 'submit', ...ticket }, fallbackError);
+  // language 는 Apps Script 가 확인 메일을 어느 언어로 보낼지 고르는 데 쓴다
+  await callWebApp(language, { action: 'submit', language, ...ticket }, fallbackError);
 };
 
 /** 성함 + 연락처 뒷자리(한국어 4자리 / 영어 3자리)로 기존 신청 내역 조회 */

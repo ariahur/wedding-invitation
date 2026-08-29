@@ -45,10 +45,13 @@ const RsvpIssuedPanel: React.FC<RsvpIssuedPanelProps> = ({ ticket, variant, onVi
         {title}
       </h3>
 
-      <button type="button" className="rsvp-issued__view" onClick={onView} lang={language}>
-        <span className="rsvp-issued__view-icon material-symbols-outlined">travel</span>
-        {panel.viewButton}
-      </button>
+      {/* 불참 응답에는 볼 탑승권이 없다 */}
+      {isAttending && (
+        <button type="button" className="rsvp-issued__view" onClick={onView} lang={language}>
+          <span className="rsvp-issued__view-icon material-symbols-outlined">travel</span>
+          {panel.viewButton}
+        </button>
+      )}
 
       <button type="button" className="rsvp-issued__edit" onClick={onEdit} lang={language}>
         {t.rsvp.ticket.editButton}
