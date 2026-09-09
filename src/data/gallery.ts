@@ -9,7 +9,14 @@ import { imageGroup, ResponsiveImage } from './images';
 
 export const galleryImages: ResponsiveImage[] = imageGroup('gallery');
 
-export type GalleryBlockType = 'feature-left' | 'feature-right' | 'trio' | 'pair' | 'duo' | 'full';
+export type GalleryBlockType =
+  | 'feature-left'
+  | 'feature-right'
+  | 'trio'
+  | 'pair'
+  | 'duo'
+  | 'split'
+  | 'full';
 
 export interface GalleryBlock {
   type: GalleryBlockType;
@@ -17,20 +24,28 @@ export interface GalleryBlock {
   indexes: number[];
 }
 
-/** 한 페이지에 담기는 사진 수. 넘치면 오른쪽 페이지로 이어진다. */
-export const PAGE_SIZE = 6;
+/**
+ * 한 페이지가 차지하는 높이(가로폭 대비 비율)의 목표치.
+ * 사진 장수가 아니라 높이로 끊어야 블록 종류가 섞여도 페이지마다 줄 수가 비슷해진다.
+ * 한 줄이 대략 0.45~0.63 이므로 1.45 는 "세 줄" 정도다.
+ */
+export const PAGE_HEIGHT = 1.45;
 
 export const isLandscape = (image: ResponsiveImage): boolean => image.width > image.height;
 
 /**
  * 사진 방향에 맞는 블록을 골라 순서대로 채운다.
- * 한 블록 안의 사진은 같은 비율을 쓰므로 방향이 섞이지 않게 묶는다.
+ * 한 블록 안의 사진은 같은 비율을 쓰므로 되도록 방향이 섞이지 않게 묶는다.
  *
  *   feature  세로 1장(큰 칸) + 가로 2장(오른쪽 위아래)
  *   trio     세로 3장
  *   duo      가로 2장
  *   pair     세로 2장
+ *   split    방향이 다른 2장 — 정사각 칸이라 어느 쪽도 크게 잘리지 않는다
  *   full     남은 1장 — 사진 방향대로 높이가 정해진다
+ *
+ * split이 없으면 가로 사진이 세로 사진 사이에 하나씩 끼었을 때 full이 줄줄이 생기고,
+ * 세로 full 한 장이 4/3을 먹어 페이지 높이가 통째로 늘어난다.
  */
 const packBlocks = (images: ResponsiveImage[]): GalleryBlock[] => {
   const shape = images.map((image) => (isLandscape(image) ? 'L' : 'P'));
@@ -53,6 +68,8 @@ const packBlocks = (images: ResponsiveImage[]): GalleryBlock[] => {
       block = { type: 'duo', indexes: span(cursor, 2) };
     } else if (at(cursor, 0) === 'P' && at(cursor, 1) === 'P') {
       block = { type: 'pair', indexes: span(cursor, 2) };
+    } else if (at(cursor, 1) && at(cursor, 0) !== at(cursor, 1)) {
+      block = { type: 'split', indexes: span(cursor, 2) };
     } else {
       block = { type: 'full', indexes: span(cursor, 1) };
     }
@@ -64,21 +81,27 @@ const packBlocks = (images: ResponsiveImage[]): GalleryBlock[] => {
   return blocks;
 };
 
-/** 블록을 PAGE_SIZE 장을 넘지 않게 페이지로 끊는다 (블록은 쪼개지 않는다) */
-const paginate = (blocks: GalleryBlock[]): GalleryBlock[][] => {
+/**
+ * 블록을 PAGE_HEIGHT 근처 높이로 끊는다 (블록은 쪼개지 않는다).
+ * 넘기든 모자라든 목표에 더 가까워지는 쪽을 고르므로 페이지 높이가 고르게 맞는다.
+ */
+const paginate = (blocks: GalleryBlock[], images: ResponsiveImage[]): GalleryBlock[][] => {
   const pages: GalleryBlock[][] = [];
   let page: GalleryBlock[] = [];
-  let count = 0;
+  let height = 0;
 
   blocks.forEach((block) => {
-    if (count > 0 && count + block.indexes.length > PAGE_SIZE) {
+    const next = height + blockHeightRatio(block, images);
+
+    // 이 블록을 더 넣으면 목표에서 오히려 멀어지는 순간이 페이지 경계다
+    if (page.length > 0 && Math.abs(next - PAGE_HEIGHT) >= Math.abs(height - PAGE_HEIGHT)) {
       pages.push(page);
       page = [];
-      count = 0;
+      height = 0;
     }
 
     page.push(block);
-    count += block.indexes.length;
+    height += blockHeightRatio(block, images);
   });
 
   if (page.length > 0) pages.push(page);
@@ -91,7 +114,7 @@ const mirrorFeature = (block: GalleryBlock): GalleryBlock =>
   block.type === 'feature-left' ? { ...block, type: 'feature-right' } : block;
 
 export const buildGalleryPages = (images: ResponsiveImage[]): GalleryBlock[][] =>
-  paginate(packBlocks(images)).map((page, pageIndex) =>
+  paginate(packBlocks(images), images).map((page, pageIndex) =>
     pageIndex % 2 === 0 ? page : page.map(mirrorFeature)
   );
 
@@ -112,6 +135,9 @@ export const blockHeightRatio = (block: GalleryBlock, images: ResponsiveImage[])
       return (1 / 2) * (5 / 4);
     case 'duo':
       return (1 / 2) * (2 / 3);
+    // 방향이 섞여 있어 정사각 칸으로 맞춘다
+    case 'split':
+      return 1 / 2;
     case 'full':
     default:
       return isLandscape(images[block.indexes[0]]) ? 2 / 3 : 4 / 3;

@@ -28,6 +28,7 @@ const TILE_SIZES: Record<string, string> = {
   'gallery__block--trio': '(max-width: 430px) 33vw, 143px',
   'gallery__block--pair': '(max-width: 430px) 50vw, 215px',
   'gallery__block--duo': '(max-width: 430px) 50vw, 215px',
+  'gallery__block--split': '(max-width: 430px) 50vw, 215px',
   'gallery__block--full': '(max-width: 430px) 100vw, 430px',
 };
 

@@ -91,7 +91,7 @@ const WeddingInvitation: React.FC = () => {
     updateMetaTag('og:description', description);
     updateMetaTag('og:image', imageUrl);
     updateMetaTag('og:image:width', '1200');
-    updateMetaTag('og:image:height', '630');
+    updateMetaTag('og:image:height', '800');
     updateMetaTag('og:url', currentUrl);
     updateMetaTag('og:type', 'website');
     updateMetaTag('og:locale', language === 'ko' ? 'ko_KR' : 'en_US');

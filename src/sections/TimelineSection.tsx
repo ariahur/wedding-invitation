@@ -13,6 +13,16 @@ const startDate = new Date('2013-06-02T00:00:00');
 /** .timeline__event-image 는 최대 120px */
 const THUMB_SIZES = '120px';
 
+/** 정사각 썸네일로 잘릴 때 인물이 잘리지 않도록 사진마다 보여줄 자리를 정한다 */
+const IMAGE_POSITIONS: Record<string, string> = {
+  'timeline/2013': ' event-image--pos-left',
+  'timeline/2018': ' event-image--pos-right',
+  'timeline/2025': ' event-image--pos-left',
+  'timeline/2027': ' event-image--pos-top',
+};
+
+const eventImagePosition = (image: string): string => IMAGE_POSITIONS[image] ?? '';
+
 const TimelineSection: React.FC = () => {
   const language = useLanguage();
   const t = translations[language];
@@ -142,7 +152,7 @@ const TimelineSection: React.FC = () => {
                   <img
                     {...imageProps(event.image, THUMB_SIZES)}
                     alt={event.title}
-                    className={`event-image${(event.image.includes('2013') || event.image.includes('2025')) ? ' event-image--pos-left' : ''}${event.image.includes('2018') ? ' event-image--pos-right' : ''}`}
+                    className={`event-image${eventImagePosition(event.image)}`}
                     onClick={() => handleImageClick(event.image!)}
                     style={{ cursor: 'pointer' }}
                     loading="lazy"
@@ -175,7 +185,7 @@ const TimelineSection: React.FC = () => {
                       <img
                         {...imageProps(event.image, THUMB_SIZES)}
                         alt={event.title}
-                        className={`event-image${(event.image.includes('2013') || event.image.includes('2025')) ? ' event-image--pos-left' : ''}${event.image.includes('2018') ? ' event-image--pos-right' : ''}`}
+                        className={`event-image${eventImagePosition(event.image)}`}
                         onClick={() => handleImageClick(event.image!)}
                         style={{ cursor: 'pointer' }}
                         loading="lazy"

@@ -188,6 +188,11 @@
   object-position: 65% 50%;
 }
 
+/* 2027 photo: show a bit more of the top */
+.event-image--pos-top {
+  object-position: 50% 32%;
+}
+
 .event-image-placeholder {
   width: 100%;
   height: 100%;
