@@ -486,21 +486,23 @@ const EMAIL_TEXT = {
     route: '{origin} → {destination} · {flight}',
     logoAlt: 'DANIEL & ARIA AIR',
 
-    // 인사 · 헤드라인
-    greeting: '{name}님께',
-    headlineIssued: '참석 소식을 전해주셔서\n고맙습니다.',
-    headlineUpdated: '보내주신 내용대로\n다시 챙겨두었습니다.',
+    greeting: '{name}님, 참석 여부를 알려주셔서 감사합니다.',
+    leadIssued: '아래 내용으로 접수되었습니다.',
+    leadUpdated: '아래 내용으로 수정되었습니다.',
 
-    // 본문 — 신청 내용을 표 대신 문장으로 풀어 쓴다
-    bodyIssuedIntro: '{name}님의 탑승권이 발급되었습니다.',
-    bodyUpdatedIntro: '{name}님의 탑승권을 보내주신 내용대로 수정했습니다.',
-    bodySeatOne: '{name}님 한 분의 자리를 예식장에 마련해 두겠습니다.',
-    bodySeatMany: '{name}님을 포함해 모두 {count}분의 자리를 예식장에 마련해 두겠습니다.',
-    bodyChildren: '아이와 함께 오신다고 알려주셨습니다.',
-    bodyChildrenAges: '아이({ages})와 함께 오신다고 알려주셨습니다.',
-    bodyContact: '안내가 필요하면 {email} 로 메일을 드리고, 급한 일은 {phone} 으로 연락드리겠습니다.',
-    bodyContactEmailOnly: '안내가 필요하면 {email} 로 메일을 드리겠습니다.',
-    bodyNote: '남겨주신 말씀도 잘 받았습니다. “{note}”',
+    // 신청 내용 — 표가 아니라 한 줄씩 나열한다
+    labelName: '성함',
+    labelPhone: '연락처',
+    labelEmail: '이메일',
+    labelAttendance: '참석 여부',
+    labelGuestCount: '동행 인원',
+    labelChildren: '아이 동반',
+    labelNote: '전달사항',
+
+    valueAttending: '참석합니다',
+    valueGuestCount: '{count}명 (본인 포함)',
+    valueChildrenNo: '아니오',
+    valueChildrenYes: '예',
 
     // 일시·장소 패널
     button: 'RSVP 확인하기',
@@ -515,14 +517,11 @@ const EMAIL_TEXT = {
     mapCredit: '',
 
     // 리마인드 메일
-    headlineReminder: '우리의 특별한 날이\n{daysPhrase} 남았습니다.',
-    headlineReminderToday: '드디어 오늘,\n우리의 특별한 날입니다.',
+    reminderGreeting: '{name}님, 우리의 특별한 날이 {daysPhrase} 앞으로 다가왔습니다.',
+    reminderGreetingToday: '{name}님, 드디어 오늘 우리의 특별한 날입니다.',
+    reminderLead: '참석 소식을 전해주신 덕분에 준비하는 내내 든든했습니다.\n예식 일정을 다시 한번 안내드립니다.',
     reminderDaysPhrase: '{days}일',
     reminderDaysPhraseOne: '하루',
-
-    bodyReminderIntro: '{name}님, 참석 소식을 전해주신 덕분에 준비하는 내내 든든했습니다.',
-    bodyReminderLead: '예식 일정을 다시 한번 안내드립니다.',
-    bodyReminderSeat: '{count}분의 자리가 그대로 준비되어 있습니다.',
 
     signoffReminder: '오시는 길 조심히 오시고,\n그날 반가운 얼굴로 뵙겠습니다.',
     reminderEditNote: '혹시 일정이 바뀌셨다면 청첩장의 “탑승권 신청”에서 수정해주세요.',
@@ -537,19 +536,22 @@ const EMAIL_TEXT = {
     route: '{origin} → {destination} · {flight}',
     logoAlt: 'DANIEL & ARIA AIR',
 
-    greeting: 'Dear {name},',
-    headlineIssued: 'Thank you for letting us\nknow you will be there.',
-    headlineUpdated: 'Your details have been\nupdated as you asked.',
+    greeting: '{name}, thank you for letting us know.',
+    leadIssued: 'We have received your RSVP as below.',
+    leadUpdated: 'Your RSVP has been updated as below.',
 
-    bodyIssuedIntro: 'Your boarding pass has been issued.',
-    bodyUpdatedIntro: 'We have updated your boarding pass with the details you sent us.',
-    bodySeatOne: 'We will keep a seat for you at the ceremony.',
-    bodySeatMany: 'We will keep {count} seats for you and your party at the ceremony.',
-    bodyChildren: 'You also let us know that children will be joining you.',
-    bodyChildrenAges: 'You also let us know that children ({ages}) will be joining you.',
-    bodyContact: 'We will send anything you need to know to {email}, and call {phone} if something urgent comes up.',
-    bodyContactEmailOnly: 'We will send anything you need to know to {email}.',
-    bodyNote: 'Thank you for the note you left us — “{note}”',
+    labelName: 'Full Name',
+    labelPhone: 'Phone',
+    labelEmail: 'Email',
+    labelAttendance: 'Attendance',
+    labelGuestCount: 'Number of Guests',
+    labelChildren: 'Children',
+    labelNote: 'Special Requests',
+
+    valueAttending: 'I will attend',
+    valueGuestCount: '{count} (including yourself)',
+    valueChildrenNo: 'No',
+    valueChildrenYes: 'Yes',
 
     button: 'View your RSVP',
     buttonNote: 'Opens the mobile invitation.',
@@ -561,14 +563,11 @@ const EMAIL_TEXT = {
     mapAlt: 'Grand Hill Convention on the map',
     mapCredit: 'Map data © Google',
 
-    headlineReminder: 'Our special day is only\n{daysPhrase} away.',
-    headlineReminderToday: 'Our special day\nis finally here.',
+    reminderGreeting: '{name}, our special day is only {daysPhrase} away.',
+    reminderGreetingToday: '{name}, our special day is finally here.',
+    reminderLead: 'Knowing that you will be there has kept us going.\nHere are the details once more.',
     reminderDaysPhrase: '{days} days',
     reminderDaysPhraseOne: 'one day',
-
-    bodyReminderIntro: 'Knowing that you will be there has kept us going.',
-    bodyReminderLead: 'Here are the details once more.',
-    bodyReminderSeat: '{count} seats are still waiting for you.',
 
     signoffReminder: 'Travel safe —\nwe cannot wait to see your face on the day.',
     reminderEditNote: 'If your plans have changed, please update your RSVP in the invitation.',
@@ -620,8 +619,8 @@ function confirmationParts(data, updated, language) {
 
   return {
     greeting: fillTemplate(t.greeting, { name: name }),
-    headline: updated ? t.headlineUpdated : t.headlineIssued,
-    body: confirmationBody(data, updated, language),
+    lead: updated ? t.leadUpdated : t.leadIssued,
+    details: confirmationDetails(data, language),
     button: t.button,
     buttonNote: t.buttonNote,
     signoff: t.signoffAttending,
@@ -631,40 +630,36 @@ function confirmationParts(data, updated, language) {
 }
 
 /**
- * 폼에 작성된 내용을 표가 아니라 문장으로 풀어 쓴다.
- * 한 항목이 한 문단이 되고, 메일 본문(HTML)과 대체 텍스트가 같은 문단 목록을 공유한다.
+ * 폼에 작성된 내용을 [라벨, 값] 목록으로 정리한다.
+ * 메일 본문(HTML)과 대체 텍스트가 같은 목록을 공유하며,
+ * HTML 쪽은 이 목록을 표가 아니라 한 줄씩 나열해 보여준다.
  */
-function confirmationBody(data, updated, language) {
+function confirmationDetails(data, language) {
   const t = EMAIL_TEXT[language];
-  const name = String(data.name || '').trim();
-  const count = Number(data.guestCount) || 1;
-  const paragraphs = [];
+  const rows = [];
 
-  paragraphs.push(fillTemplate(updated ? t.bodyUpdatedIntro : t.bodyIssuedIntro, { name: name }));
+  rows.push([t.labelName, String(data.name || '').trim()]);
+  rows.push([t.labelPhone, String(data.phone || '').trim()]);
+  rows.push([t.labelEmail, String(data.email || '').trim()]);
+  rows.push([t.labelAttendance, t.valueAttending]);
+  rows.push([
+    t.labelGuestCount,
+    fillTemplate(t.valueGuestCount, { count: Number(data.guestCount) || 1 }),
+  ]);
 
-  paragraphs.push(count > 1
-    ? fillTemplate(t.bodySeatMany, { name: name, count: count })
-    : fillTemplate(t.bodySeatOne, { name: name }));
-
+  const ages = String(data.childrenAges || '').trim();
   if (data.hasChildren === 'yes') {
-    const ages = String(data.childrenAges || '').trim();
-    paragraphs.push(ages ? fillTemplate(t.bodyChildrenAges, { ages: ages }) : t.bodyChildren);
-  }
-
-  const email = String(data.email || '').trim();
-  const phone = String(data.phone || '').trim();
-  if (email && phone) {
-    paragraphs.push(fillTemplate(t.bodyContact, { email: email, phone: phone }));
-  } else if (email) {
-    paragraphs.push(fillTemplate(t.bodyContactEmailOnly, { email: email }));
+    rows.push([t.labelChildren, ages ? t.valueChildrenYes + ' · ' + ages : t.valueChildrenYes]);
+  } else {
+    rows.push([t.labelChildren, t.valueChildrenNo]);
   }
 
   const note = String(data.note || '').trim();
   if (note) {
-    paragraphs.push(fillTemplate(t.bodyNote, { note: note }));
+    rows.push([t.labelNote, note]);
   }
 
-  return paragraphs;
+  return rows;
 }
 
 // ===================================================================
@@ -750,14 +745,14 @@ function reminderParts(guest, daysLeft, language) {
     ? t.reminderDaysPhraseOne
     : fillTemplate(t.reminderDaysPhrase, { days: daysLeft });
 
-  const headline = daysLeft > 0
-    ? fillTemplate(t.headlineReminder, { daysPhrase: daysPhrase })
-    : t.headlineReminderToday;
+  const greeting = daysLeft > 0
+    ? fillTemplate(t.reminderGreeting, { name: name, daysPhrase: daysPhrase })
+    : fillTemplate(t.reminderGreetingToday, { name: name });
 
   return {
-    greeting: fillTemplate(t.greeting, { name: name }),
-    headline: headline,
-    body: reminderBody(guest, language),
+    greeting: greeting,
+    lead: t.reminderLead,
+    details: reminderDetails(guest, language),
     button: t.button,
     buttonNote: t.buttonNote,
     signoff: t.signoffReminder,
@@ -766,21 +761,21 @@ function reminderParts(guest, daysLeft, language) {
   };
 }
 
-/** 리마인드 메일 본문도 표 없이 문장으로 쓴다 */
-function reminderBody(guest, language) {
+/**
+ * 리마인드 메일에 다시 짚어줄 내용.
+ * 일시 · 장소 · 주소는 바로 아래 패널에 크게 나오므로 여기서는 되풀이하지 않고,
+ * 신청 때 적어주신 동행 인원만 확인차 한 줄 남긴다.
+ */
+function reminderDetails(guest, language) {
   const t = EMAIL_TEXT[language];
-  const name = String(guest.name || '').trim();
-  const paragraphs = [];
-
-  paragraphs.push(fillTemplate(t.bodyReminderIntro, { name: name }));
-  paragraphs.push(t.bodyReminderLead);
+  const rows = [];
 
   const count = Number(guest.guestCount) || 0;
   if (count > 0) {
-    paragraphs.push(fillTemplate(t.bodyReminderSeat, { count: count }));
+    rows.push([t.labelGuestCount, fillTemplate(t.valueGuestCount, { count: count })]);
   }
 
-  return paragraphs;
+  return rows;
 }
 
 /** 시트 한 행을 메일 빌더가 쓰는 게스트 객체로 바꾼다 */
@@ -891,13 +886,13 @@ function buildEmailText(parts, language) {
 
   lines.push(parts.greeting);
   lines.push('');
-  lines.push(parts.headline.split('\n').join(' '));
+  lines.push(parts.lead);
   lines.push('');
 
-  for (let i = 0; i < parts.body.length; i++) {
-    lines.push(parts.body[i]);
-    lines.push('');
+  for (let i = 0; i < parts.details.length; i++) {
+    lines.push(parts.details[i][0] + ': ' + parts.details[i][1]);
   }
+  lines.push('');
 
   lines.push(info.dateLine);
   lines.push(info.timeLine);
@@ -935,12 +930,9 @@ function buildEmailHtml(parts, language) {
     flight: WEDDING_INFO.flight,
   });
 
-  let bodyHtml = '';
-  for (let i = 0; i < parts.body.length; i++) {
-    bodyHtml +=
-      '<p style="margin:0 0 14px 0;font-size:15px;line-height:1.95;color:' + EMAIL_COLORS.subText + ';">' +
-        nl2br(escapeHtml(parts.body[i])) +
-      '</p>';
+  let detailsHtml = '';
+  for (let i = 0; i < parts.details.length; i++) {
+    detailsHtml += emailDetailLine(parts.details[i][0], parts.details[i][1]);
   }
 
   return '' +
@@ -952,7 +944,7 @@ function buildEmailHtml(parts, language) {
 
   // 받은편지함 미리보기 줄 (본문에서는 감춘다)
   '<div style="display:none;font-size:1px;color:' + EMAIL_COLORS.ivory + ';max-height:0;overflow:hidden;">' +
-    escapeHtml(parts.body.length ? parts.body[0] : parts.headline.split('\n').join(' ')) +
+    escapeHtml(parts.lead) +
   '</div>' +
 
   '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:' + EMAIL_COLORS.ivory + ';">' +
@@ -974,12 +966,12 @@ function buildEmailHtml(parts, language) {
           escapeHtml(route) +
         '</td></tr>' +
 
-        // ── 인사 · 헤드라인
-        '<tr><td align="center" style="padding:38px 32px 0 32px;font-size:14px;line-height:1.6;color:' + EMAIL_COLORS.subText + ';">' +
-          escapeHtml(parts.greeting) +
+        // ── 인사 · 안내문
+        '<tr><td align="center" style="padding:38px 32px 0 32px;font-family:Georgia,\'Times New Roman\',serif;font-size:21px;line-height:1.6;color:' + EMAIL_COLORS.navy + ';">' +
+          nl2br(escapeHtml(parts.greeting)) +
         '</td></tr>' +
-        '<tr><td align="center" style="padding:12px 32px 0 32px;font-family:Georgia,\'Times New Roman\',serif;font-size:23px;line-height:1.55;color:' + EMAIL_COLORS.navy + ';">' +
-          nl2br(escapeHtml(parts.headline)) +
+        '<tr><td align="center" style="padding:14px 32px 0 32px;font-size:14px;line-height:1.8;color:' + EMAIL_COLORS.subText + ';">' +
+          nl2br(escapeHtml(parts.lead)) +
         '</td></tr>' +
 
         // 헤드라인과 본문을 가르는 짧은 골드 선
@@ -989,8 +981,8 @@ function buildEmailHtml(parts, language) {
           '</tr></table>' +
         '</td></tr>' +
 
-        // ── 신청 내용 (표가 아니라 산문)
-        '<tr><td align="center" style="padding:0 34px;">' + bodyHtml + '</td></tr>' +
+        // ── 신청 내용 (표 없이 한 줄씩)
+        '<tr><td align="center" style="padding:0 34px;">' + detailsHtml + '</td></tr>' +
 
         // ── 일시 · 장소 패널 + RSVP 버튼
         '<tr><td style="padding:20px 20px 0 20px;">' +
@@ -1058,6 +1050,19 @@ function buildEmailHtml(parts, language) {
     '</td></tr>' +
   '</table>' +
   '</body></html>';
+}
+
+/**
+ * 신청 내용 한 줄. 라벨은 작은 회색 대문자, 값은 본문색으로 같은 줄에 잇는다.
+ * 칸을 나누거나 선을 긋지 않아 표처럼 보이지 않는다.
+ */
+function emailDetailLine(label, value) {
+  return '<div style="padding-bottom:11px;font-size:15px;line-height:1.7;">' +
+    '<span style="font-family:Roboto,Arial,sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:' + EMAIL_COLORS.label + ';">' +
+      escapeHtml(label) +
+    '</span>' +
+    '<span style="color:' + EMAIL_COLORS.text + ';">&nbsp;&nbsp;' + nl2br(escapeHtml(value)) + '</span>' +
+  '</div>';
 }
 
 /** 레터헤드를 위아래로 감싸는 1px 괘선 */

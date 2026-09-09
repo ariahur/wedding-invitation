@@ -186,8 +186,8 @@ REACT_APP_PHOTO_DROP_STATUS=open npm start
 | `WEDDING_INFO` | 메일에 찍히는 예식 정보. `dateLine`(날짜) 과 `timeLine`(시각) 이 나뉘어 두 줄로 크게 보입니다 |
 
 메일 문구는 `EMAIL_TEXT` 의 `ko` / `en` 에 모여 있습니다. 게스트가 신청한 화면 언어로 보냅니다.
-신청 내용은 표가 아니라 문장으로 나갑니다 — 인원 · 아이 동반 · 연락처 · 전달사항이 각각 한 문단이 되며,
-문장 틀은 `EMAIL_TEXT` 의 `body...` 항목에 있고 값을 채워 넣는 곳은 `confirmationBody()` 입니다.
+신청 내용은 `confirmationDetails()` 가 만든 [라벨, 값] 목록으로 나가며,
+표를 그리지 않고 `emailDetailLine()` 이 한 줄씩 나열합니다. 라벨 문구는 `EMAIL_TEXT` 의 `label...` 항목에 있습니다.
 
 ## 문제 해결
 
