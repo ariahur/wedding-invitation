@@ -32,6 +32,22 @@ const TILE_SIZES: Record<string, string> = {
   'gallery__block--full': '(max-width: 430px) 100vw, 430px',
 };
 
+/**
+ * 정사각에 가까운 칸에서 머리 위가 잘리는 사진만 보여줄 자리를 따로 잡는다.
+ * 키는 원본 파일명에서 배치 순서 접두사를 뗀 부분이라 순서를 바꿔 붙여도 따라간다.
+ */
+const TILE_POSITIONS: Record<string, string> = {
+  '80224': 'gallery__tile-image--top',
+};
+
+/** base는 "<순번>-<사진번호>-<해시8자>" 형태다 */
+const tilePositionClass = (base: string): string => {
+  const stem = base.slice(0, -9);
+  const modifier = TILE_POSITIONS[stem.slice(stem.indexOf('-') + 1)];
+
+  return modifier ? ` ${modifier}` : '';
+};
+
 const GallerySection: React.FC = () => {
   const language = useLanguage();
   const t = translations[language];
@@ -153,7 +169,7 @@ const GallerySection: React.FC = () => {
           width={image.width}
           height={image.height}
           alt={`${t.gallery.photoLabel} ${index + 1}`}
-          className="gallery__tile-image"
+          className={`gallery__tile-image${tilePositionClass(image.base)}`}
           loading="lazy"
           decoding="async"
         />
