@@ -128,6 +128,11 @@ const WEDDING_DATE = new Date(2027, 1, 20, 15, 0);
 // 예식 며칠 전에 보낼지 (한 달 전 = 30)
 const REMINDER_DAYS_BEFORE = 30;
 
+// 발송 창을 며칠까지 열어둘지. 리마인드는 D-{REMINDER_DAYS_BEFORE} 한 번이 마지막이며,
+// 트리거가 그날 하루 걸렀을 때만 이 일수만큼 이어서 보낸다.
+// (D-30 ~ D-28 에만 나가고, 그 뒤로는 신규 신청자에게도 보내지 않는다)
+const REMINDER_GRACE_DAYS = 2;
+
 // 매일 도는 트리거가 확인하는 시각 (0~23)
 const REMINDER_TRIGGER_HOUR = 10;
 
@@ -482,7 +487,6 @@ const EMAIL_TEXT = {
     subjectIssued: '[{flight}] {origin} → {destination} 탑승권 발급 완료',
     subjectUpdated: '[{flight}] {origin} → {destination} 탑승권 변경 완료',
     subjectReminder: '[{flight}] 탑승 D-{days} · 우리의 특별한 날이 다가옵니다',
-    subjectReminderToday: '[{flight}] 오늘, 우리의 특별한 날입니다',
 
     // 상단 로고 아래 한 줄
     route: '{origin} → {destination} · {flight}',
@@ -520,10 +524,8 @@ const EMAIL_TEXT = {
 
     // 리마인드 메일
     reminderGreeting: '{name}님, 우리의 특별한 날이 {daysPhrase} 앞으로 다가왔습니다.',
-    reminderGreetingToday: '{name}님, 드디어 오늘 우리의 특별한 날입니다.',
     reminderLead: '참석 소식을 전해주신 덕분에 준비하는 내내 든든했습니다.\n예식 일정을 다시 한번 안내드립니다.',
     reminderDaysPhrase: '{days}일',
-    reminderDaysPhraseOne: '하루',
 
     signoffReminder: '오시는 길 조심히 오시고,\n그날 반가운 얼굴로 뵙겠습니다.',
     reminderEditNote: '혹시 일정이 바뀌셨다면 청첩장의 “탑승권 신청”에서 수정해주세요.',
@@ -533,7 +535,6 @@ const EMAIL_TEXT = {
     subjectIssued: '[{flight}] {origin} → {destination} boarding pass issued',
     subjectUpdated: '[{flight}] {origin} → {destination} boarding pass updated',
     subjectReminder: '[{flight}] D-{days} to boarding — our special day is almost here',
-    subjectReminderToday: '[{flight}] Today is our special day',
 
     route: '{origin} → {destination} · {flight}',
     logoAlt: 'DANIEL & ARIA AIR',
@@ -566,10 +567,8 @@ const EMAIL_TEXT = {
     mapCredit: 'Map data © Google',
 
     reminderGreeting: '{name}, our special day is only {daysPhrase} away.',
-    reminderGreetingToday: '{name}, our special day is finally here.',
     reminderLead: 'Knowing that you will be there has kept us going.\nHere are the details once more.',
     reminderDaysPhrase: '{days} days',
-    reminderDaysPhraseOne: 'one day',
 
     signoffReminder: 'Travel safe —\nwe cannot wait to see your face on the day.',
     reminderEditNote: 'If your plans have changed, please update your RSVP in the invitation.',
@@ -688,8 +687,15 @@ function sendReminderEmails() {
     return result;
   }
 
+  // 리마인드 문구는 "{days}일 앞으로 다가왔습니다" 하나뿐이다.
+  // D-1 · 예식 당일 · 예식 후에는 문구가 성립하지 않으므로 (수동 실행이라도) 보내지 않는다.
+  const daysLeft = daysUntilWedding();
+  if (daysLeft < 2) {
+    Logger.log('예식까지 ' + daysLeft + '일 — 리마인드를 보내지 않습니다.');
+    return result;
+  }
+
   const values = sheet.getRange(2, 1, rowCount, COL.REMINDER_SENT).getValues();
-  const daysLeft = Math.max(daysUntilWedding(), 0);
   let quota = MailApp.getRemainingDailyQuota();
 
   for (let i = 0; i < rowCount; i++) {
@@ -730,7 +736,7 @@ function sendReminderEmail(guest, daysLeft) {
   const language = guest.language;
   const t = EMAIL_TEXT[language];
 
-  const subject = withSubjectPrefix(fillTemplate(daysLeft > 0 ? t.subjectReminder : t.subjectReminderToday, {
+  const subject = withSubjectPrefix(fillTemplate(t.subjectReminder, {
     flight: WEDDING_INFO.flight,
     days: daysLeft,
   }), language);
@@ -743,16 +749,10 @@ function reminderParts(guest, daysLeft, language) {
   const t = EMAIL_TEXT[language];
   const name = String(guest.name || '').trim();
 
-  const daysPhrase = daysLeft === 1
-    ? t.reminderDaysPhraseOne
-    : fillTemplate(t.reminderDaysPhrase, { days: daysLeft });
-
-  const greeting = daysLeft > 0
-    ? fillTemplate(t.reminderGreeting, { name: name, daysPhrase: daysPhrase })
-    : fillTemplate(t.reminderGreetingToday, { name: name });
+  const daysPhrase = fillTemplate(t.reminderDaysPhrase, { days: daysLeft });
 
   return {
-    greeting: greeting,
+    greeting: fillTemplate(t.reminderGreeting, { name: name, daysPhrase: daysPhrase }),
     lead: t.reminderLead,
     details: reminderDetails(guest, language),
     button: t.button,
@@ -816,19 +816,22 @@ function daysUntilWedding() {
 
 /**
  * 매일 도는 트리거가 부르는 함수.
- * 예식 D-{REMINDER_DAYS_BEFORE} 이 지나면 아직 못 받은 참석자에게 리마인드를 보낸다.
- * (트리거가 하루 걸러도 다음 날 이어서 보내도록 "그 날 하루만" 이 아니라 범위로 판단한다)
+ * 리마인드는 예식 D-{REMINDER_DAYS_BEFORE} 한 번이 마지막이다.
+ * 트리거가 그날 하루 걸렀을 때만 {REMINDER_GRACE_DAYS} 일까지 이어서 보내고,
+ * 그 뒤로는 (D-1 · 예식 당일 포함) 아무에게도 보내지 않는다.
  */
 function dailyReminderCheck() {
   const daysLeft = daysUntilWedding();
+  const lastDay = REMINDER_DAYS_BEFORE - REMINDER_GRACE_DAYS;
 
   if (daysLeft > REMINDER_DAYS_BEFORE) {
     Logger.log('아직 이릅니다. 예식까지 ' + daysLeft + '일 남았습니다.');
     return;
   }
 
-  if (daysLeft < 0) {
-    Logger.log('예식이 지났습니다. 리마인드를 보내지 않습니다.');
+  if (daysLeft < lastDay) {
+    Logger.log('리마인드 발송 창(D-' + REMINDER_DAYS_BEFORE + ' ~ D-' + lastDay +
+      ')이 지났습니다. 예식까지 ' + daysLeft + '일 — 보내지 않습니다.');
     return;
   }
 
@@ -1108,7 +1111,8 @@ function setupEmail() {
 /**
  * 리마인드 메일을 예약할 때 Apps Script 편집기에서 한 번 실행하세요.
  * 매일 도는 트리거를 만들고(이미 있으면 다시 만듭니다) 발송 예정일을 로그에 찍습니다.
- * 트리거는 예식 D-{REMINDER_DAYS_BEFORE} 이 되는 날부터 참석자에게 한 통씩 보냅니다.
+ * 트리거는 예식 D-{REMINDER_DAYS_BEFORE} 에 참석자에게 한 통씩 보내고,
+ * D-{REMINDER_DAYS_BEFORE - REMINDER_GRACE_DAYS} 이 지나면 더 보내지 않습니다.
  */
 function setupReminder() {
   getOrCreateSheet(); // "언어" / "리마인드 발송" 열 헤더를 채워 둔다
@@ -1132,18 +1136,32 @@ function setupReminder() {
   Logger.log('매일 ' + REMINDER_TRIGGER_HOUR + '시경 확인하는 트리거를 만들었습니다.');
   Logger.log('리마인드 발송 예정일: ' + Utilities.formatDate(sendDate, zone, 'yyyy-MM-dd') +
     ' (예식 ' + Utilities.formatDate(WEDDING_DATE, zone, 'yyyy-MM-dd') + ' 기준 D-' + REMINDER_DAYS_BEFORE + ')');
+  Logger.log('발송 창: D-' + REMINDER_DAYS_BEFORE + ' ~ D-' + (REMINDER_DAYS_BEFORE - REMINDER_GRACE_DAYS) +
+    ' (이 창이 지나면 D-1 · 예식 당일에도 보내지 않습니다)');
   Logger.log('오늘 기준 예식까지: ' + daysUntilWedding() + '일');
   Logger.log('발송 스위치(SEND_REMINDER_EMAIL): ' + SEND_REMINDER_EMAIL);
 }
 
 /**
- * 확인 메일 미리보기 — 실행하면 스크립트 소유자 주소로 샘플 두 통(발급 / 변경)이 발송됩니다.
- * 불참 신청에는 확인 메일이 나가지 않으므로 참석 샘플만 보냅니다.
+ * 테스트 메일에 쓰는 샘플 신청 내용. 언어에 맞춰 성함·연락처·전달사항까지 바꾼다.
+ * 실제 시트는 건드리지 않으므로 게스트에게는 나가지 않는다.
  */
-function sendTestConfirmationEmail() {
-  const to = Session.getEffectiveUser().getEmail();
+function testSampleGuest(language, to) {
+  if (normalizeLanguage(language) === 'en') {
+    return {
+      language: 'en',
+      name: 'John Doe',
+      phone: '+1 415-555-0123',
+      email: to,
+      attendance: 'attending',
+      guestCount: 2,
+      hasChildren: 'yes',
+      childrenAges: '5, 7',
+      note: 'Congratulations! We would not miss it.',
+    };
+  }
 
-  const sample = {
+  return {
     language: 'ko',
     name: '홍길동',
     phone: '010-1234-5678',
@@ -1154,29 +1172,79 @@ function sendTestConfirmationEmail() {
     childrenAges: '5세, 7세',
     note: '축하드려요! 그날 꼭 갈게요.',
   };
-
-  sendConfirmationEmail(sample, false);
-  sendConfirmationEmail(sample, true);
-
-  Logger.log('테스트 메일 2통을 ' + to + ' 로 보냈습니다.');
 }
 
 /**
- * 리마인드 메일 미리보기 — 실행하면 스크립트 소유자 주소로 샘플 한 통이 발송됩니다.
- * 시트는 건드리지 않으므로 실제 게스트에게는 가지 않습니다.
+ * 확인 메일 미리보기 — 국문·영문 × 발급·변경 네 통을 스크립트 소유자 주소로 보냅니다.
+ * 불참 신청에는 확인 메일이 나가지 않으므로 참석 샘플만 보냅니다.
+ */
+function sendTestConfirmationEmail() {
+  const to = Session.getEffectiveUser().getEmail();
+
+  if (!SEND_CONFIRMATION_EMAIL) {
+    Logger.log('발송 스위치(SEND_CONFIRMATION_EMAIL)가 꺼져 있어 한 통도 나가지 않습니다.');
+    return;
+  }
+
+  const cases = [
+    { language: 'ko', updated: false, label: '국문 · 발급' },
+    { language: 'ko', updated: true, label: '국문 · 변경' },
+    { language: 'en', updated: false, label: '영문 · 발급' },
+    { language: 'en', updated: true, label: '영문 · 변경' },
+  ];
+
+  let sent = 0;
+  for (let i = 0; i < cases.length; i++) {
+    const c = cases[i];
+    const ok = sendConfirmationEmail(testSampleGuest(c.language, to), c.updated);
+    Logger.log('확인 메일 [' + c.label + '] ' + (ok ? '발송' : '실패'));
+    if (ok) sent++;
+  }
+
+  Logger.log('확인 테스트 메일 ' + sent + '/' + cases.length + '통을 ' + to + ' 로 보냈습니다.');
+}
+
+/**
+ * 리마인드 메일 미리보기 — 국문·영문 두 통을 보냅니다.
+ * 실제 발송과 같은 D-{REMINDER_DAYS_BEFORE} 문구이며, 시트는 건드리지 않습니다.
  */
 function sendTestReminderEmail() {
   const to = Session.getEffectiveUser().getEmail();
 
-  sendReminderEmail({
-    name: '홍길동',
-    email: to,
-    attendance: 'attending',
-    guestCount: 2,
-    language: 'ko',
-  }, REMINDER_DAYS_BEFORE);
+  if (!SEND_REMINDER_EMAIL) {
+    Logger.log('발송 스위치(SEND_REMINDER_EMAIL)가 꺼져 있습니다. 테스트는 스위치와 무관하게 진행합니다.');
+  }
 
-  Logger.log('리마인드 테스트 메일을 ' + to + ' 로 보냈습니다.');
+  const languages = ['ko', 'en'];
+
+  let sent = 0;
+  for (let i = 0; i < languages.length; i++) {
+    const language = languages[i];
+    const sample = testSampleGuest(language, to);
+
+    const ok = sendReminderEmail({
+      name: sample.name,
+      email: to,
+      attendance: 'attending',
+      guestCount: sample.guestCount,
+      language: language,
+    }, REMINDER_DAYS_BEFORE);
+
+    Logger.log('리마인드 메일 [' + (language === 'en' ? '영문' : '국문') +
+      ' · D-' + REMINDER_DAYS_BEFORE + '] ' + (ok ? '발송' : '실패'));
+    if (ok) sent++;
+  }
+
+  Logger.log('리마인드 테스트 메일 ' + sent + '/' + languages.length + '통을 ' + to + ' 로 보냈습니다.');
+}
+
+/**
+ * 확인 메일 + 리마인드 메일을 케이스별·언어별로 한 번에 보냅니다 (최대 6통).
+ */
+function sendAllTestEmails() {
+  Logger.log('오늘 남은 발송 가능 통수: ' + MailApp.getRemainingDailyQuota());
+  sendTestConfirmationEmail();
+  sendTestReminderEmail();
 }
 
 

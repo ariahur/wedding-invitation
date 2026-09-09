@@ -155,17 +155,20 @@ REACT_APP_PHOTO_DROP_STATUS=open npm start
 2. 권한 승인 창이 뜨면 허용합니다 (Gmail 발송 권한).
 3. 실행 로그에 보내는 주소와 오늘 남은 발송 통수가 찍히면 준비 완료입니다.
 
-`sendTestConfirmationEmail` 을 실행하면 발급/변경 샘플 두 통이 내 주소로 옵니다.
+`sendTestConfirmationEmail` 을 실행하면 **국문·영문 × 발급·변경** 샘플 네 통이 내 주소로 옵니다.
 
 ### 4. 리마인드 예약
 
 1. 함수 선택 목록에서 **`setupReminder`** 를 고르고 **실행** 을 클릭합니다.
 2. 매일 한 번 도는 트리거가 만들어지고, 실행 로그에 발송 예정일이 찍힙니다.
-3. `sendTestReminderEmail` 을 실행하면 리마인드 샘플 한 통이 내 주소로 옵니다 (시트는 건드리지 않습니다).
+3. `sendTestReminderEmail` 을 실행하면 **국문·영문** 샘플 두 통이 내 주소로 옵니다 (시트는 건드리지 않습니다).
+4. 확인 메일과 리마인드 메일을 한 번에 보려면 `sendAllTestEmails` 를 실행합니다 (총 6통).
 
-예식 30일 전이 되는 날부터, **참석**으로 신청하고 이메일을 남긴 게스트에게 한 통씩 나갑니다.
+예식 30일 전에, **참석**으로 신청하고 이메일을 남긴 게스트에게 한 통씩 나갑니다.
+리마인드는 이 한 번이 마지막입니다 — 트리거가 그날 하루 걸렀을 때만 `REMINDER_GRACE_DAYS`(기본 2일) 동안 이어서 보내고,
+D-28 이 지나면 그 뒤에 새로 신청한 사람에게도, D-1 · 예식 당일에도 보내지 않습니다.
 보낸 시각은 RSVP 시트의 **리마인드 발송** 열에 기록되고, 값이 있는 행은 다시 보내지 않습니다.
-(다시 보내고 싶으면 그 칸을 비우고 `sendReminderEmails` 를 실행하세요. 30일 전 이후에 새로 신청한 사람은 다음 날 트리거가 챙겨서 보냅니다.)
+(발송 창 안에서 다시 보내고 싶으면 그 칸을 비우고 `sendReminderEmails` 를 실행하세요. 창이 지난 뒤에도 굳이 보내야 한다면 `sendReminderEmails` 를 직접 실행하면 됩니다 — 트리거는 더 보내지 않습니다.)
 
 ### 5. 설정값
 
@@ -177,6 +180,7 @@ REACT_APP_PHOTO_DROP_STATUS=open npm start
 | `SEND_REMINDER_EMAIL` | 리마인드 메일 발송 on/off |
 | `WEDDING_DATE` | 예식 일시 (월은 0부터 — `1` 이 2월). 리마인드 날짜 계산용 |
 | `REMINDER_DAYS_BEFORE` | 예식 며칠 전에 보낼지 (기본 30) |
+| `REMINDER_GRACE_DAYS` | 트리거가 발송일을 걸렀을 때 이어서 보낼 기간 (기본 2일 → D-30 ~ D-28 까지만 발송) |
 | `REMINDER_TRIGGER_HOUR` | 트리거가 확인하는 시각 (기본 10시) |
 | `EMAIL_SENDER_NAME` | 받는 사람에게 보이는 발신자 이름 |
 | `INVITATION_URL` | RSVP 버튼이 가리키는 청첩장 주소. 로고 · 지도 이미지 주소의 기준이기도 합니다 |
