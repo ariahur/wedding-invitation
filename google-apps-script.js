@@ -62,8 +62,10 @@ const SEND_CONFIRMATION_EMAIL = true;
 // 받는 사람에게 보이는 발신자 이름 (주소는 스크립트를 소유한 계정으로 고정된다)
 const EMAIL_SENDER_NAME = '준용 ♥ 다영';
 
-// 메일의 RSVP 버튼이 가리키는 청첩장 주소
-const INVITATION_URL = 'https://wedding-invitation-sigma-ivory.vercel.app';
+// 청첩장 배포 주소 (메일의 로고 · 지도 · RSVP 버튼이 모두 여기서 파생된다).
+// 반드시 프로덕션 주소를 쓴다 — dev 배포(daniel-and-aria-dev)는 Vercel 접근 보호가 걸려 있어
+// 메일 클라이언트가 이미지를 못 불러온다.
+const INVITATION_URL = 'https://daniel-and-aria.vercel.app';
 
 // 메일에 들어가는 이미지 주소.
 // 메일 클라이언트는 첨부가 아닌 "웹에 올라와 있는 이미지"만 불러올 수 있으므로,
@@ -874,6 +876,11 @@ function fillTemplate(template, values) {
   return result;
 }
 
+/** 신청 언어에 맞는 청첩장 주소 (화면 라우팅이 /ko · /en 이다) */
+function invitationUrl(language) {
+  return INVITATION_URL + '/' + normalizeLanguage(language);
+}
+
 /** 모든 메일 제목 앞에 신청 언어에 맞는 접두사를 붙인다 */
 function withSubjectPrefix(subject, language) {
   return EMAIL_TEXT[language].subjectPrefix + ' ' + subject;
@@ -899,7 +906,7 @@ function buildEmailText(parts, language) {
   lines.push(info.venue);
   lines.push(info.address);
   lines.push('');
-  lines.push(parts.button + ': ' + INVITATION_URL);
+  lines.push(parts.button + ': ' + invitationUrl(language));
   lines.push(MAP_LINK_URL[language]);
   lines.push('');
   lines.push(parts.signoff);
@@ -1001,7 +1008,7 @@ function buildEmailHtml(parts, language) {
                 escapeHtml(info.address) +
               '</div>' +
               '<div style="padding-top:30px;">' +
-                '<a href="' + INVITATION_URL + '" style="display:inline-block;padding:14px 34px;border:1px solid ' + EMAIL_COLORS.navy + ';background:' + EMAIL_COLORS.white + ';color:' + EMAIL_COLORS.navy + ';text-decoration:none;font-family:Roboto,Arial,sans-serif;font-size:12px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;">' +
+                '<a href="' + invitationUrl(language) + '" style="display:inline-block;padding:14px 34px;border:1px solid ' + EMAIL_COLORS.navy + ';background:' + EMAIL_COLORS.white + ';color:' + EMAIL_COLORS.navy + ';text-decoration:none;font-family:Roboto,Arial,sans-serif;font-size:12px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;">' +
                   escapeHtml(parts.button) +
                 '</a>' +
               '</div>' +
