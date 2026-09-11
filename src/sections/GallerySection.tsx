@@ -9,6 +9,7 @@ import {
   blockHeightRatio,
   buildGalleryPages,
   galleryImages,
+  isLandscape,
   pagesHeightRatio,
   photoNumber,
   GalleryBlock,
@@ -29,8 +30,13 @@ const TILE_SIZES: Record<string, string> = {
   'gallery__block--trio': '(max-width: 430px) 33vw, 143px',
   'gallery__block--pair': '(max-width: 430px) 50vw, 215px',
   'gallery__block--duo': '(max-width: 430px) 50vw, 215px',
-  'gallery__block--split': '(max-width: 430px) 50vw, 215px',
   'gallery__block--full': '(max-width: 430px) 100vw, 430px',
+};
+
+/** split 블록은 가로 사진이 3/5, 세로 사진이 2/5 폭을 가진다 (CSS의 1.5fr 1fr) */
+const SPLIT_SIZES = {
+  landscape: '(max-width: 430px) 60vw, 258px',
+  portrait: '(max-width: 430px) 40vw, 172px',
 };
 
 /**
@@ -179,11 +185,20 @@ const GallerySection: React.FC = () => {
   const renderBlock = (block: GalleryBlock, blockIndex: number) => {
     const [first, ...rest] = block.indexes;
     const blockSizes = TILE_SIZES[`gallery__block--${block.type}`];
+    // 가로 사진이 어느 쪽에 있든 그 칸이 넓어야 한다
+    const blockClass =
+      block.type === 'split'
+        ? `gallery__block--split-landscape-${isLandscape(galleryImages[first]) ? 'left' : 'right'}`
+        : `gallery__block--${block.type}`;
+    const tileSizes = (index: number) =>
+      block.type === 'split'
+        ? SPLIT_SIZES[isLandscape(galleryImages[index]) ? 'landscape' : 'portrait']
+        : blockSizes;
 
     return (
       <div
         key={blockIndex}
-        className={`gallery__block gallery__block--${block.type}`}
+        className={`gallery__block ${blockClass}`}
         // 페이지 높이를 블록끼리 원래 비율대로 나눠 갖는다
         style={{ flexGrow: blockHeightRatio(block, galleryImages) }}
       >
@@ -197,7 +212,7 @@ const GallerySection: React.FC = () => {
             </div>
           </>
         ) : (
-          block.indexes.map((index) => renderTile(index, '', blockSizes))
+          block.indexes.map((index) => renderTile(index, '', tileSizes(index)))
         )}
       </div>
     );

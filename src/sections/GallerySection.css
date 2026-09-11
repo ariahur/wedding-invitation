@@ -66,9 +66,18 @@
 }
 
 .gallery__block--pair,
-.gallery__block--duo,
-.gallery__block--split {
+.gallery__block--duo {
   grid-template-columns: repeat(2, 1fr);
+}
+
+/* 방향이 다른 두 장 — 가로 사진 쪽을 넓게 잡아 가로 칸은 6:5, 세로 칸은 4:5가 된다.
+   칸 비율은 data/gallery.ts의 blockHeightRatio(split)와 GallerySection.tsx의 SPLIT_SIZES가 같이 든다. */
+.gallery__block--split-landscape-left {
+  grid-template-columns: 1.5fr 1fr;
+}
+
+.gallery__block--split-landscape-right {
+  grid-template-columns: 1fr 1.5fr;
 }
 
 .gallery__block--full {

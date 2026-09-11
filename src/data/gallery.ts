@@ -57,7 +57,7 @@ type Shape = 'L' | 'P';
  *   trio     세로 3장
  *   duo      가로 2장
  *   pair     세로 2장
- *   split    방향이 다른 2장 — 정사각 칸이라 어느 쪽도 크게 잘리지 않는다
+ *   split    방향이 다른 2장 — 가로 사진 6:5, 세로 사진 4:5 칸이라 어느 쪽도 크게 잘리지 않는다
  *   full     1장 — 사진 방향대로 높이가 정해진다
  *
  * split이 없으면 가로 사진이 세로 사진 사이에 하나씩 끼었을 때 full이 줄줄이 생기고,
@@ -208,7 +208,7 @@ export const blockHeightRatio = (block: GalleryBlock, images: ResponsiveImage[])
       return (1 / 2) * (5 / 4);
     case 'duo':
       return (1 / 2) * (2 / 3);
-    // 방향이 섞여 있어 정사각 칸으로 맞춘다
+    // 가로 사진 3/5 폭(6:5) + 세로 사진 2/5 폭(4:5) — 둘 다 높이가 폭의 절반이다
     case 'split':
       return 1 / 2;
     case 'full':
