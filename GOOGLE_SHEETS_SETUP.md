@@ -139,7 +139,10 @@ REACT_APP_PHOTO_DROP_STATUS=open npm start
 |---|---|
 | `public/email-logo.jpg` | 상단 로고 |
 | `public/email-map.jpg` | 한국어 메일의 하단 지도 (카카오맵, 누르면 카카오맵이 열립니다) |
-| `public/email-map-en.jpg` | 영어 메일의 하단 지도 (구글맵 영문 표기, 누르면 구글맵이 열립니다) |
+| `public/email-map-en.jpg` | 영어 메일의 하단 지도 (영문 라벨만 얹어 직접 그린 지도, 누르면 구글맵이 열립니다) |
+
+영어 지도는 `npm run email-map` 으로 다시 만들 수 있습니다 (`scripts/render-email-map-en.mjs`, OpenStreetMap 데이터 사용).
+구글·카카오 지도는 영문 모드에서도 상호가 한국어로 남아서 캡처 대신 직접 그립니다.
 
 배포한 뒤 `<청첩장 주소>/email-logo.jpg` 가 브라우저에서 열리는지 확인하세요.
 열리지 않으면 메일에서 로고 자리가 빈칸으로 나옵니다.

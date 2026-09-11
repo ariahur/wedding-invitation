@@ -69,14 +69,16 @@ const INVITATION_URL = 'https://daniel-and-aria.vercel.app';
 
 // 메일에 들어가는 이미지 주소.
 // 메일 클라이언트는 첨부가 아닌 "웹에 올라와 있는 이미지"만 불러올 수 있으므로,
-// 두 파일은 청첩장과 함께 배포되어야 한다 (저장소의 public/ 에 있다).
-//   public/email-logo.jpg  →  상단 로고
-//   public/email-map.jpg   →  하단 지도
-// 배포 주소가 바뀌면 INVITATION_URL 만 고치면 둘 다 따라간다.
+// 아래 파일은 청첩장과 함께 배포되어야 한다 (저장소의 public/ 에 있다).
+//   public/email-logo.jpg     →  상단 로고
+//   public/email-map.jpg      →  하단 지도 (한국어, 카카오맵 캡처)
+//   public/email-map-en.jpg   →  하단 지도 (영어, `npm run email-map` 으로 생성)
+// 배포 주소가 바뀌면 INVITATION_URL 만 고치면 모두 따라간다.
 const EMAIL_LOGO_URL = INVITATION_URL + '/email-logo.jpg';
 
-// 하단 지도 이미지. 청첩장 화면과 같게 한국어는 카카오맵, 영어는 구글맵(영문 표기)을 쓴다
-// (src/sections/DirectionsSection.tsx 가 언어별로 띄우는 지도와 같은 것).
+// 하단 지도 이미지. 한국어는 청첩장 화면과 같은 카카오맵 캡처.
+// 영어는 구글·카카오 모두 영문 모드에서도 상호가 한국어로 남아서, OpenStreetMap 데이터로
+// 영문 라벨만 얹어 직접 그린 지도를 쓴다 (scripts/render-email-map-en.mjs). 저작권 표기는 그림 안에 있다.
 const EMAIL_MAP_URL = {
   ko: INVITATION_URL + '/email-map.jpg',
   en: INVITATION_URL + '/email-map-en.jpg',
@@ -523,7 +525,8 @@ const EMAIL_TEXT = {
     mapCredit: '',
 
     // 리마인드 메일
-    reminderGreeting: '{name}님, 우리의 특별한 날이 {daysPhrase} 앞으로 다가왔습니다.',
+    // 이름 뒤에서 줄을 나눈다 — 한 줄로 두면 메일 폭(560px)에서 끝 두 글자만 다음 줄로 밀린다
+    reminderGreeting: '{name}님,\n우리의 특별한 날이 {daysPhrase} 앞으로 다가왔습니다.',
     reminderLead: '참석 소식을 전해주신 덕분에 준비하는 내내 든든했습니다.\n예식 일정을 다시 한번 안내드립니다.',
     reminderDaysPhrase: '{days}일',
 
@@ -564,7 +567,7 @@ const EMAIL_TEXT = {
     editNote: 'You can update your RSVP anytime from the “RSVP” section of the invitation.',
     footer: 'This mailbox is not monitored.',
     mapAlt: 'Grand Hill Convention on the map',
-    mapCredit: 'Map data © Google',
+    mapCredit: '',
 
     reminderGreeting: '{name}, our special day is only {daysPhrase} away.',
     reminderLead: 'Knowing that you will be there has kept us going.\nHere are the details once more.',
