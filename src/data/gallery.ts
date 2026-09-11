@@ -9,6 +9,14 @@ import { imageGroup, ResponsiveImage } from './images';
 
 export const galleryImages: ResponsiveImage[] = imageGroup('gallery');
 
+/**
+ * 페이지를 강제로 끊는 지점 — 여기 적힌 사진부터 새 페이지가 시작된다.
+ * 값은 원본 파일명에서 배치 순서 접두사를 뗀 사진 번호다 ("14-79180.jpg" → "79180").
+ * 마지막 지점 이후의 사진은 예전처럼 높이 기준으로 자동으로 나뉜다.
+ * 매니페스트에 없는 번호는 무시된다.
+ */
+export const PAGE_BREAKS = ['78756', '79180', '79959'];
+
 export type GalleryBlockType =
   | 'feature-left'
   | 'feature-right'
@@ -33,8 +41,16 @@ export const PAGE_HEIGHT = 1.45;
 
 export const isLandscape = (image: ResponsiveImage): boolean => image.width > image.height;
 
+/** base "<순번>-<사진번호>-<해시8자>" 에서 사진 번호만 뗀다 ("34-80869-1-f2dfbffa" → "80869-1") */
+export const photoNumber = (base: string): string => {
+  const stem = base.slice(0, -9);
+  return stem.slice(stem.indexOf('-') + 1);
+};
+
+type Shape = 'L' | 'P';
+
 /**
- * 사진 방향에 맞는 블록을 골라 순서대로 채운다.
+ * cursor 위치에서 만들 수 있는 블록을 선호 순서대로 돌려준다.
  * 한 블록 안의 사진은 같은 비율을 쓰므로 되도록 방향이 섞이지 않게 묶는다.
  *
  *   feature  세로 1장(큰 칸) + 가로 2장(오른쪽 위아래)
@@ -42,43 +58,82 @@ export const isLandscape = (image: ResponsiveImage): boolean => image.width > im
  *   duo      가로 2장
  *   pair     세로 2장
  *   split    방향이 다른 2장 — 정사각 칸이라 어느 쪽도 크게 잘리지 않는다
- *   full     남은 1장 — 사진 방향대로 높이가 정해진다
+ *   full     1장 — 사진 방향대로 높이가 정해진다
  *
  * split이 없으면 가로 사진이 세로 사진 사이에 하나씩 끼었을 때 full이 줄줄이 생기고,
  * 세로 full 한 장이 4/3을 먹어 페이지 높이가 통째로 늘어난다.
  */
-const packBlocks = (images: ResponsiveImage[]): GalleryBlock[] => {
-  const shape = images.map((image) => (isLandscape(image) ? 'L' : 'P'));
+const candidateBlocks = (shape: Shape[], cursor: number, end: number): GalleryBlock[] => {
+  const at = (offset: number) => (cursor + offset < end ? shape[cursor + offset] : undefined);
+  const span = (count: number) => Array.from({ length: count }, (_, i) => cursor + i);
   const blocks: GalleryBlock[] = [];
 
-  const at = (cursor: number, offset: number) => shape[cursor + offset];
-  const span = (cursor: number, count: number) =>
-    Array.from({ length: count }, (_, i) => cursor + i);
+  if (at(0) === 'P' && at(1) === 'L' && at(2) === 'L') {
+    blocks.push({ type: 'feature-left', indexes: span(3) });
+  }
+  if (at(0) === 'P' && at(1) === 'P' && at(2) === 'P') {
+    blocks.push({ type: 'trio', indexes: span(3) });
+  }
+  if (at(0) === 'L' && at(1) === 'L') {
+    blocks.push({ type: 'duo', indexes: span(2) });
+  }
+  if (at(0) === 'P' && at(1) === 'P') {
+    blocks.push({ type: 'pair', indexes: span(2) });
+  }
+  if (at(1) && at(0) !== at(1)) {
+    blocks.push({ type: 'split', indexes: span(2) });
+  }
+  blocks.push({ type: 'full', indexes: span(1) });
 
-  let cursor = 0;
+  return blocks;
+};
 
-  while (cursor < images.length) {
-    let block: GalleryBlock;
+const shapesOf = (images: ResponsiveImage[]): Shape[] =>
+  images.map((image) => (isLandscape(image) ? 'L' : 'P'));
 
-    if (at(cursor, 0) === 'P' && at(cursor, 1) === 'L' && at(cursor, 2) === 'L') {
-      block = { type: 'feature-left', indexes: span(cursor, 3) };
-    } else if (at(cursor, 0) === 'P' && at(cursor, 1) === 'P' && at(cursor, 2) === 'P') {
-      block = { type: 'trio', indexes: span(cursor, 3) };
-    } else if (at(cursor, 0) === 'L' && at(cursor, 1) === 'L') {
-      block = { type: 'duo', indexes: span(cursor, 2) };
-    } else if (at(cursor, 0) === 'P' && at(cursor, 1) === 'P') {
-      block = { type: 'pair', indexes: span(cursor, 2) };
-    } else if (at(cursor, 1) && at(cursor, 0) !== at(cursor, 1)) {
-      block = { type: 'split', indexes: span(cursor, 2) };
-    } else {
-      block = { type: 'full', indexes: span(cursor, 1) };
-    }
+/** [start, end) 구간을 앞에서부터 가장 선호하는 블록으로 채운다 */
+const packBlocks = (shape: Shape[], start: number, end: number): GalleryBlock[] => {
+  const blocks: GalleryBlock[] = [];
+  let cursor = start;
 
+  while (cursor < end) {
+    const block = candidateBlocks(shape, cursor, end)[0];
     blocks.push(block);
     cursor += block.indexes.length;
   }
 
   return blocks;
+};
+
+const pageHeight = (blocks: GalleryBlock[], images: ResponsiveImage[]): number =>
+  blocks.reduce((sum, block) => sum + blockHeightRatio(block, images), 0);
+
+/**
+ * 한 페이지에 반드시 들어가야 하는 [start, end) 구간을 채우는 방법 중
+ * 높이가 PAGE_HEIGHT 에 가장 가까운 것을 고른다.
+ * 앞에서부터 욕심내어 묶으면 끝에 세로 full 이 남아 페이지가 통째로 늘어나기 쉽다.
+ * 구간이 열 장 안팎이라 모든 조합을 다 세어도 부담이 없다.
+ */
+const packPage = (
+  shape: Shape[],
+  start: number,
+  end: number,
+  images: ResponsiveImage[]
+): GalleryBlock[] => {
+  const packings = (cursor: number): GalleryBlock[][] => {
+    if (cursor >= end) return [[]];
+
+    return candidateBlocks(shape, cursor, end).flatMap((block) =>
+      packings(cursor + block.indexes.length).map((rest) => [block, ...rest])
+    );
+  };
+
+  return packings(start).reduce((best, blocks) =>
+    Math.abs(pageHeight(blocks, images) - PAGE_HEIGHT) <
+    Math.abs(pageHeight(best, images) - PAGE_HEIGHT)
+      ? blocks
+      : best
+  );
 };
 
 /**
@@ -113,10 +168,28 @@ const paginate = (blocks: GalleryBlock[], images: ResponsiveImage[]): GalleryBlo
 const mirrorFeature = (block: GalleryBlock): GalleryBlock =>
   block.type === 'feature-left' ? { ...block, type: 'feature-right' } : block;
 
-export const buildGalleryPages = (images: ResponsiveImage[]): GalleryBlock[][] =>
-  paginate(packBlocks(images), images).map((page, pageIndex) =>
+/**
+ * PAGE_BREAKS 로 고정된 페이지는 구간 그대로 한 페이지에 담고,
+ * 마지막 지점 이후는 높이 기준으로 자동으로 나눈다.
+ */
+export const buildGalleryPages = (images: ResponsiveImage[]): GalleryBlock[][] => {
+  if (images.length === 0) return [];
+
+  const shape = shapesOf(images);
+  const starts = PAGE_BREAKS.map((number) =>
+    images.findIndex((image) => photoNumber(image.base) === number)
+  )
+    .filter((index) => index > 0)
+    .sort((a, b) => a - b);
+
+  const fixedPages = starts.map((end, i) => packPage(shape, i === 0 ? 0 : starts[i - 1], end, images));
+  const tailStart = starts.length > 0 ? starts[starts.length - 1] : 0;
+  const tailPages = paginate(packBlocks(shape, tailStart, images.length), images);
+
+  return [...fixedPages, ...tailPages].map((page, pageIndex) =>
     pageIndex % 2 === 0 ? page : page.map(mirrorFeature)
   );
+};
 
 /**
  * 블록이 페이지 너비 대비 차지하는 높이.
@@ -146,8 +219,4 @@ export const blockHeightRatio = (block: GalleryBlock, images: ResponsiveImage[])
 
 /** 가장 높은 페이지에 나머지 페이지를 맞추기 위한 공통 높이 비율 */
 export const pagesHeightRatio = (pages: GalleryBlock[][], images: ResponsiveImage[]): number =>
-  Math.max(
-    ...pages.map((page) =>
-      page.reduce((sum, block) => sum + blockHeightRatio(block, images), 0)
-    )
-  );
+  Math.max(...pages.map((page) => pageHeight(page, images)));

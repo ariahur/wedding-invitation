@@ -10,6 +10,7 @@ import {
   buildGalleryPages,
   galleryImages,
   pagesHeightRatio,
+  photoNumber,
   GalleryBlock,
 } from '../data/gallery';
 import { fallbackSrc, srcSet } from '../data/images';
@@ -40,10 +41,8 @@ const TILE_POSITIONS: Record<string, string> = {
   '80224': 'gallery__tile-image--top',
 };
 
-/** base는 "<순번>-<사진번호>-<해시8자>" 형태다 */
 const tilePositionClass = (base: string): string => {
-  const stem = base.slice(0, -9);
-  const modifier = TILE_POSITIONS[stem.slice(stem.indexOf('-') + 1)];
+  const modifier = TILE_POSITIONS[photoNumber(base)];
 
   return modifier ? ` ${modifier}` : '';
 };
