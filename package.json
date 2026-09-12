@@ -8,7 +8,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "images": "node scripts/optimize-images.mjs",
-    "email-map": "node scripts/render-email-map-en.mjs"
+    "email-map": "node scripts/render-email-map-en.mjs",
+    "photo-api": "node scripts/dev-photo-api.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

@@ -11,13 +11,14 @@
 | `src/index.tsx` (진입점) | `app/page.tsx`, `app/layout.tsx` — `create-next-app` 기본 템플릿 그대로 |
 | `src/App.tsx` (라우팅: react-router) | `next.config.ts`, `next-env.d.ts` |
 | `react-scripts build` → `/build` | `.next/`, `app/globals.css` |
-| | `api/` — 빈 디렉터리 |
+| `api/photo.js` (Vercel 서버리스 함수, CommonJS) | |
 | | `src/lib/` — 빈 디렉터리 |
 
 규칙:
 - **`app/` 아래에 코드를 추가하지 않는다.** 빌드에 포함되지 않는다.
 - Next 전용 API(`next/image`, `next/font`, 서버 컴포넌트, App Router, `NEXT_PUBLIC_*`)를 쓰지 않는다.
-- 라우팅은 `react-router-dom` (`/ko`, `/en`). Vercel은 `vercel.json` 의 rewrite로 모든 경로를 `index.html` 로 넘기는 SPA 배포다.
+- 라우팅은 `react-router-dom` (`/ko`, `/en`). Vercel은 `vercel.json` 의 rewrite로 `/api/` 를 뺀 모든 경로를 `index.html` 로 넘기는 SPA 배포다.
+- `api/` 는 Vercel 서버리스 함수다. CRA 빌드·ESLint·tsconfig 밖에 있으므로 **CommonJS 자바스크립트**로 쓰고, 검증은 `npm run photo-api` 로 직접 띄워서 한다.
 
 ## 2. 의존성 설치는 항상 `--legacy-peer-deps`
 
@@ -35,13 +36,16 @@ react-scripts 5 + react-router-dom 7 조합이 peer dependency 충돌을 낸다.
   **서버 시크릿(service role key, 비공개 API 키)을 절대 넣지 않는다.** 공개 전제 키만 허용.
 - `.env` 는 `.gitignore` 에 있다 → 키를 추가했으면 **Vercel 대시보드 환경변수에도 같이 등록**해야 배포가 동작한다.
 
-현재 코드가 실제로 읽는 값은 셋뿐이다:
+현재 코드가 실제로 읽는 값:
 
-| 변수 | 용도 |
-|---|---|
-| `REACT_APP_GOOGLE_SHEETS_WEB_APP_URL` | RSVP 저장 (Apps Script 웹 앱) |
-| `REACT_APP_PHOTO_DROP_STATUS` | `open` / `closed` / `archived`. 비우면 실제 날짜 기준 |
-| `PUBLIC_URL` | CRA 기본 제공 |
+| 변수 | 읽는 곳 | 용도 |
+|---|---|---|
+| `REACT_APP_GOOGLE_SHEETS_WEB_APP_URL` | 프론트 | RSVP 저장·사진 접수 기록 (Apps Script 웹 앱) |
+| `REACT_APP_PHOTO_DROP_STATUS` | 프론트 | `open` / `closed` / `archived`. 비우면 실제 날짜 기준 |
+| `REACT_APP_PHOTO_UPLOAD_URL` | 프론트 | 사진 업로드 함수 주소. 비우면 `/api/photo`. 로컬 개발에서만 지정 |
+| `PUBLIC_URL` | 프론트 | CRA 기본 제공 |
+| `MYBOX_PAT` | `api/photo.js` (서버) | MYBOX 개인 액세스 토큰. **접두사 없음** → 번들에 안 들어감. Vercel 환경 변수 + 로컬 `.env` |
+| `MYBOX_FOLDER_ID` / `MYBOX_FOLDER_NAME` | `api/photo.js` (서버) | 저장 폴더 지정 (선택) |
 
 `.env` 의 `REACT_APP_SUPABASE_URL`, `REACT_APP_SUPABASE_ANON_KEY`, `REACT_APP_KAKAO_MAP_API_KEY`,
 `REACT_APP_GOOGLE_MAPS_API_KEY` 는 **현재 코드에서 참조되지 않는다.** 새로 쓰기 시작할 때 실제로 연결됐는지 먼저 확인할 것.
@@ -77,6 +81,11 @@ assets/originals/<그룹>/  →  npm run images  →  public/<그룹>/ + src/dat
 - RSVP는 Google Apps Script 웹 앱으로 전송된다. 스크립트 원본은 루트 `google-apps-script.js` 이고
   **자동 배포되지 않는다** — 수정했으면 Apps Script 편집기에 붙여넣고 새 배포를 만들어야 반영된다.
   절차와 주의사항은 `GOOGLE_SHEETS_SETUP.md` 에 있다.
+- 게스트 사진·영상은 **Vercel 서버리스 함수 `api/photo.js`** 가 네이버 MYBOX Open API 로 중계해 저장하고,
+  Apps Script 는 접수 한 건당 `action: 'photoLog'` 로 시트 기록만 남긴다 (Google Drive 아님).
+  MYBOX 저장소는 브라우저 직접 업로드(Origin 헤더)를 403 으로 막으므로 프론트에서 MYBOX 를 바로 호출하는 구조로 바꾸려 하지 말고,
+  Apps Script 로 파일을 중계하는 구조로 되돌리지도 말 것 (요청마다 2~3초 기본 지연, 측정값: 1MB 사진 7.5초 vs 함수 0.8초).
+  MYBOX 토큰(`mbx_pat_...`)은 Vercel 환경 변수 `MYBOX_PAT` 와 로컬 `.env` 에만 둔다. 코드·문서에 값을 적지 않는다.
 
 ## 8. Git
 

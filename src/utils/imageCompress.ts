@@ -4,13 +4,13 @@ const MAX_EDGE = 2048;
 const QUALITY = 0.82;
 /**
  * 캔버스 디코딩이 실패했을 때(데스크톱 브라우저의 HEIC 등) 원본을 그대로 올릴 수 있는 최대 크기.
- * base64는 약 1.33배로 부풀기 때문에 Apps Script 페이로드 한도를 넘지 않도록 제한한다.
+ * Apps Script 의 PHOTO_MAX_BYTES 와 맞춰 둔다.
  */
-const RAW_FALLBACK_LIMIT = 6 * 1024 * 1024;
+const RAW_FALLBACK_LIMIT = 20 * 1024 * 1024;
 
-export interface CompressedImage {
-  /** data: 접두사를 제거한 base64 문자열 */
-  base64: string;
+/** 업로드 직전 상태의 파일 (사진은 압축된 JPEG, 영상은 원본 그대로) */
+export interface PreparedFile {
+  blob: Blob;
   mimeType: string;
   fileName: string;
   /** 전송되는 바이너리 크기 (bytes) */
@@ -54,7 +54,8 @@ const canvasToBlob = (canvas: HTMLCanvasElement): Promise<Blob | null> =>
     canvas.toBlob((blob) => resolve(blob), 'image/jpeg', QUALITY);
   });
 
-const blobToBase64 = (blob: Blob): Promise<string> =>
+/** Blob(또는 그 일부)을 data: 접두사 없는 base64 문자열로 읽는다 */
+export const blobToBase64 = (blob: Blob): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => {
@@ -67,19 +68,56 @@ const blobToBase64 = (blob: Blob): Promise<string> =>
     reader.readAsDataURL(blob);
   });
 
-/** Drive에 그대로 쓸 수 있도록 파일명을 정리한다 */
-const sanitizeFileName = (name: string): string =>
-  name.replace(/[\\/:*?"<>|]/g, '_').slice(-80) || 'photo';
+/** 저장소에 그대로 쓸 수 있도록 파일명을 정리한다 */
+const sanitizeFileName = (name: string, fallback: string): string =>
+  name.replace(/[\\/:*?"<>|]/g, '_').slice(-80) || fallback;
 
 const withJpegExtension = (name: string): string =>
-  `${sanitizeFileName(name).replace(/\.[^.]+$/, '')}.jpg`;
+  `${sanitizeFileName(name, 'photo').replace(/\.[^.]+$/, '')}.jpg`;
+
+/** 확장자로 영상 MIME 타입을 추정한다 (일부 브라우저는 file.type 을 비워 보낸다) */
+const guessVideoMimeType = (name: string): string => {
+  const ext = (name.match(/\.([^.]+)$/) || ['', ''])[1].toLowerCase();
+  switch (ext) {
+    case 'mov':
+      return 'video/quicktime';
+    case 'webm':
+      return 'video/webm';
+    case '3gp':
+      return 'video/3gpp';
+    case 'm4v':
+    case 'mp4':
+    default:
+      return 'video/mp4';
+  }
+};
+
+/** 영상은 브라우저에서 줄일 수 없으므로 원본 그대로 보낸다 */
+export const prepareVideo = (file: File): PreparedFile => ({
+  blob: file,
+  mimeType: file.type && file.type.startsWith('video/') ? file.type : guessVideoMimeType(file.name),
+  fileName: sanitizeFileName(file.name, 'video.mp4'),
+  size: file.size,
+});
+
+const rawImage = (file: File): PreparedFile => {
+  if (file.size > RAW_FALLBACK_LIMIT) {
+    throw new Error('unsupported');
+  }
+  return {
+    blob: file,
+    mimeType: file.type || 'application/octet-stream',
+    fileName: sanitizeFileName(file.name, 'photo.jpg'),
+    size: file.size,
+  };
+};
 
 /**
  * 업로드 전에 사진을 줄인다.
- * 긴 변을 MAX_EDGE로 맞추고 JPEG로 다시 인코딩해 Apps Script로 보낼 수 있는 크기로 만든다.
+ * 긴 변을 MAX_EDGE로 맞추고 JPEG로 다시 인코딩한다.
  * 브라우저가 디코딩하지 못하는 형식(데스크톱의 HEIC 등)은 원본을 그대로 올린다.
  */
-export const compressImage = async (file: File): Promise<CompressedImage> => {
+export const compressImage = async (file: File): Promise<PreparedFile> => {
   const source: ImageBitmap | HTMLImageElement | null =
     (await loadBitmap(file)) || (await loadImageElement(file));
 
@@ -87,15 +125,7 @@ export const compressImage = async (file: File): Promise<CompressedImage> => {
   const sourceHeight = source ? source.height : 0;
 
   if (!source || !sourceWidth || !sourceHeight) {
-    if (file.size > RAW_FALLBACK_LIMIT) {
-      throw new Error('unsupported');
-    }
-    return {
-      base64: await blobToBase64(file),
-      mimeType: file.type || 'application/octet-stream',
-      fileName: sanitizeFileName(file.name),
-      size: file.size,
-    };
+    return rawImage(file);
   }
 
   const scale = Math.min(1, MAX_EDGE / Math.max(sourceWidth, sourceHeight));
@@ -120,19 +150,11 @@ export const compressImage = async (file: File): Promise<CompressedImage> => {
 
   // 캔버스 인코딩이 실패하면 원본으로 되돌린다
   if (!blob) {
-    if (file.size > RAW_FALLBACK_LIMIT) {
-      throw new Error('unsupported');
-    }
-    return {
-      base64: await blobToBase64(file),
-      mimeType: file.type || 'application/octet-stream',
-      fileName: sanitizeFileName(file.name),
-      size: file.size,
-    };
+    return rawImage(file);
   }
 
   return {
-    base64: await blobToBase64(blob),
+    blob,
     mimeType: 'image/jpeg',
     fileName: withJpegExtension(file.name),
     size: blob.size,

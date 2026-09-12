@@ -14,8 +14,16 @@
   ],
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
+  ],
+  "functions": {
+    "api/photo.js": {
+      "maxDuration": 60
+    }
+  },
+  "regions": [
+    "icn1"
   ]
 }

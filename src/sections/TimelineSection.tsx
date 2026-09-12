@@ -127,7 +127,7 @@ const TimelineSection: React.FC = () => {
           whileInView={{ scaleY: 1 }}
           viewport={{ once: true, amount: 0.1 }}
           style={{ transformOrigin: "top" }}
-          transition={{ duration: 3, ease: "easeInOut" }}
+          transition={{ duration: 0.6 }}
         >
           <div className="timeline__line" />
         </motion.div>

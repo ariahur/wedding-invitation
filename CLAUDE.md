@@ -26,5 +26,5 @@ Next.js가 **아니다** — 루트의 `app/`, `next.config.ts` 는 미사용 �
 ## 참고 문서
 
 - `THEME_COLORS.md` — 색상 값 전체 정본 (모든 hex·그라데이션·투명도). 요약과 사용 규칙은 `theme-concept.md`
-- `GOOGLE_SHEETS_SETUP.md` — RSVP(Apps Script) 연동 설정
+- `GOOGLE_SHEETS_SETUP.md` — RSVP(Apps Script) 연동 설정, 사진·영상 접수(네이버 MYBOX) 설정
 - `TROUBLESHOOTING.md`

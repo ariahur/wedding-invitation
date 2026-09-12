@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BagTag as BagTagData, PhotoItem } from '../types/photoDrop';
+import { BagTag as BagTagData, PhotoItem, PhotoKind } from '../types/photoDrop';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useRsvpTicket } from '../contexts/RsvpTicketContext';
 import { translations } from '../data/translations';
@@ -10,14 +10,28 @@ import { renderMultilineText } from '../utils/textUtils';
 import { phoneLast4 } from '../utils/rsvpStorage';
 import { getCounterStatus, getDaysUntilOpen } from '../utils/photoDropSchedule';
 import { buildTagNo, loadBagTag, saveBagTag } from '../utils/photoDropStorage';
-import { uploadPhoto } from '../utils/photoDropApi';
+import { logPhotoBatch, uploadPhoto, UploadedFile } from '../utils/photoDropApi';
 import BagTag from '../components/BagTag/BagTag';
 import './PhotoDropSection.css';
 
-/** 한 번에 부칠 수 있는 사진 수 */
-const MAX_PHOTOS = 10;
-/** 압축 전 원본 한 장의 최대 크기 */
-const MAX_FILE_SIZE = 20 * 1024 * 1024;
+/** 한 번에 부칠 수 있는 파일 수 (사진 + 영상) */
+const MAX_PHOTOS = 30;
+/** 동시에 전송하는 파일 수. 회선 대역폭을 나눠 쓰므로 너무 크게 잡지 않는다 */
+const UPLOAD_CONCURRENCY = 4;
+/** 압축 전 사진 원본 한 장의 최대 크기 */
+const MAX_IMAGE_SIZE = 20 * 1024 * 1024;
+/** 영상 한 편의 최대 크기 (Apps Script 의 VIDEO_MAX_BYTES 와 동일) */
+const MAX_VIDEO_SIZE = 200 * 1024 * 1024;
+
+const IMAGE_EXTENSIONS = /\.(hei[cf]|jpe?g|png|webp|gif)$/i;
+const VIDEO_EXTENSIONS = /\.(mp4|m4v|mov|webm|3gp)$/i;
+
+/** 파일이 사진인지 영상인지 판별한다. 둘 다 아니면 null */
+const detectKind = (file: File): PhotoKind | null => {
+  if (file.type.startsWith('image/') || IMAGE_EXTENSIONS.test(file.name)) return 'image';
+  if (file.type.startsWith('video/') || VIDEO_EXTENSIONS.test(file.name)) return 'video';
+  return null;
+};
 
 const createId = (): string => `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 
@@ -86,17 +100,19 @@ const PhotoDropSection: React.FC = () => {
       let rejectedType = false;
 
       incoming.forEach((file) => {
-        if (!file.type.startsWith('image/') && !/\.(hei[cf]|jpe?g|png|webp)$/i.test(file.name)) {
+        const kind = detectKind(file);
+        if (!kind) {
           rejectedType = true;
           return;
         }
-        if (file.size > MAX_FILE_SIZE) {
+        if (file.size > (kind === 'video' ? MAX_VIDEO_SIZE : MAX_IMAGE_SIZE)) {
           rejectedSize = true;
           return;
         }
         accepted.push({
           id: createId(),
           file,
+          kind,
           previewUrl: URL.createObjectURL(file),
           status: 'pending',
         });
@@ -172,15 +188,39 @@ const PhotoDropSection: React.FC = () => {
     };
 
     let succeeded = 0;
+    let cursor = 0;
+    const uploaded: UploadedFile[] = [];
 
-    for (let i = 0; i < items.length; i += 1) {
-      const item = items[i];
+    // 작업자 여러 개가 목록에서 다음 파일을 하나씩 집어 가며 동시에 올린다
+    const runWorker = async () => {
+      while (cursor < items.length) {
+        const i = cursor;
+        cursor += 1;
+        await uploadItem(items[i], i);
+      }
+    };
+
+    const uploadItem = async (item: PhotoItem, i: number) => {
       setItems((prev) =>
-        prev.map((entry) => (entry.id === item.id ? { ...entry, status: 'uploading' } : entry))
+        prev.map((entry) =>
+          entry.id === item.id ? { ...entry, status: 'uploading', progress: 0 } : entry
+        )
       );
 
       try {
-        await uploadPhoto(language, item.file, meta, i + 1, items.length, text.open.error);
+        const saved = await uploadPhoto(
+          item.file,
+          item.kind,
+          meta,
+          i + 1,
+          text.open.error,
+          (progress) => {
+            setItems((prev) =>
+              prev.map((entry) => (entry.id === item.id ? { ...entry, progress } : entry))
+            );
+          }
+        );
+        uploaded.push(saved);
         succeeded += 1;
         setUploadedCount(succeeded);
         setItems((prev) =>
@@ -192,6 +232,17 @@ const PhotoDropSection: React.FC = () => {
           prev.map((entry) => (entry.id === item.id ? { ...entry, status: 'error' } : entry))
         );
       }
+    };
+
+    await Promise.all(
+      Array.from({ length: Math.min(UPLOAD_CONCURRENCY, items.length) }, () => runWorker())
+    );
+
+    // 올라간 파일 목록을 시트에 한 번에 기록한다. 기록이 실패해도 파일은 이미 MYBOX 에 있으므로 접수는 성공으로 본다.
+    try {
+      await logPhotoBatch(language, meta, uploaded, items.length, text.open.error);
+    } catch (error) {
+      console.error('Error logging photo batch:', error);
     }
 
     setIsUploading(false);
@@ -310,7 +361,7 @@ const PhotoDropSection: React.FC = () => {
             ref={fileInputRef}
             id="photo-drop-files"
             type="file"
-            accept="image/*"
+            accept="image/*,video/*"
             multiple
             className="photo-drop__file-input"
             onChange={(e) => {
@@ -343,9 +394,29 @@ const PhotoDropSection: React.FC = () => {
                   key={item.id}
                   className={`photo-drop__thumb photo-drop__thumb--${item.status}`}
                 >
-                  <img src={item.previewUrl} alt="" className="photo-drop__thumb-image" />
+                  {item.kind === 'video' ? (
+                    <video
+                      src={item.previewUrl}
+                      className="photo-drop__thumb-image"
+                      muted
+                      playsInline
+                      preload="metadata"
+                    />
+                  ) : (
+                    <img src={item.previewUrl} alt="" className="photo-drop__thumb-image" />
+                  )}
+                  {item.kind === 'video' && (
+                    <span className="photo-drop__thumb-kind material-symbols-outlined" aria-hidden="true">
+                      videocam
+                    </span>
+                  )}
                   {item.status === 'uploading' && (
                     <span className="photo-drop__thumb-spinner" aria-hidden="true" />
+                  )}
+                  {item.status === 'uploading' && item.kind === 'video' && (
+                    <span className="photo-drop__thumb-progress">
+                      {Math.round((item.progress || 0) * 100)}%
+                    </span>
                   )}
                   {item.status === 'done' && (
                     <span className="photo-drop__thumb-badge material-symbols-outlined">check</span>

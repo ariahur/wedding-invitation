@@ -20,12 +20,11 @@
  *   { action: 'lookup', name, phoneTail, digits }
  *     → 성함과 연락처 뒷자리가 일치하는 최신 신청 내역을 반환합니다.
  *       (한국어 화면은 뒤 4자리, 영어 화면은 호주 번호에 맞춰 뒤 3자리)
- *   { action: 'photo', name, phoneTail, message, batchId, tagNo, fileName, mimeType, data, index, total }
- *     → 게스트가 부친 사진 한 장을 Drive 폴더에 저장하고 PHOTOS 시트에 기록합니다.
- *       data는 base64 문자열이며, 사진은 한 장씩 순차로 전송됩니다.
- *
- * ※ 사진 접수를 쓰려면 Drive 권한 승인이 새로 필요합니다.
- *   코드를 붙여넣고 재배포한 뒤 권한 승인 창이 다시 뜨면 허용해주세요.
+ *   { action: 'photoLog', name, phoneTail, message, batchId, tagNo, total, files: [{ index, storedName, fileId }] }
+ *     → 게스트가 부친 사진·영상 파일 목록을 PHOTOS 시트에 한 줄씩 기록합니다.
+ *       파일 자체는 이 스크립트를 거치지 않습니다. 프론트가 Vercel 함수(api/photo.js)를 통해
+ *       네이버 MYBOX 에 먼저 올리고, 다 올라간 뒤 이 액션으로 기록만 남깁니다.
+ *       (Apps Script 는 요청마다 2~3초가 걸려 파일 중계에는 쓰지 않습니다)
  *
  * ※ 확인 메일을 쓰려면 Gmail 전송 권한 승인도 새로 필요합니다. 재배포한 뒤 setupEmail() 을
  *   한 번 실행해 권한을 승인하고 남은 발송 할당량을 확인하세요.
@@ -43,15 +42,6 @@ const SHEET_NAME = 'RSVP';
 
 // 게스트 사진 기록용 시트 이름
 const PHOTO_SHEET_NAME = 'PHOTOS';
-
-// 사진을 저장할 Drive 폴더 이름. 없으면 내 드라이브 루트에 자동으로 만들어집니다.
-const PHOTO_FOLDER_NAME = '결혼식 게스트 사진';
-
-// 특정 폴더에 저장하고 싶으면 폴더 ID를 넣으세요 (비워두면 위 이름으로 찾거나 새로 만듭니다)
-const PHOTO_FOLDER_ID = '';
-
-// 사진 한 장의 최대 크기 (디코딩 후 기준)
-const PHOTO_MAX_BYTES = 12 * 1024 * 1024;
 
 // ===== 확인 메일 =====
 
@@ -192,8 +182,8 @@ function doPost(e) {
       return handleLookup(data);
     }
 
-    if (action === 'photo') {
-      return handlePhoto(data);
+    if (action === 'photoLog') {
+      return handlePhotoLog(data);
     }
 
     return handleSubmit(data);
@@ -268,65 +258,46 @@ function handleLookup(data) {
   });
 }
 
-/** 게스트가 부친 사진 한 장을 Drive에 저장하고 PHOTOS 시트에 기록한다 */
-function handlePhoto(data) {
+/** 게스트가 MYBOX 에 올린 사진·영상 목록을 PHOTOS 시트에 기록한다 */
+function handlePhotoLog(data) {
   const name = String(data.name || '').trim();
-  const base64 = String(data.data || '');
+  const files = Array.isArray(data.files) ? data.files : [];
 
-  if (!name || !base64) {
-    return createResponse({ success: false, error: 'Missing name or photo data' });
+  if (!name || files.length === 0) {
+    return createResponse({ success: false, error: 'Missing name or files' });
   }
 
-  const bytes = Utilities.base64Decode(base64);
-  if (bytes.length > PHOTO_MAX_BYTES) {
-    return createResponse({ success: false, error: 'Photo is too large' });
+  const total = Number(data.total) || files.length;
+  const now = new Date();
+  const rows = files.slice(0, 100).map(function (file) {
+    return [
+      now,
+      name,
+      String(data.phoneTail || ''),
+      String(data.tagNo || ''),
+      String(data.batchId || ''),
+      (Number(file.index) || 0) + ' / ' + total,
+      String(file.storedName || ''),
+      String(file.fileId || ''),
+      String(data.message || ''),
+    ];
+  });
+
+  // 여러 게스트가 동시에 접수해도 같은 행에 겹쳐 쓰지 않도록 잠그고 기록한다
+  const lock = LockService.getScriptLock();
+  lock.waitLock(15000);
+  try {
+    const sheet = getOrCreatePhotoSheet();
+    sheet.getRange(sheet.getLastRow() + 1, 1, rows.length, rows[0].length).setValues(rows);
+  } finally {
+    lock.releaseLock();
   }
-
-  const tagNo = String(data.tagNo || '');
-  const index = Number(data.index) > 0 ? Number(data.index) : 1;
-  const safeName = normalizeName(name) || 'guest';
-  const originalName = String(data.fileName || 'photo.jpg');
-  const extension = (originalName.match(/\.[^.]+$/) || ['.jpg'])[0];
-  // 정렬하기 좋도록 접수 시각 + 성함 + 순번으로 파일명을 다시 짓는다
-  const storedName =
-    Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyyMMdd-HHmmss') +
-    '_' + safeName + '_' + index + extension;
-
-  const blob = Utilities.newBlob(bytes, String(data.mimeType || 'image/jpeg'), storedName);
-  const file = getPhotoFolder().createFile(blob);
-
-  const sheet = getOrCreatePhotoSheet();
-  sheet.appendRow([
-    new Date(),
-    name,
-    String(data.phoneTail || ''),
-    tagNo,
-    String(data.batchId || ''),
-    index + ' / ' + (Number(data.total) || 1),
-    storedName,
-    file.getUrl(),
-    String(data.message || ''),
-  ]);
 
   return createResponse({
     success: true,
-    message: 'Photo saved successfully',
-    data: { fileId: file.getId() },
+    message: 'Photo log saved',
+    data: { count: rows.length },
   });
-}
-
-/** 사진을 저장할 Drive 폴더 (ID가 지정되어 있으면 그 폴더, 아니면 이름으로 찾거나 생성) */
-function getPhotoFolder() {
-  if (PHOTO_FOLDER_ID) {
-    return DriveApp.getFolderById(PHOTO_FOLDER_ID);
-  }
-
-  const existing = DriveApp.getFoldersByName(PHOTO_FOLDER_NAME);
-  if (existing.hasNext()) {
-    return existing.next();
-  }
-
-  return DriveApp.createFolder(PHOTO_FOLDER_NAME);
 }
 
 function getOrCreatePhotoSheet() {
@@ -352,7 +323,7 @@ function setupPhotoHeaders(sheet) {
     '접수 묶음',
     '순번',
     '파일명',
-    '파일 링크',
+    'MYBOX 파일 ID',
     '한마디'
   ];
   sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
@@ -1261,16 +1232,11 @@ function doGet(e) {
 }
 
 /**
- * 사진 접수를 처음 설정할 때 Apps Script 편집기에서 한 번 실행하세요.
- * Drive 권한 승인 창을 띄우고, 사진 폴더와 PHOTOS 시트를 미리 만들어 둡니다.
- * 실행 로그에 폴더 URL이 찍히니 그 폴더를 즐겨찾기 해두면 편합니다.
+ * 사진·영상 접수를 처음 설정할 때 Apps Script 편집기에서 한 번 실행하세요.
+ * 스프레드시트에 PHOTOS 시트를 미리 만들어 둡니다.
+ * 파일 저장(MYBOX 토큰·폴더)은 Vercel 함수 쪽 환경 변수로 설정합니다 — GOOGLE_SHEETS_SETUP.md 참고.
  */
 function setupPhotoDrop() {
-  const folder = getPhotoFolder();
   getOrCreatePhotoSheet();
-
-  Logger.log('사진 폴더: ' + folder.getName());
-  Logger.log('폴더 URL: ' + folder.getUrl());
-  Logger.log('폴더 ID: ' + folder.getId());
   Logger.log('PHOTOS 시트 준비 완료');
 }
