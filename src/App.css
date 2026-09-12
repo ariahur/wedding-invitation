@@ -40,12 +40,12 @@
 
 /* Continuous Paper Container: REQUEST.md - bottom sections as one paper strip */
 .paper-container {
-  background-color: #FAF8F3;
+  /* 배경·그림자 없음 — PaperCard 실크 종이가 그대로 이어진다.
+     예전 box-shadow 는 좌우는 카드 overflow 에 잘리고 위아래는 불투명 이웃에 덮여 보이지 않았는데,
+     이웃이 투명해지자 푸터 물결 위로 회색 띠처럼 새어 나와 제거했다. */
+  background-color: transparent;
   border-radius: 24px;
   padding: 36px 22px 48px;
-  box-shadow:
-    0 16px 32px rgba(0, 0, 0, 0.05),
-    0 4px 8px rgba(0, 0, 0, 0.03);
   margin: 0 -10px;
 }
 
@@ -67,9 +67,13 @@
   margin-bottom: 48px;
 }
 
-/* Timeline and RSVP sections: white to paper gradient + top wave separator, extends to sides */
+/* 흰 섹션(타임라인·갤러리·오시는 길·RSVP): 위 물결 구분 + 흰색→투명 그라데이션, 좌우로 확장 */
 .paper-container .section-wrapper--white {
-  background: linear-gradient(to bottom, #fff 0%, #fff 40%, #FAF8F3 100%);
+  /* 위 56px(물결 높이)은 투명 — 물결 SVG가 곡선 아래만 흰색으로 칠한다.
+     끝단도 종이색을 직접 칠하지 않고 투명으로 빠져 PaperCard 실크 종이가 그대로 이어지게 한다 */
+  background: linear-gradient(to bottom,
+    rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0) 54px,
+    #fff 54px, #fff 40%, rgba(255, 255, 255, 0) 100%);
   margin-left: -33px;
   margin-right: -33px;
   padding-left: 22px;
@@ -82,8 +86,14 @@
   height: 56px;
   margin-top: -50px; /* Move wave up to overlap previous section and remove cut white/beige margin */
   margin-bottom: -1px;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 56' preserveAspectRatio='none'%3E%3Cpath fill='%23FAF8F3' d='M0,0v28q150,28,300,0t300,0t300,0t300,0l0,-28H0z'/%3E%3C/svg%3E") no-repeat center top;
+  /* 물결 위쪽은 투명(종이가 비침), 아래쪽만 흰색으로 칠한다 */
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 56' preserveAspectRatio='none'%3E%3Cpath fill='%23FFFFFF' d='M0,28q150,28,300,0t300,0t300,0t300,0V56H0z'/%3E%3C/svg%3E") no-repeat center top;
   background-size: 100% 100%;
+}
+
+/* 흰 섹션 맨 위 구분선은 물결 뒤에 놓이므로 간격만 남기고 그리지 않는다 */
+.paper-container .section-wrapper--white .section-divider {
+  background: transparent;
 }
 
 /* Section padding maintained in each section CSS (24px 20px), only background is transparent */

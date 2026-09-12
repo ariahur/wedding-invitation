@@ -1,7 +1,7 @@
 .boarding-pass-wrapper {
   padding: 0;
   margin-bottom: 0;
-  background-color: #FAF8F3;
+  background-color: transparent; /* PaperCard 실크 종이가 비치도록 */
 }
 
 .boarding-pass {

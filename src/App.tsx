@@ -149,7 +149,7 @@ const WeddingInvitation: React.FC = () => {
           <div className="app-header">
             <LanguageToggle language={language} />
           </div>
-          <PaperCard texture="paper1" className="main-content-card">
+          <PaperCard className="main-content-card">
             <HeroBoardingPassSection />
             <div className="paper-container">
               <AboutUsSection />
