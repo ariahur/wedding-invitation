@@ -139,7 +139,7 @@ const EMAIL_COLORS = {
   // 글자색은 navy(주요) · subText(보조) 두 단계만 쓴다. gold 는 편명, beige 는 네이비 푸터 전용.
   // 다크모드를 강제하는 클라이언트(Gmail Android)는 글자 밝기를 뒤집는데, #9CA3AF 같은 중간 회색은
   // 뒤집혀도 중간 회색이라 어두운 배경에서 묻히고, 색이 여러 가지면 반전 뒤 위계가 흐트러진다.
-  subText: '#666666',
+  subText: '#333333',
 };
 
 // 메일 폰트
@@ -1013,7 +1013,7 @@ function buildEmailHtml(parts, language) {
                   '<span class="c-navy" style="color:' + EMAIL_COLORS.navy + ';">' + escapeHtml(parts.button) + '</span>' +
                 '</a>' +
               '</div>' +
-              '<div class="c-subText" style="padding-top:12px;font-family:' + EMAIL_FONT + ';font-size:12px;line-height:1.6;color:' + EMAIL_COLORS.subText + ';">' +
+              '<div class="c-subText" style="padding-top:12px;font-family:' + EMAIL_FONT + ';font-size:13px;line-height:1.6;color:' + EMAIL_COLORS.subText + ';">' +
                 escapeHtml(parts.buttonNote) +
               '</div>' +
             '</td></tr>' +
@@ -1038,7 +1038,7 @@ function buildEmailHtml(parts, language) {
 
         // 지도 그림에 저작권 표기가 없는 언어만 한 줄 덧붙인다
         (t.mapCredit
-          ? '<tr><td class="c-subText" align="right" style="padding:6px 12px 0 12px;font-family:' + EMAIL_FONT + ';font-size:10px;line-height:1.4;color:' + EMAIL_COLORS.subText + ';">' +
+          ? '<tr><td class="c-subText" align="right" style="padding:6px 12px 0 12px;font-family:' + EMAIL_FONT + ';font-size:11px;line-height:1.4;color:' + EMAIL_COLORS.subText + ';">' +
               escapeHtml(t.mapCredit) +
             '</td></tr>'
           : '') +
@@ -1049,7 +1049,7 @@ function buildEmailHtml(parts, language) {
           '<div class="c-gold" style="font-family:' + EMAIL_FONT_TICKET + ';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:' + EMAIL_COLORS.gold + ';">' +
             escapeHtml(route) +
           '</div>' +
-          '<div class="c-beige" style="padding-top:12px;font-family:' + EMAIL_FONT + ';font-size:12px;line-height:1.8;color:' + EMAIL_COLORS.beige + ';">' +
+          '<div class="c-beige" style="padding-top:12px;font-family:' + EMAIL_FONT + ';font-size:13px;line-height:1.8;color:' + EMAIL_COLORS.beige + ';">' +
             escapeHtml(parts.editNote) + '<br>' + escapeHtml(parts.footer) +
           '</div>' +
         '</td></tr>' +
@@ -1066,7 +1066,7 @@ function buildEmailHtml(parts, language) {
  */
 function emailDetailLine(label, value) {
   return '<div style="padding-bottom:11px;font-family:' + EMAIL_FONT + ';font-size:15px;line-height:1.7;">' +
-    '<span class="c-subText" style="font-size:12px;color:' + EMAIL_COLORS.subText + ';">' +
+    '<span class="c-subText" style="font-size:13px;color:' + EMAIL_COLORS.subText + ';">' +
       escapeHtml(label) +
     '</span>' +
     '<span class="c-navy" style="color:' + EMAIL_COLORS.navy + ';">&nbsp;&nbsp;' + nl2br(escapeHtml(value)) + '</span>' +
