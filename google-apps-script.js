@@ -60,11 +60,12 @@ const INVITATION_URL = 'https://daniel-and-aria.vercel.app';
 // 메일에 들어가는 이미지 주소.
 // 메일 클라이언트는 첨부가 아닌 "웹에 올라와 있는 이미지"만 불러올 수 있으므로,
 // 아래 파일은 청첩장과 함께 배포되어야 한다 (저장소의 public/ 에 있다).
-//   public/email-logo.jpg     →  상단 로고
+//   public/email-logo.png     →  상단 로고 (원 바깥 여백 투명)
 //   public/email-map.jpg      →  하단 지도 (한국어, 카카오맵 캡처)
 //   public/email-map-en.jpg   →  하단 지도 (영어, `npm run email-map` 으로 생성)
 // 배포 주소가 바뀌면 INVITATION_URL 만 고치면 모두 따라간다.
-const EMAIL_LOGO_URL = INVITATION_URL + '/email-logo.jpg';
+// 바깥 여백이 투명한 PNG. Gmail Android 처럼 다크모드를 강제하는 클라이언트에서 흰 네모로 뜨지 않게 한다
+const EMAIL_LOGO_URL = INVITATION_URL + '/email-logo.png';
 
 // 하단 지도 이미지. 한국어는 청첩장 화면과 같은 카카오맵 캡처.
 // 영어는 구글·카카오 모두 영문 모드에서도 상호가 한국어로 남아서, OpenStreetMap 데이터로
@@ -139,6 +140,16 @@ const EMAIL_COLORS = {
   text: '#333333',
   subText: '#666666',
 };
+
+// 메일 폰트
+//   본문·헤드라인은 청첩장 본문과 같은 Gowun Dodum(둥근 고딕)을 쓴다. 세리프·기본 고딕보다
+//   글자가 둥글어 "시스템이 보낸 알림" 보다 "사람이 쓴 편지" 에 가깝게 읽힌다.
+//   Gmail 은 웹폰트를 내려받지 않으므로, 그 뒤의 폴백도 각 OS 의 둥근 고딕으로 맞춘다
+//   (iOS·macOS: Apple SD Gothic Neo / Windows: Malgun Gothic / Android: Noto Sans KR).
+//   편명·버튼·푸터의 Roboto 는 티켓 기계 인쇄체 은유라 그대로 둔다.
+const EMAIL_FONT_URL = 'https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap';
+const EMAIL_FONT = "'Gowun Dodum','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR','Helvetica Neue',Arial,sans-serif";
+const EMAIL_FONT_TICKET = 'Roboto,Arial,sans-serif';
 
 const COL = {
   TIMESTAMP: 1,
@@ -923,17 +934,29 @@ function buildEmailHtml(parts, language) {
   '<!DOCTYPE html>' +
   '<html lang="' + language + '"><head><meta charset="utf-8">' +
   '<meta name="viewport" content="width=device-width,initial-scale=1">' +
-  '<title>' + escapeHtml(info.couple) + '</title></head>' +
-  '<body style="margin:0;padding:0;background:' + EMAIL_COLORS.ivory + ';">' +
+  // 기기가 다크모드여도 메일은 항상 밝은 종이색으로 보이게 한다 (Apple Mail·iOS Mail·Outlook 이 따른다)
+  '<meta name="color-scheme" content="light">' +
+  '<meta name="supported-color-schemes" content="light">' +
+  '<title>' + escapeHtml(info.couple) + '</title>' +
+  // 웹폰트를 지원하는 클라이언트(Apple Mail, iOS Mail 등)만 내려받고, Gmail 은 폴백 폰트로 그린다
+  '<link rel="stylesheet" href="' + EMAIL_FONT_URL + '">' +
+  '<style>' +
+    '@import url("' + EMAIL_FONT_URL + '");' +
+    ':root{color-scheme:light;supported-color-schemes:light;}' +
+    'body{background:' + EMAIL_COLORS.ivory + ' !important;}' +
+    emailDarkModeCss() +
+  '</style>' +
+  '</head>' +
+  '<body class="body b-ivory" bgcolor="' + EMAIL_COLORS.ivory + '" style="margin:0;padding:0;' + emailBg('ivory') + 'font-family:' + EMAIL_FONT + ';">' +
 
   // 받은편지함 미리보기 줄 (본문에서는 감춘다)
   '<div style="display:none;font-size:1px;color:' + EMAIL_COLORS.ivory + ';max-height:0;overflow:hidden;">' +
     escapeHtml(parts.lead) +
   '</div>' +
 
-  '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:' + EMAIL_COLORS.ivory + ';">' +
-    '<tr><td align="center" style="padding:28px 12px 40px 12px;">' +
-      '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;width:100%;background:' + EMAIL_COLORS.white + ';border:1px solid ' + EMAIL_COLORS.beige + ';">' +
+  '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="b-ivory" bgcolor="' + EMAIL_COLORS.ivory + '" style="' + emailBg('ivory') + '">' +
+    '<tr><td align="center" class="b-ivory" bgcolor="' + EMAIL_COLORS.ivory + '" style="padding:28px 12px 40px 12px;' + emailBg('ivory') + '">' +
+      '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="b-white" bgcolor="' + EMAIL_COLORS.white + '" style="max-width:560px;width:100%;' + emailBg('white') + 'border:1px solid ' + EMAIL_COLORS.beige + ';">' +
 
         // ── 레터헤드: 괘선 · 로고 · 괘선 · 편명
         '<tr><td style="padding:34px 28px 0 28px;">' +
@@ -946,22 +969,22 @@ function buildEmailHtml(parts, language) {
         '<tr><td style="padding:0 28px;">' +
           emailRule(EMAIL_COLORS.navy) +
         '</td></tr>' +
-        '<tr><td align="center" style="padding:13px 28px 0 28px;font-family:Roboto,Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:' + EMAIL_COLORS.gold + ';">' +
+        '<tr><td class="c-gold" align="center" style="padding:13px 28px 0 28px;font-family:' + EMAIL_FONT_TICKET + ';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:' + EMAIL_COLORS.gold + ';">' +
           escapeHtml(route) +
         '</td></tr>' +
 
         // ── 인사 · 안내문
-        '<tr><td align="center" style="padding:38px 32px 0 32px;font-family:Georgia,\'Times New Roman\',serif;font-size:21px;line-height:1.6;color:' + EMAIL_COLORS.navy + ';">' +
+        '<tr><td class="c-navy" align="center" style="padding:38px 32px 0 32px;font-family:' + EMAIL_FONT + ';font-size:21px;line-height:1.6;color:' + EMAIL_COLORS.navy + ';">' +
           nl2br(escapeHtml(parts.greeting)) +
         '</td></tr>' +
-        '<tr><td align="center" style="padding:14px 32px 0 32px;font-size:14px;line-height:1.8;color:' + EMAIL_COLORS.subText + ';">' +
+        '<tr><td class="c-subText" align="center" style="padding:14px 32px 0 32px;font-family:' + EMAIL_FONT + ';font-size:14px;line-height:1.8;color:' + EMAIL_COLORS.subText + ';">' +
           nl2br(escapeHtml(parts.lead)) +
         '</td></tr>' +
 
         // 헤드라인과 본문을 가르는 짧은 골드 선
         '<tr><td align="center" style="padding:26px 32px;">' +
           '<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="46"><tr>' +
-            '<td height="2" style="height:2px;line-height:2px;font-size:0;background:' + EMAIL_COLORS.gold + ';">&nbsp;</td>' +
+            '<td height="2" style="height:2px;line-height:2px;font-size:0;' + emailBg('gold') + '">&nbsp;</td>' +
           '</tr></table>' +
         '</td></tr>' +
 
@@ -970,26 +993,26 @@ function buildEmailHtml(parts, language) {
 
         // ── 일시 · 장소 패널 + RSVP 버튼
         '<tr><td style="padding:20px 20px 0 20px;">' +
-          '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:' + EMAIL_COLORS.ivory + ';">' +
-            '<tr><td align="center" style="padding:40px 24px;">' +
-              '<div style="font-family:Georgia,\'Times New Roman\',serif;font-size:24px;line-height:1.4;color:' + EMAIL_COLORS.navy + ';">' +
+          '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="b-ivory" bgcolor="' + EMAIL_COLORS.ivory + '" style="' + emailBg('ivory') + '">' +
+            '<tr><td align="center" class="b-ivory" bgcolor="' + EMAIL_COLORS.ivory + '" style="padding:40px 24px;' + emailBg('ivory') + '">' +
+              '<div class="c-navy" style="font-family:' + EMAIL_FONT + ';font-size:24px;line-height:1.4;color:' + EMAIL_COLORS.navy + ';">' +
                 escapeHtml(info.dateLine) +
               '</div>' +
-              '<div style="padding-top:14px;font-size:16px;line-height:1.6;color:' + EMAIL_COLORS.text + ';">' +
+              '<div class="c-text" style="padding-top:14px;font-family:' + EMAIL_FONT + ';font-size:16px;line-height:1.6;color:' + EMAIL_COLORS.text + ';">' +
                 escapeHtml(info.timeLine) +
               '</div>' +
-              '<div style="padding-top:6px;font-size:14px;line-height:1.7;color:' + EMAIL_COLORS.subText + ';">' +
+              '<div class="c-subText" style="padding-top:6px;font-family:' + EMAIL_FONT + ';font-size:14px;line-height:1.7;color:' + EMAIL_COLORS.subText + ';">' +
                 escapeHtml(info.venue) +
               '</div>' +
-              '<div style="padding-top:2px;font-size:13px;line-height:1.7;color:' + EMAIL_COLORS.label + ';">' +
+              '<div class="c-label" style="padding-top:2px;font-family:' + EMAIL_FONT + ';font-size:13px;line-height:1.7;color:' + EMAIL_COLORS.label + ';">' +
                 escapeHtml(info.address) +
               '</div>' +
               '<div style="padding-top:30px;">' +
-                '<a href="' + invitationUrl(language) + '" style="display:inline-block;padding:14px 34px;border:1px solid ' + EMAIL_COLORS.navy + ';background:' + EMAIL_COLORS.white + ';color:' + EMAIL_COLORS.navy + ';text-decoration:none;font-family:Roboto,Arial,sans-serif;font-size:12px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;">' +
-                  escapeHtml(parts.button) +
+                '<a href="' + invitationUrl(language) + '" style="display:inline-block;padding:14px 34px;border:1px solid ' + EMAIL_COLORS.navy + ';' + emailBg('white') + 'color:' + EMAIL_COLORS.navy + ';text-decoration:none;font-family:' + EMAIL_FONT_TICKET + ';font-size:12px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;">' +
+                  '<span class="c-navy" style="color:' + EMAIL_COLORS.navy + ';">' + escapeHtml(parts.button) + '</span>' +
                 '</a>' +
               '</div>' +
-              '<div style="padding-top:12px;font-size:12px;line-height:1.6;color:' + EMAIL_COLORS.label + ';">' +
+              '<div class="c-label" style="padding-top:12px;font-family:' + EMAIL_FONT + ';font-size:12px;line-height:1.6;color:' + EMAIL_COLORS.label + ';">' +
                 escapeHtml(parts.buttonNote) +
               '</div>' +
             '</td></tr>' +
@@ -997,10 +1020,10 @@ function buildEmailHtml(parts, language) {
         '</td></tr>' +
 
         // ── 맺음말 · 서명
-        '<tr><td align="center" style="padding:34px 34px 0 34px;font-size:14px;line-height:1.9;color:' + EMAIL_COLORS.subText + ';">' +
+        '<tr><td class="c-subText" align="center" style="padding:34px 34px 0 34px;font-family:' + EMAIL_FONT + ';font-size:14px;line-height:1.9;color:' + EMAIL_COLORS.subText + ';">' +
           nl2br(escapeHtml(parts.signoff)) +
         '</td></tr>' +
-        '<tr><td align="center" style="padding:18px 34px 34px 34px;font-family:Georgia,\'Times New Roman\',serif;font-size:15px;line-height:1.6;color:' + EMAIL_COLORS.navy + ';">' +
+        '<tr><td class="c-navy" align="center" style="padding:18px 34px 34px 34px;font-family:' + EMAIL_FONT + ';font-size:15px;line-height:1.6;color:' + EMAIL_COLORS.navy + ';">' +
           escapeHtml(info.signature) +
         '</td></tr>' +
 
@@ -1014,18 +1037,18 @@ function buildEmailHtml(parts, language) {
 
         // 지도 그림에 저작권 표기가 없는 언어만 한 줄 덧붙인다
         (t.mapCredit
-          ? '<tr><td align="right" style="padding:6px 12px 0 12px;font-size:10px;line-height:1.4;color:' + EMAIL_COLORS.label + ';">' +
+          ? '<tr><td class="c-label" align="right" style="padding:6px 12px 0 12px;font-family:' + EMAIL_FONT + ';font-size:10px;line-height:1.4;color:' + EMAIL_COLORS.label + ';">' +
               escapeHtml(t.mapCredit) +
             '</td></tr>'
           : '') +
 
         // ── 푸터 (티켓 헤더와 같은 네이비 + 골드 밑단을 위로 뒤집은 모양)
-        '<tr><td height="4" style="height:4px;line-height:4px;font-size:0;background:' + EMAIL_COLORS.gold + ';">&nbsp;</td></tr>' +
-        '<tr><td align="center" style="background:' + EMAIL_COLORS.navy + ';padding:24px 28px;">' +
-          '<div style="font-family:Roboto,Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:' + EMAIL_COLORS.gold + ';">' +
+        '<tr><td height="4" style="height:4px;line-height:4px;font-size:0;' + emailBg('gold') + '">&nbsp;</td></tr>' +
+        '<tr><td align="center" class="b-navy" bgcolor="' + EMAIL_COLORS.navy + '" style="' + emailBg('navy') + 'padding:24px 28px;">' +
+          '<div class="c-gold" style="font-family:' + EMAIL_FONT_TICKET + ';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:' + EMAIL_COLORS.gold + ';">' +
             escapeHtml(route) +
           '</div>' +
-          '<div style="padding-top:12px;font-size:12px;line-height:1.8;color:' + EMAIL_COLORS.beige + ';">' +
+          '<div class="c-beige" style="padding-top:12px;font-family:' + EMAIL_FONT + ';font-size:12px;line-height:1.8;color:' + EMAIL_COLORS.beige + ';">' +
             escapeHtml(parts.editNote) + '<br>' + escapeHtml(parts.footer) +
           '</div>' +
         '</td></tr>' +
@@ -1041,12 +1064,43 @@ function buildEmailHtml(parts, language) {
  * 칸을 나누거나 선을 긋지 않아 표처럼 보이지 않는다.
  */
 function emailDetailLine(label, value) {
-  return '<div style="padding-bottom:11px;font-size:15px;line-height:1.7;">' +
-    '<span style="font-family:Roboto,Arial,sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:' + EMAIL_COLORS.label + ';">' +
+  return '<div style="padding-bottom:11px;font-family:' + EMAIL_FONT + ';font-size:15px;line-height:1.7;">' +
+    '<span class="c-label" style="font-size:12px;color:' + EMAIL_COLORS.label + ';">' +
       escapeHtml(label) +
     '</span>' +
-    '<span style="color:' + EMAIL_COLORS.text + ';">&nbsp;&nbsp;' + nl2br(escapeHtml(value)) + '</span>' +
+    '<span class="c-text" style="color:' + EMAIL_COLORS.text + ';">&nbsp;&nbsp;' + nl2br(escapeHtml(value)) + '</span>' +
   '</div>';
+}
+
+/**
+ * 다크모드 대응.
+ *
+ * 받는 사람 기기가 다크모드여도 메일은 항상 밝은 종이색으로 보여야 한다.
+ *   - Apple Mail · iOS Mail: <head> 의 color-scheme 메타를 따른다.
+ *   - Gmail 앱(iOS · Android): 메타를 무시하고 색을 직접 반전한다. 단, 그라데이션 배경은 건드리지 않으므로
+ *     배경은 단색 그라데이션으로 깔고(emailBg), 글자는 background-clip:text 로 그라데이션을 글자 모양으로
+ *     오려내 원래 색을 지킨다. Gmail 만 <body> 앞에 <u></u> 를 끼워 넣으므로 `u + .body` 로 Gmail 에만 적용한다.
+ *   - Outlook 앱 · Outlook.com: 다크모드에서 본문을 [data-ogsc]/[data-ogsb] 래퍼로 감싸므로 그 안에서 원래 색을 되살린다.
+ * 글자색은 `c-<색 키>`, 배경색은 `b-<색 키>` 클래스로 표시하고, 규칙은 EMAIL_COLORS 에서 만든다.
+ */
+function emailDarkModeCss() {
+  let css = '';
+  const keys = Object.keys(EMAIL_COLORS);
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    const c = EMAIL_COLORS[key];
+    css += 'u + .body .c-' + key + '{background-image:linear-gradient(' + c + ',' + c + ') !important;' +
+      '-webkit-background-clip:text !important;background-clip:text !important;color:transparent !important;}';
+    css += '[data-ogsc] .c-' + key + '{color:' + c + ' !important;}';
+    css += '[data-ogsb] .b-' + key + '{background-color:' + c + ' !important;}';
+  }
+  return css;
+}
+
+/** 배경색 한 벌 — 단색 + 같은 색 그라데이션 (Gmail 다크모드가 반전하지 않는 유일한 배경) */
+function emailBg(key) {
+  const c = EMAIL_COLORS[key];
+  return 'background:' + c + ';background-image:linear-gradient(' + c + ',' + c + ');';
 }
 
 /** 레터헤드를 위아래로 감싸는 1px 괘선 */

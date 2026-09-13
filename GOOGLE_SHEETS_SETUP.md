@@ -170,14 +170,14 @@ REACT_APP_PHOTO_DROP_STATUS=open npm start
 
 | 파일 | 메일에서 쓰이는 곳 |
 |---|---|
-| `public/email-logo.jpg` | 상단 로고 |
+| `public/email-logo.png` | 상단 로고 (원 바깥 여백은 투명 — 다크모드에서 흰 네모로 뜨지 않게) |
 | `public/email-map.jpg` | 한국어 메일의 하단 지도 (카카오맵, 누르면 카카오맵이 열립니다) |
 | `public/email-map-en.jpg` | 영어 메일의 하단 지도 (영문 라벨만 얹어 직접 그린 지도, 누르면 구글맵이 열립니다) |
 
 영어 지도는 `npm run email-map` 으로 다시 만들 수 있습니다 (`scripts/render-email-map-en.mjs`, OpenStreetMap 데이터 사용).
 구글·카카오 지도는 영문 모드에서도 상호가 한국어로 남아서 캡처 대신 직접 그립니다.
 
-배포한 뒤 `<청첩장 주소>/email-logo.jpg` 가 브라우저에서 열리는지 확인하세요.
+배포한 뒤 `<청첩장 주소>/email-logo.png` 가 브라우저에서 열리는지 확인하세요.
 열리지 않으면 메일에서 로고 자리가 빈칸으로 나옵니다.
 배포 주소가 바뀌면 `INVITATION_URL` 만 고치면 로고 · 지도 · RSVP 버튼이 모두 따라갑니다.
 
@@ -228,6 +228,18 @@ D-28 이 지나면 그 뒤에 새로 신청한 사람에게도, D-1 · 예식 �
 메일 문구는 `EMAIL_TEXT` 의 `ko` / `en` 에 모여 있습니다. 게스트가 신청한 화면 언어로 보냅니다.
 신청 내용은 `confirmationDetails()` 가 만든 [라벨, 값] 목록으로 나가며,
 표를 그리지 않고 `emailDetailLine()` 이 한 줄씩 나열합니다. 라벨 문구는 `EMAIL_TEXT` 의 `label...` 항목에 있습니다.
+
+메일 폰트는 `EMAIL_FONT` 에 있습니다. 청첩장 본문과 같은 Gowun Dodum(둥근 고딕)을 헤드라인·본문에 쓰고,
+Gmail 처럼 웹폰트를 내려받지 않는 클라이언트는 각 OS 의 둥근 고딕(Apple SD Gothic Neo · Malgun Gothic · Noto Sans KR)으로 대신 그립니다.
+편명 · RSVP 버튼 · 푸터의 Roboto(`EMAIL_FONT_TICKET`)는 티켓 기계 인쇄체 은유라 그대로 둡니다.
+받는 사람 기기가 다크모드여도 항상 아이보리 · 흰 종이색으로 보이도록 세 겹으로 막습니다 (`emailDarkModeCss()`, `emailBg()`).
+Apple Mail · iOS Mail 은 `color-scheme: light` 메타를 따르고, Gmail 앱은 메타를 무시하므로 배경을 단색 그라데이션으로 깔고
+글자는 `background-clip: text` 로 원래 색을 지킵니다 (Gmail 은 그라데이션을 반전하지 않습니다). Outlook 은 `[data-ogsc]` / `[data-ogsb]` 규칙으로 되돌립니다.
+글자색 요소에는 `c-<색 키>`, 배경 요소에는 `b-<색 키>` 클래스가 붙어 있으니 문구를 추가할 때 같은 방식으로 붙이세요.
+Gmail 앱에 Gmail 이 아닌 계정을 넣어 쓰는 경우는 `<style>` 을 지원하지 않아 Gmail 기본 동작(색 반전)으로 보입니다.
+**Gmail Android 앱은 위 방법이 모두 통하지 않습니다.** 그라데이션·`background-clip` 우회는 iOS 에서만 검증됐고,
+Android 는 배경을 어둡게 바꾸고 글자를 밝게 뒤집는 부분 반전을 강제합니다 (2026년 9월 기준 공개된 회피 기법 없음).
+그래서 Android 는 다크로 보이는 것을 전제로, 로고를 여백 투명 PNG 로 두어 어두운 카드 위에서도 어색하지 않게 했습니다.
 
 ## 문제 해결
 
