@@ -136,10 +136,10 @@ const EMAIL_COLORS = {
   ivory: '#FAF8F3',
   white: '#FFFFFF',
   beige: '#E6D8C3',
-  // 글자색은 navy(주요) · subText(보조) 두 단계만 쓴다. gold 는 편명, beige 는 네이비 푸터 전용.
-  // 다크모드를 강제하는 클라이언트(Gmail Android)는 글자 밝기를 뒤집는데, #9CA3AF 같은 중간 회색은
-  // 뒤집혀도 중간 회색이라 어두운 배경에서 묻히고, 색이 여러 가지면 반전 뒤 위계가 흐트러진다.
-  subText: '#333333',
+  // 글자색은 검정 하나만 쓴다 (gold 는 편명, beige 는 네이비 푸터 전용).
+  // Gmail 앱은 다크모드에서 글자 밝기를 뒤집으므로, 검정이면 그대로 흰색이 되어 라이트·다크 양쪽에서 가장 또렷하다.
+  // 네이비·회색처럼 중간 밝기 색은 뒤집힌 뒤 흐려진다. 위계는 색이 아니라 글자 크기로 낸다.
+  ink: '#000000',
 };
 
 // 메일 폰트
@@ -948,7 +948,7 @@ function buildEmailHtml(parts, language) {
     emailDarkModeCss() +
   '</style>' +
   '</head>' +
-  '<body class="body b-ivory" bgcolor="' + EMAIL_COLORS.ivory + '" style="margin:0;padding:0;' + emailBg('ivory') + 'font-family:' + EMAIL_FONT + ';">' +
+  '<body class="b-ivory" bgcolor="' + EMAIL_COLORS.ivory + '" style="margin:0;padding:0;' + emailBg('ivory') + 'font-family:' + EMAIL_FONT + ';">' +
 
   // 받은편지함 미리보기 줄 (본문에서는 감춘다)
   '<div style="display:none;font-size:1px;color:' + EMAIL_COLORS.ivory + ';max-height:0;overflow:hidden;">' +
@@ -975,10 +975,10 @@ function buildEmailHtml(parts, language) {
         '</td></tr>' +
 
         // ── 인사 · 안내문
-        '<tr><td class="c-navy" align="center" style="padding:38px 32px 0 32px;font-family:' + EMAIL_FONT + ';font-size:21px;line-height:1.6;color:' + EMAIL_COLORS.navy + ';">' +
+        '<tr><td class="c-ink" align="center" style="padding:38px 32px 0 32px;font-family:' + EMAIL_FONT + ';font-size:21px;line-height:1.6;color:' + EMAIL_COLORS.ink + ';">' +
           nl2br(escapeHtml(parts.greeting)) +
         '</td></tr>' +
-        '<tr><td class="c-subText" align="center" style="padding:14px 32px 0 32px;font-family:' + EMAIL_FONT + ';font-size:14px;line-height:1.8;color:' + EMAIL_COLORS.subText + ';">' +
+        '<tr><td class="c-ink" align="center" style="padding:14px 32px 0 32px;font-family:' + EMAIL_FONT + ';font-size:14px;line-height:1.8;color:' + EMAIL_COLORS.ink + ';">' +
           nl2br(escapeHtml(parts.lead)) +
         '</td></tr>' +
 
@@ -996,24 +996,24 @@ function buildEmailHtml(parts, language) {
         '<tr><td style="padding:20px 20px 0 20px;">' +
           '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="b-ivory" bgcolor="' + EMAIL_COLORS.ivory + '" style="' + emailBg('ivory') + '">' +
             '<tr><td align="center" class="b-ivory" bgcolor="' + EMAIL_COLORS.ivory + '" style="padding:40px 24px;' + emailBg('ivory') + '">' +
-              '<div class="c-navy" style="font-family:' + EMAIL_FONT + ';font-size:24px;line-height:1.4;color:' + EMAIL_COLORS.navy + ';">' +
+              '<div class="c-ink" style="font-family:' + EMAIL_FONT + ';font-size:24px;line-height:1.4;color:' + EMAIL_COLORS.ink + ';">' +
                 escapeHtml(info.dateLine) +
               '</div>' +
-              '<div class="c-navy" style="padding-top:14px;font-family:' + EMAIL_FONT + ';font-size:16px;line-height:1.6;color:' + EMAIL_COLORS.navy + ';">' +
+              '<div class="c-ink" style="padding-top:14px;font-family:' + EMAIL_FONT + ';font-size:16px;line-height:1.6;color:' + EMAIL_COLORS.ink + ';">' +
                 escapeHtml(info.timeLine) +
               '</div>' +
-              '<div class="c-subText" style="padding-top:6px;font-family:' + EMAIL_FONT + ';font-size:14px;line-height:1.7;color:' + EMAIL_COLORS.subText + ';">' +
+              '<div class="c-ink" style="padding-top:6px;font-family:' + EMAIL_FONT + ';font-size:14px;line-height:1.7;color:' + EMAIL_COLORS.ink + ';">' +
                 escapeHtml(info.venue) +
               '</div>' +
-              '<div class="c-subText" style="padding-top:2px;font-family:' + EMAIL_FONT + ';font-size:13px;line-height:1.7;color:' + EMAIL_COLORS.subText + ';">' +
+              '<div class="c-ink" style="padding-top:2px;font-family:' + EMAIL_FONT + ';font-size:13px;line-height:1.7;color:' + EMAIL_COLORS.ink + ';">' +
                 escapeHtml(info.address) +
               '</div>' +
               '<div style="padding-top:30px;">' +
-                '<a href="' + invitationUrl(language) + '" style="display:inline-block;padding:14px 34px;border:1px solid ' + EMAIL_COLORS.navy + ';' + emailBg('white') + 'color:' + EMAIL_COLORS.navy + ';text-decoration:none;font-family:' + EMAIL_FONT_TICKET + ';font-size:12px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;">' +
-                  '<span class="c-navy" style="color:' + EMAIL_COLORS.navy + ';">' + escapeHtml(parts.button) + '</span>' +
+                '<a href="' + invitationUrl(language) + '" style="display:inline-block;padding:14px 34px;border:1px solid ' + EMAIL_COLORS.navy + ';' + emailBg('white') + 'color:' + EMAIL_COLORS.ink + ';text-decoration:none;font-family:' + EMAIL_FONT_TICKET + ';font-size:12px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;">' +
+                  '<span class="c-ink" style="color:' + EMAIL_COLORS.ink + ';">' + escapeHtml(parts.button) + '</span>' +
                 '</a>' +
               '</div>' +
-              '<div class="c-subText" style="padding-top:12px;font-family:' + EMAIL_FONT + ';font-size:13px;line-height:1.6;color:' + EMAIL_COLORS.subText + ';">' +
+              '<div class="c-ink" style="padding-top:12px;font-family:' + EMAIL_FONT + ';font-size:13px;line-height:1.6;color:' + EMAIL_COLORS.ink + ';">' +
                 escapeHtml(parts.buttonNote) +
               '</div>' +
             '</td></tr>' +
@@ -1021,10 +1021,10 @@ function buildEmailHtml(parts, language) {
         '</td></tr>' +
 
         // ── 맺음말 · 서명
-        '<tr><td class="c-subText" align="center" style="padding:34px 34px 0 34px;font-family:' + EMAIL_FONT + ';font-size:14px;line-height:1.9;color:' + EMAIL_COLORS.subText + ';">' +
+        '<tr><td class="c-ink" align="center" style="padding:34px 34px 0 34px;font-family:' + EMAIL_FONT + ';font-size:14px;line-height:1.9;color:' + EMAIL_COLORS.ink + ';">' +
           nl2br(escapeHtml(parts.signoff)) +
         '</td></tr>' +
-        '<tr><td class="c-navy" align="center" style="padding:18px 34px 34px 34px;font-family:' + EMAIL_FONT + ';font-size:15px;line-height:1.6;color:' + EMAIL_COLORS.navy + ';">' +
+        '<tr><td class="c-ink" align="center" style="padding:18px 34px 34px 34px;font-family:' + EMAIL_FONT + ';font-size:15px;line-height:1.6;color:' + EMAIL_COLORS.ink + ';">' +
           escapeHtml(info.signature) +
         '</td></tr>' +
 
@@ -1038,7 +1038,7 @@ function buildEmailHtml(parts, language) {
 
         // 지도 그림에 저작권 표기가 없는 언어만 한 줄 덧붙인다
         (t.mapCredit
-          ? '<tr><td class="c-subText" align="right" style="padding:6px 12px 0 12px;font-family:' + EMAIL_FONT + ';font-size:11px;line-height:1.4;color:' + EMAIL_COLORS.subText + ';">' +
+          ? '<tr><td class="c-ink" align="right" style="padding:6px 12px 0 12px;font-family:' + EMAIL_FONT + ';font-size:11px;line-height:1.4;color:' + EMAIL_COLORS.ink + ';">' +
               escapeHtml(t.mapCredit) +
             '</td></tr>'
           : '') +
@@ -1061,27 +1061,26 @@ function buildEmailHtml(parts, language) {
 }
 
 /**
- * 신청 내용 한 줄. 라벨은 작은 회색 글자, 값은 네이비로 같은 줄에 잇는다.
+ * 신청 내용 한 줄. 라벨은 작은 글자, 값은 본문 크기로 같은 줄에 잇는다.
  * 칸을 나누거나 선을 긋지 않아 표처럼 보이지 않는다.
  */
 function emailDetailLine(label, value) {
   return '<div style="padding-bottom:11px;font-family:' + EMAIL_FONT + ';font-size:15px;line-height:1.7;">' +
-    '<span class="c-subText" style="font-size:13px;color:' + EMAIL_COLORS.subText + ';">' +
+    '<span class="c-ink" style="font-size:13px;color:' + EMAIL_COLORS.ink + ';">' +
       escapeHtml(label) +
     '</span>' +
-    '<span class="c-navy" style="color:' + EMAIL_COLORS.navy + ';">&nbsp;&nbsp;' + nl2br(escapeHtml(value)) + '</span>' +
+    '<span class="c-ink" style="color:' + EMAIL_COLORS.ink + ';">&nbsp;&nbsp;' + nl2br(escapeHtml(value)) + '</span>' +
   '</div>';
 }
 
 /**
  * 다크모드 대응.
  *
- * 받는 사람 기기가 다크모드여도 메일은 항상 밝은 종이색으로 보여야 한다.
- *   - Apple Mail · iOS Mail: <head> 의 color-scheme 메타를 따른다.
- *   - Gmail 앱(iOS · Android): 메타를 무시하고 색을 직접 반전한다. 단, 그라데이션 배경은 건드리지 않으므로
- *     배경은 단색 그라데이션으로 깔고(emailBg), 글자는 background-clip:text 로 그라데이션을 글자 모양으로
- *     오려내 원래 색을 지킨다. Gmail 만 <body> 앞에 <u></u> 를 끼워 넣으므로 `u + .body` 로 Gmail 에만 적용한다.
+ *   - Apple Mail · iOS Mail: <head> 의 color-scheme 메타를 따라 항상 밝게 보인다.
  *   - Outlook 앱 · Outlook.com: 다크모드에서 본문을 [data-ogsc]/[data-ogsb] 래퍼로 감싸므로 그 안에서 원래 색을 되살린다.
+ *   - Gmail 앱(iOS · Android): 메타를 무시하고 색을 직접 뒤집는다. 그라데이션 배경·background-clip:text 같은
+ *     우회는 iOS 에서만 검증됐고 Android 에서는 글자가 반투명하게 깨졌다 (2026-09 실측). 그래서 Gmail 은 막지 않고,
+ *     글자를 검정(EMAIL_COLORS.ink)으로 두어 뒤집혀도 흰색으로 또렷하게 보이게 한다.
  * 글자색은 `c-<색 키>`, 배경색은 `b-<색 키>` 클래스로 표시하고, 규칙은 EMAIL_COLORS 에서 만든다.
  */
 function emailDarkModeCss() {
@@ -1090,18 +1089,15 @@ function emailDarkModeCss() {
   for (let i = 0; i < keys.length; i++) {
     const key = keys[i];
     const c = EMAIL_COLORS[key];
-    css += 'u + .body .c-' + key + '{background-image:linear-gradient(' + c + ',' + c + ') !important;' +
-      '-webkit-background-clip:text !important;background-clip:text !important;color:transparent !important;}';
     css += '[data-ogsc] .c-' + key + '{color:' + c + ' !important;}';
     css += '[data-ogsb] .b-' + key + '{background-color:' + c + ' !important;}';
   }
   return css;
 }
 
-/** 배경색 한 벌 — 단색 + 같은 색 그라데이션 (Gmail 다크모드가 반전하지 않는 유일한 배경) */
+/** 배경색 스타일 조각. bgcolor 속성과 짝으로 쓴다 */
 function emailBg(key) {
-  const c = EMAIL_COLORS[key];
-  return 'background:' + c + ';background-image:linear-gradient(' + c + ',' + c + ');';
+  return 'background:' + EMAIL_COLORS[key] + ';';
 }
 
 /** 레터헤드를 위아래로 감싸는 1px 괘선 */
