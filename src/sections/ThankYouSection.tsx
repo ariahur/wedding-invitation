@@ -14,12 +14,7 @@ const ThankYouSection: React.FC = () => {
     <div className="section-wrapper">
       <motion.div {...sectionFadeInProps}>
         <div className="thank-you">
-        <div
-          className="thank-you__background"
-          style={{
-            backgroundImage: `url(${process.env.PUBLIC_URL}/footer/footer-couple.png)`,
-          }}
-        />
+        <div className="thank-you__wave" aria-hidden="true" />
         <div className="thank-you__content">
           {/* Thank you message */}
           <div className="thank-you__message" lang={language}>

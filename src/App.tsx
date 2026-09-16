@@ -3,12 +3,15 @@ import { Routes, Route, Navigate, useParams, useNavigate } from 'react-router-do
 import HeroBoardingPassSection from './sections/HeroBoardingPassSection';
 import AboutUsSection from './sections/AboutUsSection';
 import TimelineSection from './sections/TimelineSection';
+import GallerySection from './sections/GallerySection';
 import DirectionsSection from './sections/DirectionsSection';
 import RsvpSection from './sections/RsvpSection';
+import PhotoDropSection from './sections/PhotoDropSection';
 import ThankYouSection from './sections/ThankYouSection';
 import LoadingScreen from './components/LoadingScreen/LoadingScreen';
 import PaperCard from './components/PaperCard/PaperCard';
 import { LanguageProvider } from './contexts/LanguageContext';
+import { RsvpTicketProvider } from './contexts/RsvpTicketContext';
 import { Language } from './types/language';
 import './App.css';
 
@@ -88,7 +91,7 @@ const WeddingInvitation: React.FC = () => {
     updateMetaTag('og:description', description);
     updateMetaTag('og:image', imageUrl);
     updateMetaTag('og:image:width', '1200');
-    updateMetaTag('og:image:height', '630');
+    updateMetaTag('og:image:height', '800');
     updateMetaTag('og:url', currentUrl);
     updateMetaTag('og:type', 'website');
     updateMetaTag('og:locale', language === 'ko' ? 'ko_KR' : 'en_US');
@@ -140,32 +143,36 @@ const WeddingInvitation: React.FC = () => {
 
   return (
     <LanguageProvider language={language}>
-      {isLoading && <LoadingScreen />}
-      <div className="App" style={{ opacity: isLoading ? 0 : 1, transition: 'opacity 0.5s ease-in' }}>
-        <div className="app-header">
-          <LanguageToggle language={language} />
-        </div>
-        <PaperCard texture="paper1" className="main-content-card">
-          <HeroBoardingPassSection />
-          <div className="paper-container">
-            <AboutUsSection />
-            <TimelineSection />
-            <DirectionsSection />
-            <RsvpSection />
+      <RsvpTicketProvider>
+        {isLoading && <LoadingScreen />}
+        <div className="App" style={{ opacity: isLoading ? 0 : 1, transition: 'opacity 0.5s ease-in' }}>
+          <div className="app-header">
+            <LanguageToggle language={language} />
           </div>
-          <ThankYouSection />
-        </PaperCard>
-        
-        {showScrollTop && (
-          <button 
-            className="scroll-to-top-btn" 
-            onClick={scrollToTop}
-            aria-label="Scroll to top"
-          >
-            <span className="material-symbols-outlined">keyboard_arrow_up</span>
-          </button>
-        )}
-      </div>
+          <PaperCard className="main-content-card">
+            <HeroBoardingPassSection />
+            <div className="paper-container">
+              <AboutUsSection />
+              <TimelineSection />
+              <GallerySection />
+              <DirectionsSection />
+              <RsvpSection />
+              <PhotoDropSection />
+            </div>
+            <ThankYouSection />
+          </PaperCard>
+
+          {showScrollTop && (
+            <button
+              className="scroll-to-top-btn"
+              onClick={scrollToTop}
+              aria-label="Scroll to top"
+            >
+              <span className="material-symbols-outlined">keyboard_arrow_up</span>
+            </button>
+          )}
+        </div>
+      </RsvpTicketProvider>
     </LanguageProvider>
   );
 };

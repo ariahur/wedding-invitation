@@ -94,6 +94,7 @@ npx serve -s build
 1. [Vercel](https://vercel.com)에 로그인 후 New Project로 저장소 연결
 2. **Environment Variables**에 추가:
    - `REACT_APP_GOOGLE_SHEETS_WEB_APP_URL` — Google Apps Script 웹 앱 URL ([GOOGLE_SHEETS_SETUP.md](./GOOGLE_SHEETS_SETUP.md) 참고)
+   - `MYBOX_PAT` — 네이버 MYBOX 개인 액세스 토큰. 사진·영상 접수용 서버리스 함수(`api/photo.js`)가 읽는다 (같은 문서 참고)
 3. 빌드·배포는 푸시 시 자동 수행 (Build Command: `npm run build`, Output: `build`)
 
 ## 주요 기능

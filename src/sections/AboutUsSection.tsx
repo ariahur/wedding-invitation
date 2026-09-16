@@ -6,15 +6,23 @@ import { translations } from '../data/translations';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { sectionFadeInProps } from '../utils/animations';
 import { handleImageError } from '../utils/imageErrorHandler';
+import { imageProps } from '../data/images';
 import { renderMultilineText } from '../utils/textUtils';
 import './AboutUsSection.css';
+
+/** .about-us__photo 는 200px, 좁은 화면에서는 160px */
+const PHOTO_SIZES = '(max-width: 430px) 160px, 200px';
 
 const AboutUsSection: React.FC = () => {
   const language = useLanguage();
   const t = translations[language];
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [openPhoto, setOpenPhoto] = useState<string | null>(null);
 
-  useScrollLock(isContactModalOpen);
+  const groomPhoto = imageProps(t.aboutUs.groom.image, PHOTO_SIZES);
+  const bridePhoto = imageProps(t.aboutUs.bride.image, PHOTO_SIZES);
+
+  useScrollLock(isContactModalOpen || !!openPhoto);
 
   const handleContactClick = () => {
     setIsContactModalOpen(true);
@@ -22,6 +30,14 @@ const AboutUsSection: React.FC = () => {
 
   const handleCloseModal = () => {
     setIsContactModalOpen(false);
+  };
+
+  const handlePhotoClick = (image: string) => {
+    setOpenPhoto(image);
+  };
+
+  const handleClosePhoto = () => {
+    setOpenPhoto(null);
   };
 
   const handlePhoneClick = (phone: string) => {
@@ -37,13 +53,16 @@ const AboutUsSection: React.FC = () => {
             <div className="about-us__cards">
               {/* Groom */}
               <div className="about-us__card">
-              {t.aboutUs.groom.image ? (
+              {groomPhoto ? (
                 <>
                   <div className="about-us__photo">
-                    <img 
-                      src={t.aboutUs.groom.image}
+                    <img
+                      {...groomPhoto}
                       alt={t.aboutUs.groom.name}
                       className="about-us__photo-img"
+                      onClick={() => handlePhotoClick(t.aboutUs.groom.image!)}
+                      loading="lazy"
+                      decoding="async"
                       onError={handleImageError}
                     />
                   </div>
@@ -73,13 +92,16 @@ const AboutUsSection: React.FC = () => {
 
             {/* Bride */}
             <div className="about-us__card">
-              {t.aboutUs.bride.image ? (
+              {bridePhoto ? (
                 <>
                   <div className="about-us__photo">
-                    <img 
-                      src={t.aboutUs.bride.image}
+                    <img
+                      {...bridePhoto}
                       alt={t.aboutUs.bride.name}
                       className="about-us__photo-img"
+                      onClick={() => handlePhotoClick(t.aboutUs.bride.image!)}
+                      loading="lazy"
+                      decoding="async"
                       onError={handleImageError}
                     />
                   </div>
@@ -116,6 +138,44 @@ const AboutUsSection: React.FC = () => {
             </div>
           </div>
       </motion.div>
+
+      {typeof document !== 'undefined' && createPortal(
+        <AnimatePresence>
+          {openPhoto && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="about-us__photo-modal-overlay"
+              onClick={handleClosePhoto}
+            >
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="about-us__photo-modal"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  className="about-us__photo-modal-close"
+                  onClick={handleClosePhoto}
+                  aria-label="Close"
+                >
+                  <span className="material-symbols-outlined">close</span>
+                </button>
+                <img
+                  {...imageProps(openPhoto, '100vw')}
+                  alt={openPhoto === t.aboutUs.groom.image ? t.aboutUs.groom.name : t.aboutUs.bride.name}
+                  className="about-us__photo-modal-image"
+                />
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
 
       {typeof document !== 'undefined' && createPortal(
         <AnimatePresence>

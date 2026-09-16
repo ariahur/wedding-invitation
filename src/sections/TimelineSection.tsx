@@ -5,9 +5,23 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
 import { useScrollLock } from '../hooks/useScrollLock';
 import { sectionFadeInProps } from '../utils/animations';
+import { imageProps } from '../data/images';
 import './TimelineSection.css';
 
 const startDate = new Date('2013-06-02T00:00:00');
+
+/** .timeline__event-image 는 최대 120px */
+const THUMB_SIZES = '120px';
+
+/** 정사각 썸네일로 잘릴 때 인물이 잘리지 않도록 사진마다 보여줄 자리를 정한다 */
+const IMAGE_POSITIONS: Record<string, string> = {
+  'timeline/2013': ' event-image--pos-left',
+  'timeline/2018': ' event-image--pos-right',
+  'timeline/2025': ' event-image--pos-left',
+  'timeline/2027': ' event-image--pos-top',
+};
+
+const eventImagePosition = (image: string): string => IMAGE_POSITIONS[image] ?? '';
 
 const TimelineSection: React.FC = () => {
   const language = useLanguage();
@@ -113,7 +127,7 @@ const TimelineSection: React.FC = () => {
           whileInView={{ scaleY: 1 }}
           viewport={{ once: true, amount: 0.1 }}
           style={{ transformOrigin: "top" }}
-          transition={{ duration: 3, ease: "easeInOut" }}
+          transition={{ duration: 0.6 }}
         >
           <div className="timeline__line" />
         </motion.div>
@@ -135,12 +149,14 @@ const TimelineSection: React.FC = () => {
                 <>
               <div className="timeline__event-image">
                 {event.image ? (
-                  <img 
-                    src={event.image}
+                  <img
+                    {...imageProps(event.image, THUMB_SIZES)}
                     alt={event.title}
-                    className={`event-image${(event.image.includes('2013') || event.image.includes('2025')) ? ' event-image--pos-left' : ''}${event.image.includes('2018') ? ' event-image--pos-right' : ''}`}
+                    className={`event-image${eventImagePosition(event.image)}`}
                     onClick={() => handleImageClick(event.image!)}
                     style={{ cursor: 'pointer' }}
+                    loading="lazy"
+                    decoding="async"
                   />
                 ) : (
                   <div className="event-image-placeholder">
@@ -166,12 +182,14 @@ const TimelineSection: React.FC = () => {
               </div>
                   <div className="timeline__event-image">
                     {event.image ? (
-                      <img 
-                        src={event.image}
+                      <img
+                        {...imageProps(event.image, THUMB_SIZES)}
                         alt={event.title}
-                        className={`event-image${(event.image.includes('2013') || event.image.includes('2025')) ? ' event-image--pos-left' : ''}${event.image.includes('2018') ? ' event-image--pos-right' : ''}`}
+                        className={`event-image${eventImagePosition(event.image)}`}
                         onClick={() => handleImageClick(event.image!)}
                         style={{ cursor: 'pointer' }}
+                        loading="lazy"
+                        decoding="async"
                       />
                     ) : (
                       <div className="event-image-placeholder">
@@ -215,8 +233,8 @@ const TimelineSection: React.FC = () => {
                 >
                   <span className="material-symbols-outlined">close</span>
                 </button>
-                <img 
-                  src={selectedImage}
+                <img
+                  {...imageProps(selectedImage, '100vw')}
                   alt="Timeline event"
                   className="timeline-image-modal__image"
                 />

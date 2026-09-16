@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "roboto",
+        "createdAt": "2026-08-26T06:29:46.706Z",
+        "reason": "theme-concept.md 폰트 역할표: Roboto = 티켓 기계 인쇄체(라벨/코드/게이트 번호) 전용. 보딩패스 은유를 위해 의도적으로 선택된 값이며 같은 문서가 신규 폰트 추가를 금지함. DESIGN.md typography 의 display/label 도 Roboto 로 선언돼 있음."
+      }
+    ]
+  }
+}

@@ -1,0 +1,574 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-26T00:00:00.000Z",
+  "title": "Design System: No Return Airlines — Wedding Invitation",
+  "extensions": {
+    "colorMeta": {
+      "uniform-navy": {
+        "role": "primary",
+        "displayName": "Uniform Navy",
+        "canonical": "oklch(30.2% 0.056 255.3)",
+        "tonalRamp": [
+          "oklch(15% 0.027 255.3)",
+          "oklch(27% 0.035 255.3)",
+          "oklch(39% 0.043 255.3)",
+          "oklch(51% 0.050 255.3)",
+          "oklch(63% 0.054 255.3)",
+          "oklch(74% 0.047 255.3)",
+          "oklch(85% 0.040 255.3)",
+          "oklch(95% 0.034 255.3)"
+        ]
+      },
+      "navy-deep": {
+        "role": "primary",
+        "displayName": "Navy Deep",
+        "canonical": "oklch(36.3% 0.054 255.1)",
+        "tonalRamp": [
+          "oklch(15% 0.026 255.1)",
+          "oklch(27% 0.034 255.1)",
+          "oklch(39% 0.041 255.1)",
+          "oklch(51% 0.049 255.1)",
+          "oklch(63% 0.052 255.1)",
+          "oklch(74% 0.045 255.1)",
+          "oklch(85% 0.039 255.1)",
+          "oklch(95% 0.032 255.1)"
+        ]
+      },
+      "trim-gold": {
+        "role": "secondary",
+        "displayName": "Trim Gold",
+        "canonical": "oklch(74.8% 0.070 73)",
+        "tonalRamp": [
+          "oklch(15% 0.034 73)",
+          "oklch(27% 0.044 73)",
+          "oklch(39% 0.053 73)",
+          "oklch(51% 0.063 73)",
+          "oklch(63% 0.068 73)",
+          "oklch(74% 0.059 73)",
+          "oklch(85% 0.050 73)",
+          "oklch(95% 0.042 73)"
+        ]
+      },
+      "gold-light": {
+        "role": "secondary",
+        "displayName": "Gold Light",
+        "canonical": "oklch(79.8% 0.056 72.3)",
+        "tonalRamp": [
+          "oklch(15% 0.027 72.3)",
+          "oklch(27% 0.035 72.3)",
+          "oklch(39% 0.043 72.3)",
+          "oklch(51% 0.050 72.3)",
+          "oklch(63% 0.054 72.3)",
+          "oklch(74% 0.047 72.3)",
+          "oklch(85% 0.040 72.3)",
+          "oklch(95% 0.033 72.3)"
+        ]
+      },
+      "camel": {
+        "role": "secondary",
+        "displayName": "Camel",
+        "canonical": "oklch(69.2% 0.072 71.9)",
+        "tonalRamp": [
+          "oklch(15% 0.035 71.9)",
+          "oklch(27% 0.045 71.9)",
+          "oklch(39% 0.054 71.9)",
+          "oklch(51% 0.064 71.9)",
+          "oklch(63% 0.069 71.9)",
+          "oklch(74% 0.060 71.9)",
+          "oklch(85% 0.051 71.9)",
+          "oklch(95% 0.043 71.9)"
+        ]
+      },
+      "ivory-paper": {
+        "role": "neutral",
+        "displayName": "Ivory Paper",
+        "canonical": "oklch(97.9% 0.007 88.6)",
+        "tonalRamp": [
+          "oklch(15% 0.003 88.6)",
+          "oklch(27% 0.004 88.6)",
+          "oklch(39% 0.005 88.6)",
+          "oklch(51% 0.006 88.6)",
+          "oklch(63% 0.007 88.6)",
+          "oklch(74% 0.006 88.6)",
+          "oklch(85% 0.005 88.6)",
+          "oklch(95% 0.004 88.6)"
+        ]
+      },
+      "warm-sand": {
+        "role": "neutral",
+        "displayName": "Warm Sand",
+        "canonical": "oklch(93.7% 0.022 80.7)",
+        "tonalRamp": [
+          "oklch(15% 0.011 80.7)",
+          "oklch(27% 0.014 80.7)",
+          "oklch(39% 0.017 80.7)",
+          "oklch(51% 0.020 80.7)",
+          "oklch(63% 0.021 80.7)",
+          "oklch(74% 0.019 80.7)",
+          "oklch(85% 0.016 80.7)",
+          "oklch(95% 0.013 80.7)"
+        ]
+      },
+      "beige-accent": {
+        "role": "neutral",
+        "displayName": "Beige Accent",
+        "canonical": "oklch(88.8% 0.032 78.1)",
+        "tonalRamp": [
+          "oklch(15% 0.015 78.1)",
+          "oklch(27% 0.020 78.1)",
+          "oklch(39% 0.024 78.1)",
+          "oklch(51% 0.029 78.1)",
+          "oklch(63% 0.031 78.1)",
+          "oklch(74% 0.027 78.1)",
+          "oklch(85% 0.023 78.1)",
+          "oklch(95% 0.019 78.1)"
+        ]
+      },
+      "beige-light": {
+        "role": "neutral",
+        "displayName": "Beige Light",
+        "canonical": "oklch(92.9% 0.024 79.7)",
+        "tonalRamp": [
+          "oklch(15% 0.012 79.7)",
+          "oklch(27% 0.015 79.7)",
+          "oklch(39% 0.018 79.7)",
+          "oklch(51% 0.021 79.7)",
+          "oklch(63% 0.023 79.7)",
+          "oklch(74% 0.020 79.7)",
+          "oklch(85% 0.017 79.7)",
+          "oklch(95% 0.014 79.7)"
+        ]
+      },
+      "surface-white": {
+        "role": "neutral",
+        "displayName": "Surface White",
+        "canonical": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "oklch(15% 0.000 89.9)",
+          "oklch(27% 0.000 89.9)",
+          "oklch(39% 0.000 89.9)",
+          "oklch(51% 0.000 89.9)",
+          "oklch(63% 0.000 89.9)",
+          "oklch(74% 0.000 89.9)",
+          "oklch(85% 0.000 89.9)",
+          "oklch(95% 0.000 89.9)"
+        ]
+      },
+      "divider-gray": {
+        "role": "neutral",
+        "displayName": "Divider Gray",
+        "canonical": "oklch(90.7% 0.000 89.9)",
+        "tonalRamp": [
+          "oklch(15% 0.000 89.9)",
+          "oklch(27% 0.000 89.9)",
+          "oklch(39% 0.000 89.9)",
+          "oklch(51% 0.000 89.9)",
+          "oklch(63% 0.000 89.9)",
+          "oklch(74% 0.000 89.9)",
+          "oklch(85% 0.000 89.9)",
+          "oklch(95% 0.000 89.9)"
+        ]
+      },
+      "label-gray": {
+        "role": "neutral",
+        "displayName": "Label Gray",
+        "canonical": "oklch(71.4% 0.019 261.3)",
+        "tonalRamp": [
+          "oklch(15% 0.009 261.3)",
+          "oklch(27% 0.012 261.3)",
+          "oklch(39% 0.015 261.3)",
+          "oklch(51% 0.017 261.3)",
+          "oklch(63% 0.019 261.3)",
+          "oklch(74% 0.016 261.3)",
+          "oklch(85% 0.014 261.3)",
+          "oklch(95% 0.011 261.3)"
+        ]
+      },
+      "text-primary": {
+        "role": "neutral",
+        "displayName": "Text Primary",
+        "canonical": "oklch(32.1% 0.000 89.9)",
+        "tonalRamp": [
+          "oklch(15% 0.000 89.9)",
+          "oklch(27% 0.000 89.9)",
+          "oklch(39% 0.000 89.9)",
+          "oklch(51% 0.000 89.9)",
+          "oklch(63% 0.000 89.9)",
+          "oklch(74% 0.000 89.9)",
+          "oklch(85% 0.000 89.9)",
+          "oklch(95% 0.000 89.9)"
+        ]
+      },
+      "text-secondary": {
+        "role": "neutral",
+        "displayName": "Text Secondary",
+        "canonical": "oklch(51.0% 0.000 89.9)",
+        "tonalRamp": [
+          "oklch(15% 0.000 89.9)",
+          "oklch(27% 0.000 89.9)",
+          "oklch(39% 0.000 89.9)",
+          "oklch(51% 0.000 89.9)",
+          "oklch(63% 0.000 89.9)",
+          "oklch(74% 0.000 89.9)",
+          "oklch(85% 0.000 89.9)",
+          "oklch(95% 0.000 89.9)"
+        ]
+      },
+      "text-tertiary": {
+        "role": "neutral",
+        "displayName": "Text Tertiary",
+        "canonical": "oklch(68.3% 0.000 89.9)",
+        "tonalRamp": [
+          "oklch(15% 0.000 89.9)",
+          "oklch(27% 0.000 89.9)",
+          "oklch(39% 0.000 89.9)",
+          "oklch(51% 0.000 89.9)",
+          "oklch(63% 0.000 89.9)",
+          "oklch(74% 0.000 89.9)",
+          "oklch(85% 0.000 89.9)",
+          "oklch(95% 0.000 89.9)"
+        ]
+      },
+      "disabled-gray": {
+        "role": "neutral",
+        "displayName": "Disabled Gray",
+        "canonical": "oklch(84.5% 0.000 89.9)",
+        "tonalRamp": [
+          "oklch(15% 0.000 89.9)",
+          "oklch(27% 0.000 89.9)",
+          "oklch(39% 0.000 89.9)",
+          "oklch(51% 0.000 89.9)",
+          "oklch(63% 0.000 89.9)",
+          "oklch(74% 0.000 89.9)",
+          "oklch(85% 0.000 89.9)",
+          "oklch(95% 0.000 89.9)"
+        ]
+      },
+      "success-green": {
+        "role": "tertiary",
+        "displayName": "Success Green",
+        "canonical": "oklch(67.3% 0.162 144.2)",
+        "tonalRamp": [
+          "oklch(15% 0.078 144.2)",
+          "oklch(27% 0.101 144.2)",
+          "oklch(39% 0.123 144.2)",
+          "oklch(51% 0.146 144.2)",
+          "oklch(63% 0.157 144.2)",
+          "oklch(74% 0.136 144.2)",
+          "oklch(85% 0.116 144.2)",
+          "oklch(95% 0.097 144.2)"
+        ]
+      },
+      "error-red": {
+        "role": "tertiary",
+        "displayName": "Error Red",
+        "canonical": "oklch(63.7% 0.208 25.3)",
+        "tonalRamp": [
+          "oklch(15% 0.100 25.3)",
+          "oklch(27% 0.129 25.3)",
+          "oklch(39% 0.158 25.3)",
+          "oklch(51% 0.186 25.3)",
+          "oklch(63% 0.201 25.3)",
+          "oklch(74% 0.174 25.3)",
+          "oklch(85% 0.148 25.3)",
+          "oklch(95% 0.124 25.3)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display / Route Code",
+        "purpose": "보딩패스와 티켓의 노선 코드(SYD / ICN). Roboto 700 32px, 항상 네이비 면 위 흰 글자."
+      },
+      "headline": {
+        "displayName": "Section Title",
+        "purpose": "섹션 <h2>. KR 28px 고운돋움 / EN 24px Lora uppercase ls 3px. 430px에서 KR 24 / EN 20."
+      },
+      "title": {
+        "displayName": "Field Value",
+        "purpose": "티켓·태그의 필드 값과 카드 안 이름. word-break: keep-all 필수."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "본문 전체의 기본 크기(12px). 인사말 문단 line-height 1.8, 보조 설명 1.6."
+      },
+      "label": {
+        "displayName": "Machine Label",
+        "purpose": "티켓 라벨·상태 배지·바코드 텍스트·게이트 표기. Roboto 700 10px ls 2px uppercase 세트로만."
+      },
+      "script": {
+        "displayName": "Loading Script",
+        "purpose": "Dancing Script. 로딩 화면 인사말 한 곳 전용, 다른 어디에도 쓰지 않는다."
+      }
+    },
+    "shadows": [
+      {
+        "name": "paper-lift",
+        "value": "0 16px 32px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.03)",
+        "purpose": "paper-container. 긴 종이 한 장이 바닥에서 아주 살짝 뜬 상태. 기본값."
+      },
+      {
+        "name": "ticket-lift",
+        "value": "0 6px 20px rgba(26,47,74,0.08)",
+        "purpose": "발권된 티켓과 수하물 태그. 네이비 잉크가 번진 듯한 그림자."
+      },
+      {
+        "name": "interactive-lift",
+        "value": "0 4px 12px rgba(26,47,74,0.2)",
+        "purpose": "버튼 호버. translateY(-1px)과 함께 쓴다."
+      },
+      {
+        "name": "floating-control",
+        "value": "0 4px 12px rgba(0,0,0,0.15)",
+        "purpose": "스크롤 버튼 등 종이 위에 떠 있는 조작 요소. 호버 시 0 6px 16px rgba(0,0,0,0.2)."
+      },
+      {
+        "name": "overlay-gallery",
+        "value": "0 12px 40px rgba(0,0,0,0.45)",
+        "purpose": "갤러리 라이트박스 이미지. 배경은 rgba(16,26,40,0.94) — 순검정이 아니라 네이비 쪽으로 기운 어둠."
+      },
+      {
+        "name": "overlay-timeline-modal",
+        "value": "0 8px 32px rgba(0,0,0,0.5)",
+        "purpose": "타임라인 이미지 모달의 이미지. 배경은 rgba(0,0,0,0.85). 갤러리 라이트박스와 값이 다른 별개 컴포넌트."
+      },
+      {
+        "name": "inset-punch",
+        "value": "inset 0 1px 2px rgba(0,0,0,0.25)",
+        "purpose": "수하물 태그의 펀치홀. 유일하게 안으로 파인 그림자."
+      },
+      {
+        "name": "legacy-papercard",
+        "value": "0 8px 32px rgba(0,0,0,0.25), 0 4px 16px rgba(0,0,0,0.2), 0 2px 8px rgba(0,0,0,0.15)",
+        "purpose": "PaperCard 잔재. 규범을 크게 벗어난 유일한 예외이며, 복사할 모범이 아니다."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-standard",
+        "value": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "purpose": "이 시스템의 유일한 커스텀 이징. 상태 전환과 형태 변화 전부."
+      },
+      {
+        "name": "duration-state",
+        "value": "0.2s",
+        "purpose": "색·보더 등 상태 전환."
+      },
+      {
+        "name": "duration-shape",
+        "value": "0.3s",
+        "purpose": "형태·위치 변화, 칩 채워짐."
+      },
+      {
+        "name": "duration-sweep",
+        "value": "0.5s",
+        "purpose": "버튼 호버의 빛 스침(left -100% → 100%)."
+      },
+      {
+        "name": "duration-flip",
+        "value": "0.6s ~ 0.85s",
+        "purpose": "HeroPassFlip 카드 뒤집기."
+      },
+      {
+        "name": "section-enter",
+        "value": "opacity 0→1, y 28→0, 0.45s easeOut, viewport {once:true, amount:0.15}",
+        "purpose": "framer-motion sectionFadeInProps. 모든 섹션이 예외 없이 이 하나를 쓴다."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "mobile",
+        "value": "430px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button (Ghost Navy)",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "RSVP·사진 접수의 제출 버튼. 면을 채우지 않고 2px 네이비 테두리로 존재하며, 호버 시 빛이 훑고 지나간다.",
+      "html": "<button class=\"ds-btn-primary\"><span>참석 여부 보내기</span></button>",
+      "css": ".ds-btn-primary{font-family:\"Gowun Dodum\",\"Lora\",sans-serif;width:100%;max-width:280px;padding:16px 24px;background:transparent;color:#1A2F4A;border:2px solid #1A2F4A;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .3s ease;position:relative;overflow:hidden}.ds-btn-primary::before{content:\"\";position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(26,47,74,.1),transparent);transition:left .5s ease}.ds-btn-primary:hover::before{left:100%}.ds-btn-primary:hover{background:rgba(26,47,74,.05);transform:translateY(-1px);box-shadow:0 4px 12px rgba(26,47,74,.2)}.ds-btn-primary:focus-visible{outline:2px solid #C9A77C;outline-offset:2px}.ds-btn-primary:active{transform:translateY(0)}.ds-btn-primary:disabled{color:#ccc;border-color:#ccc;cursor:not-allowed;transform:none}"
+    },
+    {
+      "name": "Underline Input",
+      "kind": "input",
+      "refersTo": "input-underline",
+      "description": "상자가 아니라 양식 서류의 기입란. 밑줄 하나뿐이고, 포커스 시 밑줄만 네이비로 바뀐다.",
+      "html": "<div class=\"ds-field\"><label class=\"ds-field__label\" for=\"ds-name\">성함</label><div class=\"ds-field__wrap\"><input class=\"ds-input\" id=\"ds-name\" type=\"text\" placeholder=\"이름을 입력해주세요\"></div></div>",
+      "css": ".ds-field{display:flex;align-items:flex-start;gap:12px;width:100%;max-width:320px;font-family:\"Gowun Dodum\",\"Lora\",sans-serif}.ds-field__label{font-size:12px;font-weight:600;color:#333;min-width:80px;flex-shrink:0;padding-top:8px}.ds-field__wrap{position:relative;flex:1;padding-bottom:8px}.ds-input{width:100%;padding:8px 0;border:none;border-bottom:1px solid #e0e0e0;border-radius:0;font-size:12px;font-family:inherit;background:transparent;color:#666;transition:all .2s}.ds-input::placeholder{color:#999}.ds-input:focus{outline:none;border-bottom-color:#1A2F4A}.ds-input:focus-visible{border-bottom-width:2px}"
+    },
+    {
+      "name": "Attendance Chip",
+      "kind": "chip",
+      "refersTo": "chip-attendance",
+      "description": "참석/불참 선택 칩. 선택되면 골드 그라데이션이 면으로 차오른다 — 골드가 면적을 차지하는 유일한 자리이며, 그래서 \"발권\"처럼 읽힌다.",
+      "html": "<div class=\"ds-chips\"><button class=\"ds-chip is-active\"><span class=\"ds-chip__icon\">check_circle</span><span>참석</span></button><button class=\"ds-chip\"><span class=\"ds-chip__icon\">cancel</span><span>불참</span></button></div>",
+      "css": ".ds-chips{display:flex;width:100%;max-width:320px;border:1px solid #e0e0e0;border-radius:0;overflow:hidden;font-family:\"Gowun Dodum\",\"Lora\",sans-serif}.ds-chip{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;padding:12px 16px;background:#fff;border:none;border-radius:0;font-size:12px;color:#333;position:relative;overflow:hidden;transition:all .3s cubic-bezier(.4,0,.2,1)}.ds-chip::before{content:\"\";position:absolute;inset:0;background:linear-gradient(135deg,#C9A77C 0%,#D4B896 100%);opacity:0;transition:opacity .3s cubic-bezier(.4,0,.2,1);z-index:0}.ds-chip>*{position:relative;z-index:1;transition:all .3s cubic-bezier(.4,0,.2,1)}.ds-chip__icon{font-family:\"Material Symbols Outlined\",sans-serif;font-size:18px;line-height:1;color:#999}.ds-chip.is-active{transform:scale(1.02);box-shadow:0 2px 8px rgba(201,167,124,.3)}.ds-chip.is-active::before{opacity:1}.ds-chip.is-active span{color:#fff;font-weight:600}.ds-chip.is-active .ds-chip__icon{transform:scale(1.1)}.ds-chip:focus-visible{outline:2px solid #1A2F4A;outline-offset:-2px}"
+    },
+    {
+      "name": "Boarding Pass Ticket",
+      "kind": "custom",
+      "refersTo": "ticket",
+      "description": "RSVP 제출 후 발급되는 탑승권. 네이비 헤더 + 4px 골드 밑단 + 2열 필드 그리드 + 절취선 + 바코드. 이 시스템의 서명 컴포넌트.",
+      "html": "<div class=\"ds-ticket\"><div class=\"ds-ticket__header\"><div class=\"ds-ticket__header-top\"><span class=\"ds-ticket__label\">BOARDING PASS</span><span class=\"ds-ticket__status\">CONFIRMED</span></div><div class=\"ds-ticket__route\"><span class=\"ds-ticket__code\">SYD</span><span class=\"ds-ticket__icon\">flight</span><span class=\"ds-ticket__code\">ICN</span></div></div><div class=\"ds-ticket__body\"><div class=\"ds-ticket__grid\"><div class=\"ds-ticket__field\"><span class=\"ds-ticket__field-label\">PASSENGER</span><span class=\"ds-ticket__field-value\">허다영</span></div><div class=\"ds-ticket__field\"><span class=\"ds-ticket__field-label\">GUESTS</span><span class=\"ds-ticket__field-value\">2</span></div><div class=\"ds-ticket__field\"><span class=\"ds-ticket__field-label\">DATE</span><span class=\"ds-ticket__field-value ds-mono\">2027.02.20</span></div><div class=\"ds-ticket__field\"><span class=\"ds-ticket__field-label\">BOARDING</span><span class=\"ds-ticket__field-value ds-mono\">15:00</span></div></div><div class=\"ds-ticket__perforation\"></div><div class=\"ds-ticket__barcode\"><div class=\"ds-ticket__barcode-lines\"></div><span class=\"ds-ticket__barcode-text\">&lt;WEDDING2027022014KJ08PS&gt;</span></div></div></div>",
+      "css": ".ds-ticket{width:100%;max-width:320px;background:#fff;border:1px solid rgba(26,47,74,.08);border-radius:16px;overflow:hidden;box-shadow:0 6px 20px rgba(26,47,74,.08);font-family:\"Gowun Dodum\",\"Lora\",sans-serif}.ds-ticket__header{background:#1A2F4A;color:#fff;padding:16px 20px 18px;border-bottom:4px solid #C9A77C}.ds-ticket__header-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.ds-ticket__label{font-family:\"Roboto\",sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.65)}.ds-ticket__status{font-family:\"Roboto\",sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;color:#C9A77C}.ds-ticket__route{display:flex;align-items:center;justify-content:space-between;gap:12px}.ds-ticket__code{font-family:\"Roboto\",sans-serif;font-size:32px;font-weight:700;letter-spacing:2px;line-height:1.1}.ds-ticket__icon{font-family:\"Material Symbols Outlined\",sans-serif;font-size:20px;color:#C9A77C;line-height:1}.ds-ticket__body{padding:20px}.ds-ticket__grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 12px}.ds-ticket__field{display:flex;flex-direction:column;gap:6px;min-width:0}.ds-ticket__field-label{font-family:\"Roboto\",sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;color:#9CA3AF}.ds-ticket__field-value{font-size:16px;font-weight:600;color:#1A2F4A;line-height:1.3;word-break:keep-all}.ds-mono{font-family:\"Roboto\",sans-serif;letter-spacing:.5px}.ds-ticket__perforation{margin:22px 0 18px;background-image:linear-gradient(to right,rgba(26,47,74,.25) 0,rgba(26,47,74,.25) 6px,transparent 6px,transparent 12px);background-size:12px 1px;background-repeat:repeat-x;height:1px;}.ds-ticket__barcode{text-align:center}.ds-ticket__barcode-lines{height:46px;width:100%;max-width:240px;margin:0 auto 10px;background-image:repeating-linear-gradient(90deg,#1A2F4A 0,#1A2F4A 2px,transparent 2px,transparent 4px,#1A2F4A 4px,#1A2F4A 5px,transparent 5px,transparent 8px,#1A2F4A 8px,#1A2F4A 11px,transparent 11px,transparent 13px);opacity:.45;}.ds-ticket__barcode-text{font-family:\"Roboto\",sans-serif;font-size:10px;letter-spacing:2px;color:#9CA3AF}"
+    },
+    {
+      "name": "Bag Tag",
+      "kind": "custom",
+      "refersTo": "bag-tag",
+      "description": "사진 접수 완료 시 발급되는 수하물 태그. 티켓과 같은 골격에 펀치홀(26×8px)이 더해진다.",
+      "html": "<div class=\"ds-tag\"><div class=\"ds-tag__hole\"></div><div class=\"ds-tag__header\"><div class=\"ds-tag__header-top\"><span class=\"ds-tag__label\">BAGGAGE TAG</span><span class=\"ds-tag__status\">ACCEPTED</span></div><div class=\"ds-tag__code\">ICN</div></div><div class=\"ds-tag__body\"><div class=\"ds-tag__grid\"><div class=\"ds-tag__field\"><span class=\"ds-tag__field-label\">PASSENGER</span><span class=\"ds-tag__field-value\">허다영</span></div><div class=\"ds-tag__field\"><span class=\"ds-tag__field-label\">ITEMS</span><span class=\"ds-tag__field-value\">4장</span></div></div><div class=\"ds-tag__perforation\"></div><div class=\"ds-tag__barcode\"><div class=\"ds-tag__barcode-lines\"></div><span class=\"ds-tag__barcode-text\">&lt;DROP20270220&gt;</span></div></div></div>",
+      "css": ".ds-tag{position:relative;width:100%;max-width:300px;background:#fff;border:1px solid rgba(26,47,74,.08);border-radius:16px;overflow:hidden;box-shadow:0 6px 20px rgba(26,47,74,.08);font-family:\"Gowun Dodum\",\"Lora\",sans-serif}.ds-tag__hole{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:26px;height:8px;border-radius:4px;background:#FAF8F3;box-shadow:inset 0 1px 2px rgba(0,0,0,.25);z-index:1}.ds-tag__header{background:#1A2F4A;color:#fff;padding:26px 20px 18px;border-bottom:4px solid #C9A77C;text-align:center}.ds-tag__header-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}.ds-tag__label{font-family:\"Roboto\",sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.65)}.ds-tag__status{font-family:\"Roboto\",sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;color:#C9A77C}.ds-tag__code{font-family:\"Roboto\",sans-serif;font-size:32px;font-weight:700;letter-spacing:2px;line-height:1.1}.ds-tag__body{padding:20px}.ds-tag__grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 12px}.ds-tag__field{display:flex;flex-direction:column;gap:6px;min-width:0}.ds-tag__field-label{font-family:\"Roboto\",sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;color:#9CA3AF}.ds-tag__field-value{font-size:16px;font-weight:600;color:#1A2F4A;line-height:1.3;word-break:keep-all}.ds-tag__perforation{margin:22px 0 18px;background-image:linear-gradient(to right,rgba(26,47,74,.25) 0,rgba(26,47,74,.25) 6px,transparent 6px,transparent 12px);background-size:12px 1px;background-repeat:repeat-x;height:1px;}.ds-tag__barcode{text-align:center}.ds-tag__barcode-lines{height:40px;width:100%;max-width:200px;margin:0 auto 10px;background-image:repeating-linear-gradient(90deg,#1A2F4A 0,#1A2F4A 2px,transparent 2px,transparent 4px,#1A2F4A 4px,#1A2F4A 5px,transparent 5px,transparent 8px,#1A2F4A 8px,#1A2F4A 11px,transparent 11px,transparent 13px);opacity:.45;}.ds-tag__barcode-text{font-family:\"Roboto\",sans-serif;font-size:10px;letter-spacing:2px;color:#9CA3AF}"
+    },
+    {
+      "name": "Boarding Pass Banner",
+      "kind": "custom",
+      "refersTo": "pass-banner",
+      "description": "Hero 최상단의 네이비 배너와 그 아래 4px 골드 액센트 보더. 노 리턴 항공의 레터헤드에 해당한다.",
+      "html": "<div class=\"ds-banner-wrap\"><div class=\"ds-banner\"><span class=\"ds-banner__icon\">flight</span><span class=\"ds-banner__text\">WEDDING BOARDING PASS</span></div><div class=\"ds-banner__accent\"></div></div>",
+      "css": ".ds-banner-wrap{width:100%;max-width:320px}.ds-banner{background:#1A2F4A;font-family:\"Roboto\",sans-serif;color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border-radius:16px 16px 0 0}.ds-banner__icon{font-family:\"Material Symbols Outlined\",sans-serif;font-size:17px;color:transparent;-webkit-text-stroke:1px #C9A77C;line-height:1}.ds-banner__accent{height:4px;background:linear-gradient(to right,rgba(201,167,124,.9) 0%,#C9A77C 15%,#D4B896 30%,#D4B896 70%,#C9A77C 85%,rgba(201,167,124,.9) 100%);box-shadow:0 1px 2px rgba(201,167,124,.2)}"
+    },
+    {
+      "name": "Language Toggle",
+      "kind": "nav",
+      "refersTo": "nav-language-toggle",
+      "description": "우상단 고정. 이 제품의 유일한 전역 내비게이션이자 Roboto를 쓰는 유일한 조작 요소.",
+      "html": "<button class=\"ds-lang\" aria-label=\"Switch to English\"><span class=\"ds-lang__icon\">language</span><span class=\"ds-lang__code\">EN</span></button>",
+      "css": ".ds-lang{display:inline-flex;align-items:center;gap:6px;background:transparent;border:1px solid rgba(26,47,74,.3);color:#1A2F4A;padding:8px 14px;border-radius:8px;cursor:pointer;transition:all .2s;font-family:\"Roboto\",sans-serif;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase}.ds-lang__icon{font-family:\"Material Symbols Outlined\",sans-serif;font-size:18px;line-height:1}.ds-lang:hover{background:rgba(26,47,74,.05);border-color:#1A2F4A;transform:translateY(-1px);box-shadow:0 2px 8px rgba(26,47,74,.1)}.ds-lang:focus-visible{outline:2px solid #C9A77C;outline-offset:2px}.ds-lang:active{transform:translateY(0)}"
+    },
+    {
+      "name": "Section Title",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "모든 섹션의 <h2>. 국문 28px 고운돋움, 영문 24px Lora uppercase. 8개 섹션에서 100% 동일해야 하는 정본 블록.",
+      "html": "<div class=\"ds-title-demo\"><h2 class=\"ds-section-title\" lang=\"ko\">오시는 길</h2><p class=\"ds-section-subtitle\" lang=\"ko\">지하철 2호선 삼성역에서 도보 5분</p><h2 class=\"ds-section-title\" lang=\"en\">Directions</h2></div>",
+      "css": ".ds-title-demo{width:100%;max-width:320px}.ds-section-title{font-size:28px;font-weight:400;color:#1A2F4A;margin:8px 0 24px;padding:12px 0;text-align:center;font-family:\"Gowun Dodum\",\"Lora\",sans-serif;letter-spacing:1px;line-height:1.4}.ds-section-title:lang(en){text-transform:uppercase;font-size:24px;letter-spacing:3px;font-weight:300;font-family:\"Lora\",serif}.ds-section-subtitle{margin:0 0 24px;text-align:center;font-size:12px;color:#999;line-height:1.6;font-family:\"Gowun Dodum\",\"Lora\",sans-serif}.ds-section-subtitle:lang(en){font-family:\"Lora\",serif}@media (max-width:430px){.ds-section-title{font-size:24px}.ds-section-title:lang(en){font-size:20px}}"
+    },
+    {
+      "name": "Paper Container",
+      "kind": "card",
+      "refersTo": "paper-container",
+      "description": "하단 섹션 전체를 한 장의 긴 종이로 묶는 래퍼. 24px 모서리, 아이보리, 아주 연한 Paper Lift 그림자, 48px 간격의 회색 구분선.",
+      "html": "<div class=\"ds-paper\"><p class=\"ds-paper__text\">이 안의 모든 섹션은 한 장의 종이 위에 인쇄된다.</p><div class=\"ds-paper__divider\"></div><p class=\"ds-paper__text\">구분선은 1px #e0e0e0, 위아래 48px.</p></div>",
+      "css": ".ds-paper{background:#FAF8F3;border-radius:24px;padding:36px 22px 48px;box-shadow:0 16px 32px rgba(0,0,0,.05),0 4px 8px rgba(0,0,0,.03);width:100%;max-width:320px;font-family:\"Gowun Dodum\",\"Lora\",sans-serif}.ds-paper__text{font-size:12px;line-height:1.8;color:#666;text-align:center;margin:0}.ds-paper__divider{height:1px;background:#e0e0e0;margin:48px 0;border:none;width:100%}"
+    },
+    {
+      "name": "Scroll-to-Top Control",
+      "kind": "button",
+      "refersTo": "fab-scroll-top",
+      "description": "종이 위에 떠 있는 유일한 부유 컨트롤. 면이 꽉 찬 네이비 원형 48×48.",
+      "html": "<button class=\"ds-fab\" aria-label=\"맨 위로\"><span class=\"ds-fab__icon\">keyboard_arrow_up</span></button>",
+      "css": ".ds-fab{display:flex;width:48px;height:48px;border-radius:50%;background:#1A2F4A;color:#fff;border:none;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.15);transition:all .3s ease}.ds-fab__icon{font-family:\"Material Symbols Outlined\",sans-serif;font-size:24px;line-height:1}.ds-fab:hover{background:#2a3f5a;transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.2)}.ds-fab:focus-visible{outline:2px solid #C9A77C;outline-offset:2px}.ds-fab:active{transform:translateY(0)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "노 리턴 항공 (No Return Airlines)",
+    "overview": "이 시스템은 한 가상 항공사의 브랜드 매뉴얼처럼 작동한다. 화면에 등장하는 모든 것은 노 리턴 항공이 발행한 서류다 — 보딩패스, 발권된 티켓, 수하물 태그, 게이트 안내판. 그래서 색은 두 가지 잉크뿐이다: 승무원 정복의 네이비(#1A2F4A)와 그 소매단을 두르는 마감 골드(#C9A77C). 나머지는 색이 아니라 종이다 — 아이보리, 웜 샌드, 화이트, 베이지. 라벨과 코드는 Roboto로 기계가 찍어낸 것처럼 인쇄되고, 사람의 말은 고운돋움(국문)과 Lora(영문)로 쓰인다.\n\n성격은 격식 있고 따뜻하다. 항공사의 정확함과 절제를 유지하되 차갑게 굳지 않는다. 네이비의 격식을 아이보리 종이 질감과 골드가 늦춘다. 장식은 최소한이고, 화면을 채우는 것은 여백과 인쇄물의 물성이다 — 절취선, 펀치홀, 바코드, 4px 골드 밑단.\n\n밀도는 낮다. 실사용 폭이 320~430px 하나뿐이므로 한 화면에 한 가지 일만 시킨다. 본문은 12px에 line-height 1.8로 헐겁게 눕고, 섹션과 섹션 사이는 48px로 벌어진다. 부모님 세대가 이 화면을 읽는다는 사실이 밀도의 상한을 정한다.",
+    "keyCharacteristics": [
+      "잉크는 두 가지 — 정복 네이비와 마감 골드. 나머지는 전부 종이와 회색 본문",
+      "Roboto는 기계 인쇄체 전용 — 티켓 라벨, 코드, 게이트·좌석 번호에만",
+      "그림자는 종이가 살짝 뜬 정도까지 (검정 0.05 / 네이비 0.08)",
+      "브레이크포인트는 430px 하나",
+      "한/영 두 언어가 같은 레이아웃에서 동등하게 성립해야 성립한 것",
+      "촉감은 그림자가 아니라 종이 장치(절취선·펀치홀·바코드)로 만든다"
+    ],
+    "rules": [
+      {
+        "name": "The Two-Ink Rule",
+        "body": "한 화면에 잉크는 두 가지뿐 — 정복 네이비와 마감 골드. 그 밖의 모든 색면은 종이(아이보리/화이트/베이지)이거나 본문 회색이다. 세 번째 잉크가 필요하다고 느껴지면 색이 아니라 위계가 잘못된 것이다.",
+        "section": "colors"
+      },
+      {
+        "name": "The Gold-as-Line Rule",
+        "body": "골드는 선과 테두리로 존재한다. 넓은 면을 골드로 채우는 것은 참석 선택 칩 하나뿐이며, 그 예외성이 그 칩을 \"발권됨\"으로 읽히게 만든다.",
+        "section": "colors"
+      },
+      {
+        "name": "The Feedback-Only Rule",
+        "body": "그린과 레드는 상태 피드백에서만 나타난다. 장식·강조·구분에 쓰는 순간 항공사의 색 체계가 무너진다.",
+        "section": "colors"
+      },
+      {
+        "name": "The Camel Containment Rule",
+        "body": "#B8956A는 타임라인 전용이다. 다른 섹션에서 이 색을 보면 잘못 복사된 것이다.",
+        "section": "colors"
+      },
+      {
+        "name": "The Machine-Print Rule",
+        "body": "Roboto는 티켓 세계의 글자다. 언제나 10~12px + letter-spacing 1~2px + uppercase 세트로만 등장하며, 일반 본문 문장에는 절대 쓰지 않는다.",
+        "section": "typography"
+      },
+      {
+        "name": "The Two-Language Title Rule",
+        "body": "섹션 타이틀은 KR 28→24 / EN 24→20 네 값이 한 세트다. @media (max-width: 430px) 오버라이드를 빠뜨리면 그 섹션만 타이틀이 커 보인다. 타이틀을 건드릴 때는 8개 섹션 전부를 함께 고친다.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Handwriting Rule",
+        "body": "손글씨는 로딩 화면 인사말 하나뿐이다. 손글씨가 두 곳에 있으면 그것은 더 이상 특별하지 않다.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Breakpoint Rule",
+        "body": "브레이크포인트는 430px 하나다. 새 브레이크포인트를 추가하는 대신 그 안에서 성립하는 레이아웃을 찾는다. 데스크톱은 이 제품의 사용 환경이 아니다.",
+        "section": "layout"
+      },
+      {
+        "name": "The Title Gap Rule",
+        "body": "섹션 타이틀의 margin-bottom: 24px는 상수다. 간격이 답답하거나 헐거우면 다음 요소의 margin을 조절하고, 이 값은 건드리지 않는다.",
+        "section": "layout"
+      },
+      {
+        "name": "The Lifted-Paper Rule",
+        "body": "그림자는 종이가 살짝 뜬 정도까지만. 검정 0.05 / 네이비 0.08을 넘기려면 그 요소가 종이 세계 밖(모달·부유 컨트롤)에 있어야 한다.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Depth-By-Overlap Rule",
+        "body": "층이 필요하면 그림자를 키우는 대신 겹친다 — 물결이 이전 섹션을 덮고, 흰 섹션이 종이 폭을 넘어 번지고, 티켓이 아이보리 위에 놓인다.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Perforation Rule",
+        "body": "절취선은 6px 선 + 6px 공백 + rgba(26,47,74,0.25)다. 새 티켓 계열 컴포넌트는 이 값을 그대로 복제한다. 규격이 다른 절취선이 두 개 있으면 같은 항공사가 발행한 서류로 보이지 않는다.",
+        "section": "shapes"
+      },
+      {
+        "name": "The Form-Is-Flat Rule",
+        "body": "기입란(입력 필드, 참석 선택 칩)은 border-radius: 0이다. 둥근 입력 필드는 이 시스템에서 카드처럼 보이며, 양식 서류의 성격을 지운다.",
+        "section": "shapes"
+      },
+      {
+        "name": "The Gold Hem Rule",
+        "body": "네이비 헤더 아래에는 4px solid #C9A77C 밑단을 두른다. 이것이 노 리턴 항공이 발행한 서류라는 표식이다.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "새 UI 요소를 만들기 전에 \"이것은 노 리턴 항공이 발행한 어떤 서류인가\"를 먼저 답한다. 티켓·태그·스탬프·안내판·도장 중 하나로 성립해야 한다.",
+      "절취선을 그릴 때 6px 선 + 6px 공백 + rgba(26,47,74,0.25)를 그대로 복제한다.",
+      "네이비 헤더에 border-bottom: 4px solid #C9A77C 밑단을 두른다.",
+      "섹션 타이틀을 고칠 때 8개 섹션 전부와 @media (max-width: 430px) 오버라이드, :lang(en) 변형을 함께 고친다 (KR 28→24 / EN 24→20).",
+      "언어 의존 텍스트 요소에 lang={language}를 붙인다. :lang(en) 셀렉터 전체가 여기에 의존한다.",
+      "문구를 src/data/translations.ts에만 둔다. 컴포넌트에 문자열을 하드코딩하지 않는다.",
+      "그라데이션 방향을 135deg 또는 90deg / to right로 통일한다.",
+      "새 색을 추가했으면 THEME_COLORS.md를 같이 갱신한다."
+    ],
+    "donts": [
+      "코어 5색(#1A2F4A / #C9A77C / #FAF8F3 / #FFFFFF / #E6D8C3) 밖의 색을 새로 만든다. 필요하면 THEME_COLORS.md에서 찾고, 거기에도 없으면 사용자에게 묻는다.",
+      "폰트를 새로 추가한다. Roboto / Gowun Dodum / Lora / Dancing Script / Playfair Display / Material Symbols가 전부다.",
+      "Roboto를 일반 본문 문장에 쓴다. 티켓 라벨·코드 전용이며 항상 10~12px + letter-spacing + uppercase 세트로만.",
+      "카멜(#B8956A)을 타임라인 밖에서 쓴다.",
+      "그린·레드를 피드백이 아닌 곳에 쓴다.",
+      "검정 0.05 / 네이비 0.08을 넘는 그림자를 종이 세계 안의 요소에 준다. PaperCard의 3중 그림자는 복사할 모범이 아니다.",
+      "입력 필드나 참석 선택 칩의 모서리를 깎는다. 기입란은 border-radius: 0이다.",
+      "@media (max-width: 430px) 외의 브레이크포인트를 추가한다.",
+      "섹션 전용 스타일을 src/App.css에 넣는다. section-divider / section-wave는 App.css가 소유하고, 섹션 CSS에서 재정의하지 않는다.",
+      "파스텔·형광 색조, 둥글둥글한 팝 요소, 네온 글로우, 강한 드롭섀도우를 들인다.",
+      "보딩패스 세계관과 무관한 은유를 섞는다."
+    ]
+  }
+}

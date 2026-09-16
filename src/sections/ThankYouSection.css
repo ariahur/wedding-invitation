@@ -1,40 +1,37 @@
 .thank-you {
   padding: 0;
-  background-color: transparent;
+  /* 본문 배경(#FAF8F3)과 같은 색조에서 채도만 올린 톤.
+     위 56px(물결 높이)은 투명으로 두어 PaperCard 실크 종이가 비치고, 물결이 아래쪽만 칠한다 */
+  background: linear-gradient(to bottom, rgba(242, 233, 218, 0) 56px, #F2E9DA 56px);
   position: relative;
   overflow: hidden;
   margin-top: 0;
   border-radius: 0 0 18px 18px;
-  height: 168px;
+  height: 200px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.04), 0 -1px 4px rgba(0, 0, 0, 0.02);
+  flex-direction: column;
   border: 1px solid rgba(26, 47, 74, 0.06);
   border-top: none;
 }
 
-.thank-you__background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-size: cover;
-  background-position: 50% 65%;
-  background-repeat: no-repeat;
-  opacity: 0.3;
-  z-index: 0;
+/* 위쪽 종이 배경이 물결 모양으로 흘러내려 푸터와 나뉜다.
+   다른 섹션의 .section-wave와 같은 곡선. 위는 투명, 아래만 푸터색(#F2E9DA)을 칠한다. */
+.thank-you__wave {
+  flex: none;
+  width: 100%;
+  height: 56px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 56' preserveAspectRatio='none'%3E%3Cpath fill='%23F2E9DA' d='M0,28q150,28,300,0t300,0t300,0t300,0V56H0z'/%3E%3C/svg%3E") no-repeat center top;
+  background-size: 100% 100%;
 }
 
 .thank-you__content {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
   z-index: 1;
-  height: 100%;
   padding: 0 20px;
 }
 
@@ -65,15 +62,15 @@
 
 @media (max-width: 430px) {
   .thank-you {
-    height: 168px;
+    height: 200px;
   }
 
   .thank-you__line {
-    font-size: 10px;
+    font-size: 11px;
   }
 
   .thank-you__line:lang(en) {
-    font-size: 10px;
+    font-size: 11px;
   }
 }
 
