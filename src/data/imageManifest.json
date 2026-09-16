@@ -445,9 +445,9 @@
   ],
   "hero": [
     {
-      "base": "hero-9fb47d74",
-      "width": 4250,
-      "height": 2834,
+      "base": "hero-d04f3908",
+      "width": 4256,
+      "height": 2837,
       "widths": [
         480,
         960,
@@ -455,7 +455,7 @@
         1440
       ],
       "fallbackWidth": 960,
-      "placeholder": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACwAQCdASoQAAsAA4BaJZwAAjtQbjeAAP7qiF4bf5MEzG4to8Z3rnJgwCcf/1UEXygE4QBUdNjjFjn1JvCJBLmkqrwoM+ABAAA="
+      "placeholder": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADQAQCdASoQAAsAA4BaJaQAAfiv1knGAAD+9e7pp1P/7FvPBwwcicqCl2NS8z3To7qXI78u9VOfBD79tWZqFBmtUTRg3xVxlgnsiDipHpxUPUkAAAA="
     }
   ],
   "about": [

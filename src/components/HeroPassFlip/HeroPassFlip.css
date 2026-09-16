@@ -3,9 +3,18 @@
 .hero-flip {
   position: relative;
   width: 100%;
+  /* 히어로 사진(3:2) 이 위아래 잘림 없이 통째로 들어가도록 상자를 사진 비율에 맞춘다.
+     aspect-ratio 를 모르는 구형 브라우저는 예전 고정 높이(256px)로 떨어진다. */
   height: 256px;
   perspective: 1400px;
   background: transparent;
+}
+
+@supports (aspect-ratio: 3 / 2) {
+  .hero-flip {
+    height: auto;
+    aspect-ratio: 3 / 2;
+  }
 }
 
 .hero-flip__inner {
@@ -37,7 +46,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  /* 상자가 사진 비율과 같아 보통은 잘리지 않는다. 소수점 차이로 조금 잘릴 때도 위쪽(머리)은 지킨다 */
+  object-position: center top;
 }
 
 /* 면 전체가 누를 수 있는 영역 */
