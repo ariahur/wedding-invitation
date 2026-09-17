@@ -70,10 +70,12 @@
 /* 흰 섹션(타임라인·갤러리·오시는 길·RSVP): 위 물결 구분 + 흰색→투명 그라데이션, 좌우로 확장 */
 .paper-container .section-wrapper--white {
   /* 위 56px(물결 높이)은 투명 — 물결 SVG가 곡선 아래만 흰색으로 칠한다.
-     끝단도 종이색을 직접 칠하지 않고 투명으로 빠져 PaperCard 실크 종이가 그대로 이어지게 한다 */
+     끝단도 종이색을 직접 칠하지 않고 투명으로 빠져 PaperCard 실크 종이가 그대로 이어지게 한다.
+     흰색은 섹션 내용이 끝날 때까지 그대로 유지하고 아래 120px 에서만 종이로 빠진다.
+     예전엔 40% 지점부터 흐려져 갤러리 사진 사이 틈이 위는 흰색, 아래는 종이 결로 갈라져 보였다. */
   background: linear-gradient(to bottom,
     rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0) 54px,
-    #fff 54px, #fff 40%, rgba(255, 255, 255, 0) 100%);
+    #fff 54px, #fff calc(100% - 120px), rgba(255, 255, 255, 0) 100%);
   margin-left: -33px;
   margin-right: -33px;
   padding-left: 22px;
