@@ -165,8 +165,14 @@ const HeroBoardingPassSection: React.FC = () => {
 
             <div className="boarding-pass__footer">
               <div className="footer-info">
-                <span>{t.hero.footer.gate}</span>
-                <span>{t.hero.footer.boarding}</span>
+                <span className="footer-info__item">
+                  <span className="footer-info__label">{t.hero.footer.gate}</span>
+                  <span className="footer-info__value">{t.hero.footer.gateValue}</span>
+                </span>
+                <span className="footer-info__item">
+                  <span className="footer-info__label">{t.hero.footer.boarding}</span>
+                  <span className="footer-info__value">{t.hero.footer.boardingValue}</span>
+                </span>
               </div>
               <div className="barcode">
                 <div className="barcode-lines"></div>
