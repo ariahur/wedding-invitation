@@ -12,8 +12,6 @@ export interface Translations {
   };
   timeline: {
     title: string;
-    /** 장 번호 앞에 붙는 말 — "챕터 1" / "Chapter 1" */
-    chapterLabel: string;
     events: TimelineEvent[];
   };
   gallery: {
@@ -322,6 +320,28 @@ export interface Translations {
   thankYou: {
     message: string;
   };
+  /** 마음 전하실 곳 — 국문 화면에서만 렌더링된다 (GiftSection) */
+  gift: {
+    title: string;
+    subtitle: string;
+    copyButton: string;
+    copiedButton: string;
+    sides: GiftSide[];
+  };
+}
+
+export interface GiftAccount {
+  /** 신부 / 혼주 같은 관계 */
+  role: string;
+  name: string;
+  bank: string;
+  account: string;
+}
+
+export interface GiftSide {
+  /** 접었다 펴는 묶음의 제목 — 신랑측 / 신부측 */
+  label: string;
+  accounts: GiftAccount[];
 }
 
 export const translations: Record<Language, Translations> = {
@@ -339,7 +359,6 @@ export const translations: Record<Language, Translations> = {
     },
     timeline: {
       title: "함께한 시간",
-      chapterLabel: "챕터",
       events: [
         {
           title: "첫만남",
@@ -675,6 +694,22 @@ export const translations: Record<Language, Translations> = {
         addMore: "사진·영상 더 부치기",
       },
     },
+    gift: {
+      title: "마음 전하실 곳",
+      subtitle: "참석이 어려우신 분들을 위해\n계좌번호를 기재하였습니다.\n너그러운 마음으로 양해 부탁드립니다.",
+      copyButton: "계좌 복사하기",
+      copiedButton: "계좌번호가 복사되었습니다",
+      sides: [
+        {
+          label: "신부측",
+          accounts: [
+            { role: "신부", name: "허다영", bank: "국민", account: "777502 04 182286" },
+            { role: "신부 아버지", name: "허윤", bank: "하나", account: "148 890003 85707" },
+            { role: "신부 어머니", name: "황영식", bank: "국민", account: "455425 96 110684" },
+          ],
+        },
+      ],
+    },
     thankYou: {
       message:
         "귀한 시간 내어주신 모든 분들께\n진심으로 감사드립니다.\n평생 잊지 못할 소중한 순간으로\n간직하겠습니다.",
@@ -694,7 +729,6 @@ export const translations: Record<Language, Translations> = {
     },
     timeline: {
       title: "Time Together",
-      chapterLabel: "Chapter",
       events: [
         {
           title: "First Meeting",
@@ -756,7 +790,7 @@ export const translations: Record<Language, Translations> = {
       bride: {
         name: "Aria Hur",
         parents: {
-          father: "Yoon Hur",
+          father: "Yun Hur",
           mother: "Young Sik Hwang",
         },
         relationship: "eldest daughter",
@@ -855,7 +889,7 @@ export const translations: Record<Language, Translations> = {
             email: "bride@example.com",
           },
           father: {
-            name: "Yoon Hur",
+            name: "Yun Hur",
             phone: "+82-010-3735-0100",
             email: "bride.father@example.com",
           },
@@ -885,7 +919,7 @@ export const translations: Record<Language, Translations> = {
         nameLabel: "Bride",
         keyword: "Navigator",
         parents: {
-          father: "Yoon Hur",
+          father: "Yun Hur",
           mother: "Young Sik Hwang",
         },
         birth: "Born in Seoul, December 1992",
@@ -1030,6 +1064,22 @@ export const translations: Record<Language, Translations> = {
         flight: "FLIGHT",
         addMore: "Drop off more",
       },
+    },
+    gift: {
+      title: "With Love",
+      subtitle: "For those who cannot attend,\nwe have listed our account details below.\nThank you for your kind understanding.",
+      copyButton: "Copy account number",
+      copiedButton: "Account number copied",
+      sides: [
+        {
+          label: "Bride",
+          accounts: [
+            { role: "Bride", name: "Dayeong Hur", bank: "KB Kookmin", account: "777502 04 182286" },
+            { role: "Bride's Father", name: "Yun Hur", bank: "Hana", account: "148 890003 85707" },
+            { role: "Bride's Mother", name: "Youngsik Hwang", bank: "KB Kookmin", account: "455425 96 110684" },
+          ],
+        },
+      ],
     },
     thankYou: {
       message:

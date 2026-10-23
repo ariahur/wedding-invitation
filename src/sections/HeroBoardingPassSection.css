@@ -409,6 +409,23 @@
   font-weight: 600;
 }
 
+.footer-info__item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.footer-info__label {
+  letter-spacing: 1px;
+  color: #999;
+}
+
+.footer-info__value {
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: #1A2F4A;
+}
+
 .barcode {
   text-align: center;
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { Routes, Route, Navigate, useParams, useNavigate } from 'react-router-dom';
 import HeroBoardingPassSection from './sections/HeroBoardingPassSection';
 import AboutUsSection from './sections/AboutUsSection';
@@ -7,12 +7,14 @@ import GallerySection from './sections/GallerySection';
 import DirectionsSection from './sections/DirectionsSection';
 import RsvpSection from './sections/RsvpSection';
 import PhotoDropSection from './sections/PhotoDropSection';
+import GiftSection from './sections/GiftSection';
 import ThankYouSection from './sections/ThankYouSection';
 import LoadingScreen from './components/LoadingScreen/LoadingScreen';
 import PaperCard from './components/PaperCard/PaperCard';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { RsvpTicketProvider } from './contexts/RsvpTicketContext';
 import { Language } from './types/language';
+import { useScrollLock } from './hooks/useScrollLock';
 import './App.css';
 
 const updateMetaTag = (property: string, content: string) => {
@@ -105,6 +107,18 @@ const WeddingInvitation: React.FC = () => {
     updateMetaTag('description', description);
   }, [language]);
 
+  /* Always start at the top: stop the browser from restoring the previous scroll
+     position on reload, and reset before the scroll lock below snapshots it. */
+  useLayoutEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+  }, []);
+
+  /* Lock body scroll while the loading screen is up; unlocking scrolls back to 0. */
+  useScrollLock(isLoading);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -158,6 +172,7 @@ const WeddingInvitation: React.FC = () => {
               <DirectionsSection />
               <RsvpSection />
               <PhotoDropSection />
+              <GiftSection />
             </div>
             <ThankYouSection />
           </PaperCard>
