@@ -36,7 +36,7 @@
 }
 
 .counter-text {
-  font-size: 15px;
+  font-size: 16px;
   color: #666;
   font-weight: 400;
   font-family: "Gowun Dodum", "Lora", sans-serif;
@@ -49,7 +49,7 @@
 }
 
 .counter-number {
-  font-size: 18px;
+  font-size: 19px;
   color: #B8956A; /* Camel - natural color combination */
   font-weight: 500;
   font-family: "Lora", "Playfair Display", serif;
@@ -211,7 +211,7 @@
 }
 
 .placeholder-text {
-  font-size: 12px;
+  font-size: 13px;
   color: #666;
   text-align: center;
 }
@@ -243,7 +243,7 @@
   padding: 6px 14px;
   border-radius: 20px;
   border: 1.5px solid rgba(184, 149, 106, 0.3);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   margin-bottom: 10px;
   width: fit-content;
@@ -259,7 +259,7 @@
 }
 
 .event-title {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   color: #333;
   margin-bottom: 8px;
@@ -282,7 +282,7 @@
 }
 
 .event-description {
-  font-size: 12px;
+  font-size: 13px;
   color: #555;
   line-height: 1.6;
   word-wrap: break-word;
@@ -307,11 +307,11 @@
   }
 
   .counter-text {
-    font-size: 12px;
+    font-size: 13px;
   }
 
   .counter-number {
-    font-size: 16px;
+    font-size: 17px;
   }
 
   .timeline__title {
@@ -363,16 +363,16 @@
   }
 
   .event-label {
-    font-size: 11px;
+    font-size: 12px;
     padding: 4px 10px;
   }
 
   .event-title {
-    font-size: 12px;
+    font-size: 13px;
   }
 
   .event-description {
-    font-size: 12px;
+    font-size: 13px;
   }
 }
 

@@ -56,7 +56,7 @@
 
 .rsvp-lookup-modal__label {
   font-family: "Roboto", sans-serif;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: bold;
   letter-spacing: 2px;
   color: rgba(255, 255, 255, 0.5);
@@ -93,7 +93,7 @@
   min-width: 0;
   padding: 14px 14px;
   font-family: inherit;
-  font-size: 13px;
+  font-size: 14px;
   color: #ffffff;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -112,7 +112,7 @@
 }
 
 .rsvp-lookup-modal__error {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.7;
   margin: 14px 0 0;
   word-break: keep-all;
@@ -124,7 +124,7 @@
   width: 100%;
   margin-top: 18px;
   padding: 15px 20px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: #ffffff;
   background: #C9A77C;

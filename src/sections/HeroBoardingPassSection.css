@@ -81,7 +81,7 @@
 
 .header-date {
   font-family: "Roboto", sans-serif;
-  font-size: 17px;
+  font-size: 18px;
   font-weight: bold;
   background: linear-gradient(
     to right,
@@ -125,7 +125,7 @@
 
 .airline-name {
   font-family: "Roboto", sans-serif;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: bold;
   letter-spacing: 1px;
   margin-bottom: 4px;
@@ -140,7 +140,7 @@
 }
 
 .airline-flight-label {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.5px;
   color: rgba(201, 167, 124, 0.8);
@@ -148,7 +148,7 @@
 }
 
 .airline-flight-number {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: bold;
   letter-spacing: 2px;
   color: #C9A77C;
@@ -160,7 +160,7 @@
 
 .class-label {
   font-family: "Roboto", sans-serif;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 1px;
   margin-bottom: 4px;
@@ -169,7 +169,7 @@
 
 .class-value {
   font-family: "Roboto", sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: bold;
   letter-spacing: 1px;
   color: #C9A77C;
@@ -202,7 +202,7 @@
 
 .route-city {
   font-family: "Roboto", sans-serif;
-  font-size: 12px;
+  font-size: 13px;
   color: white;
   margin-bottom: 2px;
   opacity: 0.95;
@@ -210,7 +210,7 @@
 
 .route-city-ko {
   font-family: "Roboto", sans-serif;
-  font-size: 12px;
+  font-size: 13px;
   color: white;
   opacity: 0.85;
 }
@@ -279,7 +279,7 @@
 }
 
 .couple-line {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
   color: #333;
 }
@@ -310,7 +310,7 @@
   font-weight: 400;
   font-style: normal;
   text-align: center;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 2;
   color: #333;
 }
@@ -351,20 +351,20 @@
 }
 
 .detail-label {
-  font-size: 12px;
+  font-size: 13px;
   color: #999;
   margin-bottom: 4px;
   font-weight: 500;
 }
 
 .detail-value {
-  font-size: 12px;
+  font-size: 13px;
   color: #333;
   font-weight: 500;
 }
 
 .detail-value-block {
-  font-size: 12px;
+  font-size: 13px;
   color: #333;
   line-height: 1.6;
 }
@@ -403,7 +403,7 @@
   font-family: "Roboto", sans-serif;
   display: flex;
   justify-content: space-around;
-  font-size: 11px;
+  font-size: 12px;
   color: #666;
   margin-bottom: 16px;
   font-weight: 600;
@@ -739,7 +739,7 @@
   }
 
   .boarding-pass__message {
-    font-size: 12px;
+    font-size: 13px;
     padding: 16px;
   }
 
