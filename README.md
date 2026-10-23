@@ -33,7 +33,7 @@ src/
 ├── sections/
 │   ├── HeroBoardingPassSection  # 항공권 스타일 메인(날짜, 경로, 커플 사진, 안내 문구)
 │   ├── AboutUsSection          # 신랑·신부 소개, 연락처 모달(전화 링크)
-│   ├── TimelineSection         # 연도별 타임라인, 이미지 클릭 시 모달
+│   ├── TimelineSection         # Our Story — 스크롤 고정 무대 위에 인화지가 쌓이는 연출, 이미지 클릭 시 모달
 │   ├── DirectionsSection       # 장소·주소·카카오맵, 주소 복사
 │   ├── RsvpSection             # 참석 여부·동행 인원 등 RSVP 폼
 │   └── ThankYouSection         # 맨 하단 감사 문구·배경 사진

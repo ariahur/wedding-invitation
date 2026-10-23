@@ -8,7 +8,9 @@
     0 4px 16px rgba(0, 0, 0, 0.2),
     0 2px 8px rgba(0, 0, 0, 0.15);
   position: relative;
-  overflow: hidden;
+  /* clip: 둥근 모서리로 자르되 스크롤 컨테이너가 되지 않는다.
+     hidden 이면 안쪽 타임라인의 position: sticky 가 이 카드에 갇혀 동작하지 않는다 */
+  overflow: clip;
 }
 
 .paper-card.main-content-card {
