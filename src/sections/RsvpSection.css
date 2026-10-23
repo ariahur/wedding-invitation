@@ -35,7 +35,7 @@
 }
 
 .rsvp__intro {
-  font-size: 12px;
+  font-size: 13px;
   color: #999;
   text-align: center;
   margin-bottom: 20px;
@@ -46,7 +46,7 @@
 
 
 .rsvp__seating {
-  font-size: 15px;
+  font-size: 16px;
   color: #555;
   line-height: 1.6;
   text-align: center;
@@ -74,7 +74,7 @@
 
 .rsvp-lookup-banner__label {
   font-family: "Roboto", sans-serif;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: bold;
   letter-spacing: 2px;
   color: rgba(255, 255, 255, 0.5);
@@ -82,7 +82,7 @@
 
 .rsvp-lookup-banner__title {
   font-family: "Gowun Dodum", "Lora", sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   color: #ffffff;
   letter-spacing: 0.5px;
   word-break: keep-all;
@@ -90,14 +90,14 @@
 
 .rsvp-lookup-banner__title:lang(en) {
   font-family: "Lora", serif;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .rsvp-lookup-banner__button {
   font-family: "Gowun Dodum", "Lora", sans-serif;
   flex-shrink: 0;
   padding: 10px 14px;
-  font-size: 12px;
+  font-size: 13px;
   color: #ffffff;
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.35);
@@ -164,7 +164,7 @@
 }
 
 .form-label {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   color: #333;
   display: flex;
@@ -177,7 +177,7 @@
 
 .form-required {
   color: #ef4444;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .form-icon {
@@ -197,7 +197,7 @@
   border: none;
   border-bottom: 1px solid #e0e0e0;
   border-radius: 0;
-  font-size: 12px;
+  font-size: 13px;
   font-family: inherit;
   transition: all 0.2s;
   background: transparent;
@@ -234,7 +234,7 @@
 }
 
 .form-error {
-  font-size: 12px;
+  font-size: 13px;
   color: #ef4444;
   margin-top: 4px;
   width: 100%;
@@ -246,7 +246,7 @@
 }
 
 .form-hint {
-  font-size: 12px;
+  font-size: 13px;
   color: #999;
   margin-top: -4px;
 }
@@ -376,7 +376,7 @@
 }
 
 .radio-text {
-  font-size: 12px;
+  font-size: 13px;
   color: #333;
   flex: 1;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -385,7 +385,7 @@
 .form-message {
   padding: 12px 16px;
   border-radius: 8px;
-  font-size: 12px;
+  font-size: 13px;
   text-align: center;
   font-weight: 500;
 }
@@ -410,7 +410,7 @@
   color: #1A2F4A;
   border: 2px solid #1A2F4A;
   border-radius: 8px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   margin-top: 8px;
@@ -444,7 +444,7 @@
   .form-input,
   .form-textarea {
     padding: 10px 14px;
-    font-size: 12px;
+    font-size: 13px;
   }
 
   .rsvp-lookup-banner {
@@ -453,12 +453,12 @@
   }
 
   .rsvp-lookup-banner__title {
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .rsvp-lookup-banner__button {
     padding: 9px 12px;
-    font-size: 11px;
+    font-size: 12px;
   }
 }
 

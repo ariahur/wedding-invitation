@@ -27,20 +27,259 @@
   font-family: "Lora", serif;
 }
 
+/* ──────────────────────────────────────────────────────────────
+   Our Story — 스크롤 고정 무대 위에 인화지가 쌓이는 연출
+
+   .story-track  : 화면 몇 배 높이의 긴 래퍼. 이 안을 스크롤하는 동안
+                   아래 .story-stage 가 화면 위에 붙어 있다 (position: sticky).
+                   높이 = 100svh + (장 수 - 1) × 65svh  → TSX 가 CSS 변수로 넘긴다.
+   .story-stage  : 화면 높이(100svh)의 무대. 타이틀 / 장 설명 / 인화지 더미 순.
+   .story-print  : 인화지 한 장. framer-motion 이 y·scale 을 스크롤 진행도로 움직인다.
+
+   주의: 조상 중 overflow: hidden/auto 가 있으면 sticky 가 풀린다.
+   PaperCard 는 그래서 overflow: clip 을 쓴다 (PaperCard.css 참고).
+   ────────────────────────────────────────────────────────────── */
+
+.story-track {
+  position: relative;
+  /* 섹션 패딩(20px) 밖까지 무대를 넓혀 인화지가 카드 폭을 충분히 쓰게 한다 */
+  margin: 0 -20px;
+  height: calc(100vh + var(--story-steps, 4) * var(--story-step-vh, 65) * 1vh);
+  height: calc(100svh + var(--story-steps, 4) * var(--story-step-vh, 65) * 1svh);
+}
+
+.story-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+  /* 아직 올라오지 않은 인화지(무대 아래 900px)가 다음 섹션 위로 비치지 않게 자른다 */
+  overflow: hidden;
+}
+
+.story-stage .timeline__title {
+  flex-shrink: 0;
+  width: 100%;
+}
+
+/* 장 설명: 모든 장을 같은 칸에 겹쳐 두고 opacity 로 교차한다 → 높이는 가장 긴 장 기준 */
+.story-chapters {
+  display: grid;
+  width: 100%;
+  max-width: 300px;
+  /* margin-top: auto 와 .story-stack 의 margin-bottom: auto 가 타이틀 아래 남은 높이에서
+     장 설명 + 인화지 더미를 세로 중앙에 둔다 */
+  margin: auto auto 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.story-chapter {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.story-chapter__index {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #C9A77C;
+  margin-bottom: 6px;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+}
+
+.story-chapter__index:lang(en) {
+  font-family: "Lora", serif;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.story-chapter__title {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #1A2F4A;
+  letter-spacing: 0.5px;
+  line-height: 1.4;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+}
+
+.story-chapter__title:lang(en) {
+  font-family: "Lora", serif;
+  font-weight: 500;
+}
+
+.story-chapter__description {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.65;
+  white-space: pre-line;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+}
+
+.story-chapter__description:lang(en) {
+  font-family: "Lora", serif;
+}
+
+/* 인화지 더미: 모든 장을 같은 grid 칸에 포개 윗변을 맞춘다 → 칸 높이는 가장 긴(세로) 인화지 기준이라
+   세로 인화지가 아래로 삐져나와도 무대 높이 계산에 들어간다 */
+.story-stack {
+  display: grid;
+  align-items: start;
+  justify-items: center;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto auto;
+  /* 위로 밀려난 장들이 보이도록 머리 공간을 남긴다 (네 장 × 9px 가 넘지 않게) */
+  padding-top: 28px;
+  flex-shrink: 0;
+}
+
+.story-print {
+  grid-area: 1 / 1;
+  width: 100%;
+  max-width: 300px;
+  transform-origin: 50% 20%;
+  will-change: transform;
+}
+
+/* 세로 사진(원본 height > width): 폭을 좁힌 3:4 인화지 */
+.story-print--portrait {
+  max-width: 200px;
+}
+
+.story-print--portrait .story-print__photo {
+  aspect-ratio: 3 / 4;
+}
+
+/* 인화지 자체: 흰 종이 위에 사진, 아래에 넓은 여백과 연도 */
+.story-print__paper {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 10px 10px 0;
+  border: 1px solid rgba(26, 47, 74, 0.08);
+  border-radius: 4px;
+  background: #FFFFFF;
+  box-shadow:
+    0 1px 2px rgba(26, 47, 74, 0.08),
+    0 10px 24px rgba(26, 47, 74, 0.1);
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.story-print__paper:disabled {
+  cursor: default;
+}
+
+.story-print__photo {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #FAF8F3;
+}
+
+.story-print__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 2013 / 2025 photo: show left side more */
+.story-print__image--pos-left {
+  object-position: 35% 50%;
+}
+
+/* 2018 photo: show right side more */
+.story-print__image--pos-right {
+  object-position: 65% 50%;
+}
+
+/* 2027 photo (세로 인화지): 3:4 로 살짝 잘릴 때 머리 쪽을 남긴다 */
+.story-print__image--pos-top {
+  object-position: 50% 30%;
+}
+
+.story-print__placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+}
+
+.story-print__placeholder .material-symbols-outlined {
+  font-size: 32px;
+}
+
+.story-print__caption {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Lora", serif;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: #999;
+}
+
+/* 움직임 줄이기 모드: 고정 무대 없이 세로 나열 */
+.story-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.story-list__item {
+  margin-bottom: 48px;
+}
+
+.story-list__item .story-chapters,
+.story-list__item .story-chapter {
+  text-align: center;
+  align-items: center;
+}
+
+.story-list__item .story-chapter {
+  max-width: 300px;
+  margin: 0 auto 24px;
+}
+
+.story-print--static {
+  margin: 0 auto;
+}
+
+/* 함께한 시간 카운터 — 타이틀 바로 아래, 무대에 함께 고정된다.
+   타이틀의 margin-bottom(24px)은 정본이라 두고, 아래 간격만 여기서 잡는다 */
 .timeline__counter {
   text-align: center;
-  margin: 0 -20px 24px -20px;
-  padding: 24px 16px;
+  width: 100%;
+  margin: 0 0 12px;
+  padding: 0 16px;
   background: transparent;
-  border-radius: 0;
+  flex-shrink: 0;
 }
 
 .counter-text {
-  font-size: 15px;
+  font-size: 14px;
   color: #666;
   font-weight: 400;
   font-family: "Gowun Dodum", "Lora", sans-serif;
-  line-height: 1.8;
+  line-height: 1.7;
   letter-spacing: 0.3px;
 }
 
@@ -49,331 +288,11 @@
 }
 
 .counter-number {
-  font-size: 18px;
+  font-size: 17px;
   color: #B8956A; /* Camel - natural color combination */
   font-weight: 500;
   font-family: "Lora", "Playfair Display", serif;
   letter-spacing: 0;
-}
-
-.timeline__events {
-  position: relative;
-  padding: 16px 0;
-}
-
-.timeline__line-container {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 1.5px;
-  transform: translateX(-50%);
-  z-index: 1;
-  pointer-events: none;
-  overflow: visible;
-}
-
-.timeline__line {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    to bottom,
-    rgba(224, 224, 224, 0.3) 0%,
-    #e0e0e0 20%,
-    #e0e0e0 80%,
-    rgba(224, 224, 224, 0.3) 100%
-  );
-  border-radius: 1px;
-  box-shadow: 0 0 4px rgba(224, 224, 224, 0.2);
-}
-
-.timeline__event {
-  position: relative;
-  margin-bottom: 40px;
-  display: flex;
-  align-items: flex-start;
-  width: 100%;
-}
-
-.timeline__event::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 20px;
-  width: 8px;
-  height: 8px;
-  background: white;
-  border: 2px solid #e0e0e0;
-  border-radius: 50%;
-  z-index: 2;
-  transform: translateX(-50%);
-  box-shadow: 0 2px 6px rgba(224, 224, 224, 0.4);
-  transition: all 0.3s ease;
-}
-
-.timeline__event:hover::before {
-  transform: translateX(-50%) scale(1.2);
-  box-shadow: 0 3px 10px rgba(224, 224, 224, 0.5);
-}
-
-.timeline__event--left {
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.timeline__event--left .timeline__event-image {
-  order: 1;
-}
-
-.timeline__event--left .timeline__event-text {
-  order: 2;
-}
-
-.timeline__event--right {
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.timeline__event--right .timeline__event-image {
-  order: 2;
-}
-
-.timeline__event--right .timeline__event-text {
-  order: 1;
-}
-
-.timeline__event-image {
-  width: calc(50% - 8px);
-  max-width: 120px;
-  aspect-ratio: 1;
-  border-radius: 12px;
-  overflow: hidden;
-  margin: 0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
-  border: 1px solid rgba(224, 224, 224, 0.35);
-  flex-shrink: 0;
-  transition: all 0.3s ease;
-}
-
-.timeline__event-image:hover {
-  border-color: rgba(224, 224, 224, 0.4);
-  box-shadow: 0 6px 16px rgba(224, 224, 224, 0.3);
-  transform: scale(1.02);
-}
-
-.timeline__event--left .timeline__event-image {
-  margin-left: auto;
-  margin-right: 24px;
-}
-
-.timeline__event--right .timeline__event-image {
-  margin-right: auto;
-  margin-left: 24px;
-}
-
-.event-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* 2013 photo: show left side more */
-.event-image--pos-left {
-  object-position: 35% 50%;
-}
-
-/* 2018 photo: show right side more */
-.event-image--pos-right {
-  object-position: 65% 50%;
-}
-
-/* 2027 photo: show a bit more of the top */
-.event-image--pos-top {
-  object-position: 50% 32%;
-}
-
-.event-image-placeholder {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: 2px dashed #ddd;
-}
-
-.placeholder-icon {
-  font-size: 48px;
-  margin-bottom: 8px;
-  opacity: 0.5;
-}
-
-.placeholder-text {
-  font-size: 12px;
-  color: #666;
-  text-align: center;
-}
-
-.timeline__event-text {
-  padding: 0;
-  width: calc(50% - 8px);
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-}
-
-.timeline__event--left .timeline__event-text {
-  text-align: left;
-  align-items: flex-start;
-  padding-left: 8px;
-}
-
-.timeline__event--right .timeline__event-text {
-  text-align: right;
-  align-items: flex-end;
-  padding-right: 8px;
-}
-
-.event-label {
-  display: inline-block;
-  background: linear-gradient(135deg, #B8956A 0%, #C9A77C 50%, #D4B896 100%);
-  color: white;
-  padding: 6px 14px;
-  border-radius: 20px;
-  border: 1.5px solid rgba(184, 149, 106, 0.3);
-  font-size: 11px;
-  font-weight: 600;
-  margin-bottom: 10px;
-  width: fit-content;
-  margin-left: 0;
-  margin-right: auto;
-  box-shadow: 0 2px 6px rgba(184, 149, 106, 0.25);
-  letter-spacing: 0.5px;
-}
-
-.timeline__event--right .event-label {
-  margin-left: auto;
-  margin-right: 0;
-}
-
-.event-title {
-  font-size: 12px;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  width: 100%;
-}
-
-.timeline__event--left .event-title {
-  justify-content: flex-end;
-}
-
-.timeline__event--right .event-title {
-  justify-content: flex-start;
-}
-
-.event-icon {
-  font-size: 18px;
-}
-
-.event-description {
-  font-size: 12px;
-  color: #555;
-  line-height: 1.6;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-}
-
-.event-description .highlight {
-  background: #fff9c4;
-  padding: 2px 4px;
-  border-radius: 3px;
-  font-weight: 600;
-}
-
-@media (max-width: 430px) {
-  .timeline {
-    padding: 20px;
-  }
-
-  .timeline__counter {
-    margin: 0 -20px 32px -20px;
-    padding: 20px 12px;
-  }
-
-  .counter-text {
-    font-size: 12px;
-  }
-
-  .counter-number {
-    font-size: 16px;
-  }
-
-  .timeline__title {
-    font-size: 24px;
-  }
-  
-  .timeline__title:lang(en) {
-    font-size: 20px;
-  }
-
-
-  .timeline__events {
-    padding: 16px 0;
-  }
-
-  .timeline__events::before {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .timeline__event {
-    margin-bottom: 32px;
-  }
-
-  .timeline__event::before {
-    left: 50%;
-    transform: translateX(-50%);
-    width: 8px;
-    height: 8px;
-    background: white;
-    border: 2px solid #e0e0e0;
-  }
-
-  .timeline__event-image {
-    width: calc(50% - 6px);
-    max-width: 100px;
-  }
-
-  .timeline__event-text {
-    width: calc(50% - 6px);
-  }
-
-  .timeline__event--left .timeline__event-text {
-    padding-right: 6px;
-  }
-
-  .timeline__event--right .timeline__event-text {
-    padding-left: 6px;
-  }
-
-  .event-label {
-    font-size: 11px;
-    padding: 4px 10px;
-  }
-
-  .event-title {
-    font-size: 12px;
-  }
-
-  .event-description {
-    font-size: 12px;
-  }
 }
 
 /* Timeline Image Modal */
@@ -445,6 +364,52 @@
 }
 
 @media (max-width: 430px) {
+  .timeline {
+    padding: 20px;
+  }
+
+  .timeline__title {
+    font-size: 24px;
+  }
+
+  .timeline__title:lang(en) {
+    font-size: 20px;
+  }
+
+  .story-chapters {
+    margin-bottom: 20px;
+  }
+
+  .story-chapter__title {
+    font-size: 17px;
+  }
+
+  .story-chapter__description {
+    font-size: 13px;
+  }
+
+  .story-stack,
+  .story-print--static {
+    max-width: 78vw;
+  }
+
+  .story-print--portrait {
+    max-width: 200px;
+  }
+
+  .timeline__counter {
+    margin-bottom: 12px;
+    padding: 0 12px;
+  }
+
+  .counter-text {
+    font-size: 13px;
+  }
+
+  .counter-number {
+    font-size: 16px;
+  }
+
   .timeline-image-modal-overlay {
     padding: 16px;
   }
@@ -461,5 +426,11 @@
 
   .timeline-image-modal__image {
     max-height: 85vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-print {
+    will-change: auto;
   }
 }

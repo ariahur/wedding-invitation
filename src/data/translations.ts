@@ -12,6 +12,8 @@ export interface Translations {
   };
   timeline: {
     title: string;
+    /** 장 번호 앞에 붙는 말 — "챕터 1" / "Chapter 1" */
+    chapterLabel: string;
     events: TimelineEvent[];
   };
   gallery: {
@@ -337,6 +339,7 @@ export const translations: Record<Language, Translations> = {
     },
     timeline: {
       title: "함께한 시간",
+      chapterLabel: "챕터",
       events: [
         {
           title: "첫만남",
@@ -691,6 +694,7 @@ export const translations: Record<Language, Translations> = {
     },
     timeline: {
       title: "Time Together",
+      chapterLabel: "Chapter",
       events: [
         {
           title: "First Meeting",

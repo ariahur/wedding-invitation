@@ -78,7 +78,7 @@
 }
 
 .directions__list li {
-  font-size: 12px;
+  font-size: 13px;
   color: #555;
   line-height: 1.8;
   padding-left: 0;
@@ -111,7 +111,7 @@
 }
 
 .directions__note {
-  font-size: 12px;
+  font-size: 13px;
   color: #888;
   padding-left: 20px !important;
 }
@@ -234,7 +234,7 @@
 }
 
 .address-venue {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   color: #333;
   margin-bottom: 8px;
@@ -272,7 +272,7 @@
 }
 
 .address-text {
-  font-size: 12px;
+  font-size: 13px;
   color: #666;
   line-height: 1.8;
   text-align: center;

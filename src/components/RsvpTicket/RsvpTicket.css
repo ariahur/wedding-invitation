@@ -34,7 +34,7 @@
 
 .rsvp-ticket__label {
   font-family: "Roboto", sans-serif;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: bold;
   letter-spacing: 2px;
   color: rgba(255, 255, 255, 0.65);
@@ -42,7 +42,7 @@
 
 .rsvp-ticket__status {
   font-family: "Roboto", sans-serif;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: bold;
   letter-spacing: 2px;
   color: #C9A77C;
@@ -90,14 +90,14 @@
 
 .rsvp-ticket__field-label {
   font-family: "Roboto", sans-serif;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: bold;
   letter-spacing: 1.5px;
   color: #9CA3AF;
 }
 
 .rsvp-ticket__field-value {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 600;
   color: #1A2F4A;
   line-height: 1.3;
@@ -159,7 +159,7 @@
 }
 
 .rsvp-ticket__message {
-  font-size: 12px;
+  font-size: 13px;
   color: #666;
   line-height: 1.8;
   text-align: center;
@@ -179,7 +179,7 @@
 
 .open-ticket__label {
   font-family: "Roboto", sans-serif;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: bold;
   letter-spacing: 2px;
   color: #9CA3AF;
@@ -212,7 +212,7 @@
 }
 
 .open-ticket__message {
-  font-size: 12px;
+  font-size: 13px;
   color: #666;
   line-height: 1.9;
   margin: 18px 0 0;
@@ -227,7 +227,7 @@
 
 .open-ticket__footer {
   font-family: "Roboto", sans-serif;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: bold;
   letter-spacing: 2px;
   color: #9CA3AF;
@@ -242,7 +242,7 @@
   color: #1A2F4A;
   border: 1px solid rgba(26, 47, 74, 0.3);
   border-radius: 8px;
-  font-size: 12px;
+  font-size: 13px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -262,7 +262,7 @@
   }
 
   .rsvp-ticket__field-value {
-    font-size: 15px;
+    font-size: 16px;
   }
 
   .open-ticket {

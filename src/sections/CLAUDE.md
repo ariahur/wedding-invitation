@@ -91,7 +91,7 @@
 .my-section__subtitle {
   margin: 0 0 24px;
   text-align: center;
-  font-size: 12px;
+  font-size: 13px;
   color: #999;
   line-height: 1.6;
   font-family: "Gowun Dodum", "Lora", sans-serif;

@@ -58,7 +58,7 @@
 }
 
 .about-us__intro-text {
-  font-size: 15px;
+  font-size: 16px;
   color: #666;
   margin-bottom: 8px;
   font-family: "Gowun Dodum", "Lora", sans-serif;
@@ -70,7 +70,7 @@
 }
 
 .about-us__intro-subtitle {
-  font-size: 12px;
+  font-size: 13px;
   color: #1A2F4A;
   font-family: "Gowun Dodum", "Lora", sans-serif;
   line-height: 1.6;
@@ -159,7 +159,7 @@
 }
 
 .about-us__name-label {
-  font-size: 12px;
+  font-size: 13px;
   color: #999;
   font-weight: 500;
   font-family: "Roboto", sans-serif;
@@ -178,7 +178,7 @@
 }
 
 .about-us__keyword {
-  font-size: 11px;
+  font-size: 12px;
   color: #C9A77C;
   font-weight: 600;
   margin: 4px 0 8px 0;
@@ -188,7 +188,7 @@
 }
 
 .about-us__parents {
-  font-size: 12px;
+  font-size: 13px;
   color: #666;
   margin: 0 0 8px 0;
   font-family: "Gowun Dodum", "Lora", sans-serif;
@@ -200,7 +200,7 @@
 }
 
 .about-us__birth {
-  font-size: 12px;
+  font-size: 13px;
   color: #666;
   margin: 0 0 12px 0;
   font-family: "Gowun Dodum", "Lora", sans-serif;
@@ -212,7 +212,7 @@
 }
 
 .about-us__description {
-  font-size: 12px;
+  font-size: 13px;
   color: #333;
   margin: 0;
   font-family: "Gowun Dodum", "Lora", sans-serif;
@@ -250,11 +250,11 @@
   }
 
   .about-us__intro-text {
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .about-us__intro-subtitle {
-    font-size: 12px;
+    font-size: 13px;
   }
 
   .about-us__cards {
@@ -294,7 +294,7 @@
   border: none;
   padding: 14px 32px;
   border-radius: 8px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   font-family: "Gowun Dodum", "Lora", sans-serif;
   cursor: pointer;
@@ -308,7 +308,7 @@
 @media (max-width: 430px) {
   .about-us__contact-button {
     padding: 12px 24px;
-    font-size: 12px;
+    font-size: 13px;
   }
 }
 
@@ -489,7 +489,7 @@
 }
 
 .contact-modal__section-subtitle {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 400;
   opacity: 0.7;
   letter-spacing: 1px;
@@ -518,7 +518,7 @@
 }
 
 .contact-modal__item-label {
-  font-size: 12px;
+  font-size: 13px;
   color: #666;
   font-weight: 500;
   min-width: 80px;
@@ -531,7 +531,7 @@
 
 .contact-modal__item-name {
   flex: 1;
-  font-size: 12px;
+  font-size: 13px;
   color: #1A2F4A;
   font-weight: 500;
   font-family: "Gowun Dodum", "Lora", sans-serif;
@@ -611,11 +611,11 @@
 
   .contact-modal__item-label {
     min-width: 70px;
-    font-size: 12px;
+    font-size: 13px;
   }
 
   .contact-modal__item-name {
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .contact-modal__action-button {

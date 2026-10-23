@@ -25,7 +25,7 @@
 }
 
 .photo-drop__intro {
-  font-size: 12px;
+  font-size: 13px;
   color: #999;
   text-align: center;
   margin: 0 0 24px;
@@ -48,7 +48,7 @@
 
 .photo-drop__notice-label {
   font-family: "Roboto", sans-serif;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: bold;
   letter-spacing: 2px;
   color: #9CA3AF;
@@ -81,7 +81,7 @@
 }
 
 .photo-drop__notice-message {
-  font-size: 12px;
+  font-size: 13px;
   color: #666;
   line-height: 1.9;
   margin: 14px 0 0;
@@ -90,7 +90,7 @@
 
 .photo-drop__countdown {
   font-family: "Roboto", sans-serif;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: bold;
   letter-spacing: 2px;
   color: #1A2F4A;
@@ -120,7 +120,7 @@
 
 .photo-drop__passenger-label {
   font-family: "Roboto", sans-serif;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: bold;
   letter-spacing: 2px;
   color: rgba(255, 255, 255, 0.5);
@@ -128,7 +128,7 @@
 
 .photo-drop__passenger-name {
   font-family: "Gowun Dodum", "Lora", sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   color: #ffffff;
   letter-spacing: 0.5px;
   word-break: keep-all;
@@ -139,7 +139,7 @@
 }
 
 .form-optional {
-  font-size: 11px;
+  font-size: 12px;
   color: #9CA3AF;
   font-weight: 400;
   margin-left: 4px;
@@ -189,7 +189,7 @@
 
 .photo-drop__dropzone-title {
   font-family: "Gowun Dodum", "Lora", sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   color: #1A2F4A;
   letter-spacing: 0.5px;
   word-break: keep-all;
@@ -200,7 +200,7 @@
 }
 
 .photo-drop__dropzone-hint {
-  font-size: 11px;
+  font-size: 12px;
   color: #9CA3AF;
   line-height: 1.6;
   word-break: keep-all;
@@ -208,7 +208,7 @@
 
 .photo-drop__counter {
   font-family: "Roboto", sans-serif;
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 1.5px;
   color: #9CA3AF;
   text-align: right;
@@ -330,7 +330,7 @@
   border-radius: 50%;
   background: rgba(26, 47, 74, 0.72);
   color: #ffffff;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1;
   font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
 }
@@ -342,7 +342,7 @@
   right: 0;
   top: calc(50% + 14px);
   text-align: center;
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.5px;
   color: #1A2F4A;
 }
