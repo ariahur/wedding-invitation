@@ -320,10 +320,14 @@ export interface Translations {
   thankYou: {
     message: string;
   };
-  /** 마음 전하실 곳 — 국문 화면에서만 렌더링된다 (GiftSection) */
+  /** 마음 전하실 곳 — 국문·영문 양쪽에서 렌더링된다 (GiftSection) */
   gift: {
     title: string;
     subtitle: string;
+    /** 호주 계좌의 BSB 앞에 붙는 라벨 */
+    bsbLabel: string;
+    /** 호주 계좌의 계좌번호 앞에 붙는 라벨. 한국 계좌에는 붙이지 않는다 */
+    accountLabel: string;
     copyButton: string;
     copiedButton: string;
     sides: GiftSide[];
@@ -336,6 +340,8 @@ export interface GiftAccount {
   name: string;
   bank: string;
   account: string;
+  /** 호주 계좌 전용 Bank-State-Branch 번호. 한국 계좌는 생략 */
+  bsb?: string;
 }
 
 export interface GiftSide {
@@ -697,9 +703,18 @@ export const translations: Record<Language, Translations> = {
     gift: {
       title: "마음 전하실 곳",
       subtitle: "참석이 어려우신 분들을 위해\n계좌번호를 기재하였습니다.\n너그러운 마음으로 양해 부탁드립니다.",
+      bsbLabel: "BSB",
+      accountLabel: "Acc No",
       copyButton: "계좌 복사하기",
       copiedButton: "계좌번호가 복사되었습니다",
       sides: [
+        {
+          label: "신랑측",
+          accounts: [
+            { role: "신랑", name: "조준용", bank: "ING", bsb: "923100", account: "309006162" },
+            { role: "신랑 어머니", name: "김미정", bank: "ING", bsb: "923100", account: "313828702" },
+          ],
+        },
         {
           label: "신부측",
           accounts: [
@@ -1068,9 +1083,18 @@ export const translations: Record<Language, Translations> = {
     gift: {
       title: "With Love",
       subtitle: "For those who cannot attend,\nwe have listed our account details below.\nThank you for your kind understanding.",
+      bsbLabel: "BSB",
+      accountLabel: "Acc No",
       copyButton: "Copy account number",
       copiedButton: "Account number copied",
       sides: [
+        {
+          label: "Groom",
+          accounts: [
+            { role: "Groom", name: "Daniel Cho", bank: "ING", bsb: "923100", account: "309006162" },
+            { role: "Groom's Mother", name: "Mi Jeong Kim", bank: "ING", bsb: "923100", account: "313828702" },
+          ],
+        },
         {
           label: "Bride",
           accounts: [

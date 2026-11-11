@@ -10,17 +10,24 @@ const COPIED_RESET_MS = 2000;
 
 interface AccountRowProps {
   account: GiftAccount;
+  bsbLabel: string;
+  accountLabel: string;
   copyLabel: string;
   copiedLabel: string;
   language: string;
 }
 
-const AccountRow: React.FC<AccountRowProps> = ({ account, copyLabel, copiedLabel, language }) => {
+const AccountRow: React.FC<AccountRowProps> = ({ account, bsbLabel, accountLabel, copyLabel, copiedLabel, language }) => {
   const [copied, setCopied] = useState(false);
+
+  /** 복사되는 문자열. 호주 계좌는 은행 · BSB · Acc No 순으로 라벨까지 함께 */
+  const copyText = account.bsb
+    ? `${account.bank} ${bsbLabel} ${account.bsb} ${accountLabel} ${account.account}`
+    : `${account.bank} ${account.account}`;
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(`${account.bank} ${account.account}`);
+      await navigator.clipboard.writeText(copyText);
       setCopied(true);
       setTimeout(() => setCopied(false), COPIED_RESET_MS);
     } catch (err) {
@@ -36,7 +43,20 @@ const AccountRow: React.FC<AccountRowProps> = ({ account, copyLabel, copiedLabel
       </div>
       <div className="gift__number" lang={language}>
         <span className="gift__bank">{account.bank}</span>
-        <span className="gift__digits">{account.account}</span>
+        {account.bsb ? (
+          <>
+            <span className="gift__field">
+              <span className="gift__field-label">{bsbLabel}</span>
+              <span className="gift__digits">{account.bsb}</span>
+            </span>
+            <span className="gift__field">
+              <span className="gift__field-label">{accountLabel}</span>
+              <span className="gift__digits">{account.account}</span>
+            </span>
+          </>
+        ) : (
+          <span className="gift__digits">{account.account}</span>
+        )}
       </div>
       <button
         type="button"
@@ -56,6 +76,8 @@ const AccountRow: React.FC<AccountRowProps> = ({ account, copyLabel, copiedLabel
 
 interface SidePanelProps {
   side: GiftSide;
+  bsbLabel: string;
+  accountLabel: string;
   copyLabel: string;
   copiedLabel: string;
   language: string;
@@ -63,7 +85,7 @@ interface SidePanelProps {
 }
 
 /** 접었다 펴는 묶음 하나 (신랑측 / 신부측). 처음에는 접힌 상태 */
-const SidePanel: React.FC<SidePanelProps> = ({ side, copyLabel, copiedLabel, language, reduceMotion }) => {
+const SidePanel: React.FC<SidePanelProps> = ({ side, bsbLabel, accountLabel, copyLabel, copiedLabel, language, reduceMotion }) => {
   const [open, setOpen] = useState(false);
   const panelId = `gift-panel-${side.label}`;
 
@@ -98,6 +120,8 @@ const SidePanel: React.FC<SidePanelProps> = ({ side, copyLabel, copiedLabel, lan
                 <AccountRow
                   key={`${account.name}-${account.account}`}
                   account={account}
+                  bsbLabel={bsbLabel}
+                  accountLabel={accountLabel}
                   copyLabel={copyLabel}
                   copiedLabel={copiedLabel}
                   language={language}
@@ -115,9 +139,6 @@ const GiftSection: React.FC = () => {
   const language = useLanguage();
   const t = translations[language];
   const reduceMotion = useReducedMotion() ?? false;
-
-  // 계좌 안내는 국문 청첩장에서만 보여준다
-  if (language !== 'ko') return null;
 
   return (
     <div className="section-wrapper section-wrapper--white">
@@ -137,6 +158,8 @@ const GiftSection: React.FC = () => {
               <SidePanel
                 key={side.label}
                 side={side}
+                bsbLabel={t.gift.bsbLabel}
+                accountLabel={t.gift.accountLabel}
                 copyLabel={t.gift.copyButton}
                 copiedLabel={t.gift.copiedButton}
                 language={language}
