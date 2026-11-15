@@ -28,17 +28,13 @@
 }
 
 /* ──────────────────────────────────────────────────────────────
-   Our Story — 스크롤 고정 무대 위에서 타임라인이 오른쪽으로 이어지는 연출
+   Our Story — 스크롤 고정 무대 위에 인화지가 쌓이는 연출
 
-   .story-track    : 화면 몇 배 높이의 긴 래퍼. 이 안을 스크롤하는 동안
-                     아래 .story-stage 가 화면 위에 붙어 있다 (position: sticky).
-                     높이 = 100svh + (장 수 - 1) × 65svh  → TSX 가 CSS 변수로 넘긴다.
-   .story-stage    : 화면 높이(100svh)의 무대. 타이틀 / 카운터 / 레일 뷰포트 순.
-   .story-viewport : 남은 높이를 모두 쓰는 창. 그 안의 .story-rail-box 가 세로 가운데에 놓이고,
-                     상자 바닥에 화면을 가로지르는 기준선이 붙어 있다.
-   .story-rail     : 장(카드)을 가로로 늘어놓은 레일. framer-motion 이 x 를 스크롤 진행도로 민다.
-                     첫 장이 가운데 오도록 좌우 패딩 = (뷰포트 폭 - 카드 폭) / 2.
-   .story-card     : 장 하나 = 사진 + 제목/설명 + 타임라인 점·연도 라벨. 폭은 --story-card-w.
+   .story-track  : 화면 몇 배 높이의 긴 래퍼. 이 안을 스크롤하는 동안
+                   아래 .story-stage 가 화면 위에 붙어 있다 (position: sticky).
+                   높이 = 100svh + (장 수 - 1) × 65svh  → TSX 가 CSS 변수로 넘긴다.
+   .story-stage  : 화면 높이(100svh)의 무대. 타이틀 / 장 설명 / 인화지 더미 순.
+   .story-print  : 인화지 한 장. framer-motion 이 y·scale 을 스크롤 진행도로 움직인다.
 
    주의: 조상 중 overflow: hidden/auto 가 있으면 sticky 가 풀린다.
    PaperCard 는 그래서 overflow: clip 을 쓴다 (PaperCard.css 참고).
@@ -46,17 +42,13 @@
 
 .story-track {
   position: relative;
-  /* 섹션 패딩(20px) 밖까지 무대를 넓혀 레일이 카드 폭을 충분히 쓰게 한다 */
+  /* 섹션 패딩(20px) 밖까지 무대를 넓혀 인화지가 카드 폭을 충분히 쓰게 한다 */
   margin: 0 -20px;
   height: calc(100vh + var(--story-steps, 4) * var(--story-step-vh, 65) * 1vh);
   height: calc(100svh + var(--story-steps, 4) * var(--story-step-vh, 65) * 1svh);
 }
 
 .story-stage {
-  --story-card-w: 280px;
-  --story-gap: 28px;
-  /* 레일 바닥(기준선·점·라벨)이 차지하는 높이 */
-  --story-rail-foot: 56px;
   position: sticky;
   top: 0;
   height: 100vh;
@@ -66,7 +58,7 @@
   align-items: center;
   padding: 0 20px;
   box-sizing: border-box;
-  /* 아직 들어오지 않은 장이 카드 밖으로 비치지 않게 가로세로 모두 자른다 */
+  /* 아직 올라오지 않은 인화지(무대 아래 900px)가 다음 섹션 위로 비치지 않게 자른다 */
   overflow: hidden;
 }
 
@@ -75,150 +67,37 @@
   width: 100%;
 }
 
-/* 레일 뷰포트: 타이틀·카운터 아래 남은 높이를 모두 쓰고, 그 안에서 레일 상자를 세로 가운데에 둔다 */
-.story-viewport {
-  position: relative;
-  width: calc(100% + 40px);
-  margin: 0 -20px;
-  flex: 1 1 auto;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 12px;
-  box-sizing: border-box;
-}
-
-/* 레일 상자: 레일과 같은 높이의 자리. 기준선은 여기 붙어 제자리에 있고 레일만 가로로 움직인다 */
-.story-rail-box {
-  position: relative;
-  width: 100%;
-  margin: auto 0;
-}
-
-/* 화면을 가로지르는 기준선 — 점·라벨은 레일과 함께 움직이고 이 선만 제자리에 있다 */
-.story-rail-box__line {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: calc(var(--story-rail-foot) - 8px);
-  height: 1px;
-  background: #e0e0e0;
-  pointer-events: none;
-}
-
-.story-rail {
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  gap: var(--story-gap);
-  list-style: none;
-  margin: 0;
-  /* 첫 장이 뷰포트 가운데 오도록 좌우로 비운다 */
-  padding: 0 calc((100% - var(--story-card-w)) / 2);
-  box-sizing: border-box;
-  width: max-content;
-  min-width: 100%;
-  will-change: transform;
-}
-
-
-.story-card {
-  position: relative;
-  flex: 0 0 var(--story-card-w);
-  width: var(--story-card-w);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* 점·라벨 자리 + 기준선과 설명 사이 숨 */
-  padding-bottom: calc(var(--story-rail-foot) + 20px);
-  box-sizing: border-box;
-}
-
-/* 사진 + 장 설명 묶음. framer-motion 이 가운데 장을 띄우고 옆 장을 줄인다 */
-.story-card__body {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transform-origin: 50% 100%;
-  will-change: transform, opacity;
-}
-
-/* 첫 장의 점에서 현재 장까지 이어지는 골드 진행선 — 기준선 위에 겹친다 (첫 장에만 있다) */
-.story-card__progress {
-  position: absolute;
-  left: 50%;
-  bottom: calc(var(--story-rail-foot) - 8px);
-  height: 1px;
-  background: #C9A77C;
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* 설명 아래에서 점까지 내려오는 짧은 세로선 */
-.story-card__tick {
-  position: absolute;
-  left: 50%;
-  bottom: calc(var(--story-rail-foot) - 8px);
-  width: 1px;
-  height: 20px;
-  background: #C9A77C;
-  transform: translateX(-50%);
-  pointer-events: none;
-}
-
-/* 타임라인 점 — 가운데 장이면 네이비로 채워지고 조금 커진다 (TSX 가 배경색·크기를 건넨다) */
-.story-card__dot {
-  position: absolute;
-  left: 50%;
-  bottom: calc(var(--story-rail-foot) - 8px);
-  width: 10px;
-  height: 10px;
-  margin-left: -5px;
-  margin-bottom: -5px;
-  border: 1.5px solid #1A2F4A;
-  border-radius: 50%;
-  background: #FFFFFF;
-  box-sizing: border-box;
-  z-index: 2;
-  transition: background-color 0.25s ease;
-}
-
-/* 점 아래 연도 — "2013" */
-.story-card__label {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: calc(var(--story-rail-foot) - 20px);
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  font-family: "Lora", serif;
-  font-size: 13px;
-  letter-spacing: 2px;
-  color: #999;
-  transition: color 0.25s ease;
-}
-
-/* 장 설명: 사진 아래 가운데 정렬 */
-.story-chapter {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* 장 설명: 모든 장을 같은 칸에 겹쳐 두고 opacity 로 교차한다 → 높이는 가장 긴 장 기준 */
+.story-chapters {
+  display: grid;
   width: 100%;
   max-width: 300px;
-  margin-top: 18px;
+  /* margin-top: auto 와 .story-stack 의 margin-bottom: auto 가 타이틀 아래 남은 높이에서
+     장 설명 + 인화지 더미를 세로 중앙에 둔다 */
+  margin: auto auto 20px;
   text-align: center;
+  flex-shrink: 0;
 }
 
-/* 움직임 줄이기 모드의 연도 — 레일의 점 아래 라벨과 같은 꼴 */
+.story-chapter {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .story-chapter__index {
-  font-family: "Lora", serif;
-  font-size: 13px;
-  letter-spacing: 2px;
+  font-size: 12px;
+  letter-spacing: 1px;
   color: #C9A77C;
   margin-bottom: 6px;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+}
+
+.story-chapter__index:lang(en) {
+  font-family: "Lora", serif;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .story-chapter__title {
@@ -251,30 +130,49 @@
   font-family: "Lora", serif;
 }
 
-.story-print {
+/* 인화지 더미: 모든 장을 같은 grid 칸에 포개 윗변을 맞춘다 → 칸 높이는 가장 긴(세로) 인화지 기준이라
+   세로 인화지가 아래로 삐져나와도 무대 높이 계산에 들어간다 */
+.story-stack {
+  display: grid;
+  align-items: start;
+  justify-items: center;
   width: 100%;
-  max-width: var(--story-card-w, 280px);
+  max-width: 300px;
+  margin: 0 auto auto;
+  /* 위로 밀려난 장들이 보이도록 머리 공간을 남긴다 (네 장 × 9px 가 넘지 않게) */
+  padding-top: 28px;
+  flex-shrink: 0;
 }
 
-/* 세로 사진(원본 height > width): 폭을 좁힌 3:4 */
+.story-print {
+  grid-area: 1 / 1;
+  width: 100%;
+  max-width: 300px;
+  transform-origin: 50% 20%;
+  will-change: transform;
+}
+
+/* 세로 사진(원본 height > width): 폭을 좁힌 3:4 인화지 */
 .story-print--portrait {
-  max-width: 190px;
+  max-width: 200px;
 }
 
 .story-print--portrait .story-print__photo {
   aspect-ratio: 3 / 4;
 }
 
-/* 사진 버튼: 종이 카드 없이 사진만. 모서리만 살짝 둥글린다 */
+/* 인화지 자체: 흰 종이 위에 사진, 아래에 넓은 여백과 연도 */
 .story-print__paper {
   display: block;
   width: 100%;
   margin: 0;
-  padding: 0;
-  border: none;
+  padding: 10px 10px 0;
+  border: 1px solid rgba(26, 47, 74, 0.08);
   border-radius: 4px;
-  overflow: hidden;
-  background: transparent;
+  background: #FFFFFF;
+  box-shadow:
+    0 1px 2px rgba(26, 47, 74, 0.08),
+    0 10px 24px rgba(26, 47, 74, 0.1);
   cursor: pointer;
   text-align: left;
   font: inherit;
@@ -328,6 +226,17 @@
   font-size: 32px;
 }
 
+.story-print__caption {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Lora", serif;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: #999;
+}
+
 /* 움직임 줄이기 모드: 고정 무대 없이 세로 나열 */
 .story-list {
   list-style: none;
@@ -339,6 +248,12 @@
   margin-bottom: 48px;
 }
 
+.story-list__item .story-chapters,
+.story-list__item .story-chapter {
+  text-align: center;
+  align-items: center;
+}
+
 .story-list__item .story-chapter {
   max-width: 300px;
   margin: 0 auto 24px;
@@ -346,7 +261,6 @@
 
 .story-print--static {
   margin: 0 auto;
-  max-width: 280px;
 }
 
 /* 함께한 시간 카운터 — 타이틀 바로 아래, 무대에 함께 고정된다.
@@ -462,13 +376,8 @@
     font-size: 20px;
   }
 
-  .story-stage {
-    --story-card-w: 72vw;
-    --story-gap: 24px;
-  }
-
-  .story-chapter {
-    margin-top: 16px;
+  .story-chapters {
+    margin-bottom: 20px;
   }
 
   .story-chapter__title {
@@ -479,12 +388,13 @@
     font-size: 13px;
   }
 
+  .story-stack,
   .story-print--static {
-    max-width: 72vw;
+    max-width: 78vw;
   }
 
   .story-print--portrait {
-    max-width: 190px;
+    max-width: 200px;
   }
 
   .timeline__counter {
@@ -520,8 +430,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .story-rail,
-  .story-card__body {
+  .story-print {
     will-change: auto;
   }
 }

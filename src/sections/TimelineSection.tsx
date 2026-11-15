@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import {
   motion,
   AnimatePresence,
   useScroll,
-  useSpring,
   useTransform,
   useReducedMotion,
   MotionValue,
@@ -18,11 +17,11 @@ import './TimelineSection.css';
 
 const startDate = new Date('2013-06-02T00:00:00');
 
-/** 가로 사진은 최대 280px, 430px 이하에서는 화면의 72% */
-const PRINT_SIZES = '(max-width: 430px) 72vw, 280px';
+/** 가로 인화지는 최대 300px, 430px 이하에서는 화면의 78% */
+const PRINT_SIZES = '(max-width: 430px) 78vw, 300px';
 
-/** 세로 사진은 폭을 190px 로 좁혀 높이(3:4)가 가로 사진과 크게 벌어지지 않게 한다 */
-const PORTRAIT_PRINT_SIZES = '190px';
+/** 세로 인화지는 폭을 200px 로 좁혀 높이(3:4)가 가로 인화지와 크게 벌어지지 않게 한다 */
+const PORTRAIT_PRINT_SIZES = '200px';
 
 /** 원본이 세로로 긴 사진은 세로 인화지(3:4)로 찍는다 — 매니페스트의 원본 크기로 판별 */
 const isPortrait = (image: string | undefined): boolean => {
@@ -44,85 +43,88 @@ const IMAGE_POSITIONS: Record<string, string> = {
 const eventImagePosition = (image: string | undefined): string =>
   (image && IMAGE_POSITIONS[image]) ?? '';
 
-/** 레일 위에 놓인 사진이 살짝 어긋나 보이도록 장마다 고정 회전값을 준다 */
-const PRINT_ROTATIONS = [-1.6, 1.2, -0.9, 1.5, -1.2, 1.0];
+/** 인화지가 겹칠 때 살짝 어긋나 보이도록 장마다 고정 회전값을 준다 */
+const PRINT_ROTATIONS = [-2.4, 1.8, -1.2, 2.2, -1.6, 1.4];
 
-/** 이미지 키 "timeline/2013" 에서 연도를 꺼낸다 — 타임라인 점 아래 라벨용 */
+/** 이미지 키 "timeline/2013" 에서 연도를 꺼낸다 — 인화지 하단 캡션용 */
 const eventYear = (image: string | undefined): string => {
   const match = image?.match(/(\d{4})$/);
   return match ? match[1] : '';
 };
 
-/** 스크롤 한 단계(다음 장이 가운데로 오는 거리)를 뷰포트 높이 대비 비율로 둔다 */
+/** 스크롤 한 단계(다음 인화지가 올라오는 거리)를 뷰포트 높이 대비 비율로 둔다 */
 const STEP_VH = 65;
 
-/** 가운데에서 벗어난 장의 축소·흐림 정도 */
-const SIDE_SCALE = 0.94;
-const SIDE_OPACITY = 0.55;
-/** 가운데 장이 레일에서 살짝 떠오르는 높이(px) */
-const ACTIVE_LIFT = 10;
+/** 인화지가 무대 아래에서 올라오기 시작하는 거리(px). 모바일 뷰포트 밖이면 충분하다 */
+const ENTER_DISTANCE = 900;
+
+/** 쌓인 인화지가 위로 밀려나는 간격(px)과 축소 비율. 네 장까지만 밀린다 */
+const STACK_SHIFT = 9;
+const STACK_SCALE = 0.035;
+const STACK_DEPTH_MAX = 4;
 
 const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
+const easeOutCubic = (x: number) => 1 - Math.pow(1 - x, 3);
 
-interface StoryCardProps {
+interface StoryChapterProps {
   event: TimelineEvent;
   index: number;
+  chapterLabel: string;
   language: string;
   /** 0 → count-1 로 흐르는 "현재 장" 위치 */
   position: MotionValue<number>;
-  /** 첫 장만 받는다: 자기 점에서 현재 장까지 이어지는 골드 진행선의 길이(px) */
-  progressWidth?: MotionValue<number>;
+}
+
+/** 무대 상단의 장 설명. 자기 차례 ±0.2 에서는 완전히 보이고 ±0.5 에서 사라진다 */
+const StoryChapter: React.FC<StoryChapterProps> = ({ event, index, chapterLabel, language, position }) => {
+  const opacity = useTransform(position, (t) => clamp01(1 - (Math.abs(t - index) - 0.2) / 0.3));
+  const y = useTransform(position, (t) => (t - index) * -12);
+  const pointerEvents = useTransform(opacity, (o) => (o > 0.5 ? 'auto' : 'none'));
+
+  return (
+    <motion.div
+      className="story-chapter"
+      style={{ opacity, y, pointerEvents }}
+    >
+      <div className="story-chapter__index" lang={language}>
+        {chapterLabel} {index + 1}
+      </div>
+      <h3 className="story-chapter__title" lang={language}>{event.title}</h3>
+      <p className="story-chapter__description" lang={language}>{event.description}</p>
+    </motion.div>
+  );
+};
+
+interface StoryPrintProps {
+  event: TimelineEvent;
+  index: number;
+  position: MotionValue<number>;
   onOpen: (image: string) => void;
 }
 
 /**
- * 레일 위의 장 하나: 사진 + 제목/설명 + 타임라인 점·연도 라벨.
- * 자기 차례(position ≈ index)에서 또렷하게 떠오르고, 옆으로 밀려나면 작아지며 흐려진다.
+ * 인화지 한 장. 자기 차례 직전 구간(index-0.9 → index-0.2)에 아래에서 올라와 멈추고,
+ * 다음 장이 올라올수록 위로 조금씩 밀리며 작아진다.
  */
-const StoryCard: React.FC<StoryCardProps> = ({
-  event,
-  index,
-  language,
-  position,
-  progressWidth,
-  onOpen,
-}) => {
-  // 가운데와의 거리 0 → 1 (한 장 이상 떨어지면 1)
-  const distance = useTransform(position, (t) => clamp01(Math.abs(t - index)));
-  const scale = useTransform(distance, (d) => 1 - d * (1 - SIDE_SCALE));
-  const opacity = useTransform(distance, (d) => 1 - d * (1 - SIDE_OPACITY));
-  const y = useTransform(distance, (d) => -ACTIVE_LIFT * (1 - d));
-  const dotScale = useTransform(distance, (d) => 1.4 - d * 0.4);
-  const dotBackground = useTransform(distance, (d) => (d < 0.5 ? '#1A2F4A' : '#FFFFFF'));
-  const labelColor = useTransform(distance, (d) => (d < 0.5 ? '#1A2F4A' : '#999999'));
+const StoryPrint: React.FC<StoryPrintProps> = ({ event, index, position, onOpen }) => {
+  const y = useTransform(position, (t) => {
+    const arrive = index === 0 ? 1 : easeOutCubic(clamp01((t - (index - 1) - 0.1) / 0.7));
+    const depth = Math.min(Math.max(0, t - index), STACK_DEPTH_MAX);
+    return (1 - arrive) * ENTER_DISTANCE - depth * STACK_SHIFT;
+  });
+  const scale = useTransform(position, (t) => {
+    const depth = Math.min(Math.max(0, t - index), STACK_DEPTH_MAX);
+    return 1 - depth * STACK_SCALE;
+  });
+  const rotate = PRINT_ROTATIONS[index % PRINT_ROTATIONS.length];
 
   return (
-    <li className="story-card">
-      <motion.div className="story-card__body" style={{ scale, opacity, y }}>
-        <div
-          className={printClassName(event.image)}
-          style={{ transform: `rotate(${PRINT_ROTATIONS[index % PRINT_ROTATIONS.length]}deg)` }}
-        >
-          <PrintBody event={event} onOpen={onOpen} />
-        </div>
-        <div className="story-chapter">
-          <h3 className="story-chapter__title" lang={language}>{event.title}</h3>
-          <p className="story-chapter__description" lang={language}>{event.description}</p>
-        </div>
-      </motion.div>
-      {progressWidth && (
-        <motion.span className="story-card__progress" aria-hidden="true" style={{ width: progressWidth }} />
-      )}
-      <span className="story-card__tick" aria-hidden="true" />
-      <motion.span
-        className="story-card__dot"
-        aria-hidden="true"
-        style={{ scale: dotScale, backgroundColor: dotBackground }}
-      />
-      <motion.div className="story-card__label" style={{ color: labelColor }}>
-        {eventYear(event.image)}
-      </motion.div>
-    </li>
+    <motion.div
+      className={printClassName(event.image)}
+      style={{ y, scale, rotate, zIndex: index + 1 }}
+    >
+      <PrintBody event={event} onOpen={onOpen} />
+    </motion.div>
   );
 };
 
@@ -131,9 +133,10 @@ interface PrintBodyProps {
   onOpen: (image: string) => void;
 }
 
-/** 사진 버튼. 스크롤 연출과 정적 레이아웃이 함께 쓴다 */
+/** 인화지 내용(사진 + 연도 캡션). 스크롤 연출과 정적 레이아웃이 함께 쓴다 */
 const PrintBody: React.FC<PrintBodyProps> = ({ event, onOpen }) => {
   const props = imageProps(event.image, isPortrait(event.image) ? PORTRAIT_PRINT_SIZES : PRINT_SIZES);
+  const year = eventYear(event.image);
 
   return (
     <button
@@ -159,6 +162,7 @@ const PrintBody: React.FC<PrintBodyProps> = ({ event, onOpen }) => {
           </div>
         )}
       </div>
+      <div className="story-print__caption">{year}</div>
     </button>
   );
 };
@@ -168,8 +172,6 @@ const TimelineSection: React.FC = () => {
   const t = translations[language];
   const reduceMotion = useReducedMotion();
   const trackRef = useRef<HTMLDivElement>(null);
-  const railRef = useRef<HTMLOListElement>(null);
-  const [step, setStep] = useState(0);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [timeTogether, setTimeTogether] = useState({
     years: 0,
@@ -188,27 +190,8 @@ const TimelineSection: React.FC = () => {
     target: trackRef,
     offset: ['start start', 'end end'],
   });
-  // 0 → count-1 : 지금 몇 번째 장이 가운데에 있는지 (소수점은 전환 중).
-  // 스프링으로 살짝 늦춰 손가락을 떼도 레일이 부드럽게 따라오게 한다
-  const rawPosition = useTransform(scrollYProgress, (p) => p * Math.max(count - 1, 0));
-  const position = useSpring(rawPosition, { stiffness: 170, damping: 30, mass: 0.6, restDelta: 0.001 });
-  // 레일을 왼쪽으로 민다: 한 장 넘어갈 때마다 (카드 폭 + 간격) 만큼
-  const railX = useTransform(position, (t) => -t * step);
-  // 첫 점에서 현재 장까지 이어지는 골드 진행선 (첫 장 안에 그린다)
-  const progressWidth = useTransform(position, (t) => t * step);
-
-  // 카드 폭·간격은 CSS(뷰포트)에 달려 있으므로 실제 배치에서 잰다
-  useLayoutEffect(() => {
-    if (reduceMotion) return;
-    const measure = () => {
-      const cards = railRef.current?.querySelectorAll<HTMLElement>('.story-card');
-      if (!cards || cards.length < 2) return;
-      setStep(cards[1].offsetLeft - cards[0].offsetLeft);
-    };
-    measure();
-    window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
-  }, [reduceMotion, count, language]);
+  // 0 → count-1 : 지금 몇 번째 장이 무대 위에 있는지 (소수점은 전환 중)
+  const position = useTransform(scrollYProgress, (p) => p * Math.max(count - 1, 0));
 
   useScrollLock(!!selectedImage);
 
@@ -305,7 +288,9 @@ const TimelineSection: React.FC = () => {
                 {events.map((event, index) => (
                   <li key={index} className="story-list__item">
                     <div className="story-chapter">
-                      <div className="story-chapter__index">{eventYear(event.image)}</div>
+                      <div className="story-chapter__index" lang={language}>
+                        {t.timeline.chapterLabel} {index + 1}
+                      </div>
                       <h3 className="story-chapter__title" lang={language}>{event.title}</h3>
                       <p className="story-chapter__description" lang={language}>{event.description}</p>
                     </div>
@@ -320,35 +305,41 @@ const TimelineSection: React.FC = () => {
               </ol>
             </>
           ) : (
-            <div
-              ref={trackRef}
-              className="story-track"
-              style={{ '--story-steps': Math.max(count - 1, 0), '--story-step-vh': STEP_VH } as React.CSSProperties}
-            >
-              <div className="story-stage">
-                {title}
-                {counter}
-                <div className="story-viewport">
-                  <div className="story-rail-box">
-                    {/* 화면을 가로지르는 기준선. 점·라벨은 레일과 함께 움직이고 이 선만 제자리에 있다 */}
-                    <span className="story-rail-box__line" aria-hidden="true" />
-                    <motion.ol ref={railRef} className="story-rail" style={{ x: railX }}>
-                      {events.map((event, index) => (
-                        <StoryCard
-                          key={index}
-                          event={event}
-                          index={index}
-                          language={language}
-                          position={position}
-                          progressWidth={index === 0 ? progressWidth : undefined}
-                          onOpen={handleImageClick}
-                        />
-                      ))}
-                    </motion.ol>
+            <>
+              <div
+                ref={trackRef}
+                className="story-track"
+                style={{ '--story-steps': Math.max(count - 1, 0), '--story-step-vh': STEP_VH } as React.CSSProperties}
+              >
+                <div className="story-stage">
+                  {title}
+                  {counter}
+                  <div className="story-chapters">
+                    {events.map((event, index) => (
+                      <StoryChapter
+                        key={index}
+                        event={event}
+                        index={index}
+                        chapterLabel={t.timeline.chapterLabel}
+                        language={language}
+                        position={position}
+                      />
+                    ))}
+                  </div>
+                  <div className="story-stack">
+                    {events.map((event, index) => (
+                      <StoryPrint
+                        key={index}
+                        event={event}
+                        index={index}
+                        position={position}
+                        onOpen={handleImageClick}
+                      />
+                    ))}
                   </div>
                 </div>
               </div>
-            </div>
+            </>
           )}
         </div>
       </motion.div>
