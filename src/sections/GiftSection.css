@@ -1,0 +1,252 @@
+/* ---------- 섹션 루트 (src/sections/CLAUDE.md 3절) ---------- */
+
+.gift {
+  padding: 24px 20px;
+  background-color: transparent;
+  margin-top: 0;
+}
+
+/* ---------- 타이틀 정본 (4절) — 모든 섹션에서 100% 동일해야 한다. 값을 바꾸지 말 것 ---------- */
+
+.gift__title {
+  font-size: 28px;
+  font-weight: 400;
+  color: #1A2F4A;
+  margin-top: 8px;
+  margin-bottom: 24px;
+  padding: 12px 0;
+  text-align: center;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+  letter-spacing: 1px;
+  line-height: 1.4;
+}
+
+.gift__title:lang(en) {
+  text-transform: uppercase;
+  font-size: 24px;
+  letter-spacing: 3px;
+  font-weight: 300;
+  font-family: "Lora", serif;
+}
+
+/* ---------- 타이틀 아래 보조 문구 (5절) ---------- */
+
+.gift__subtitle {
+  margin: 0 0 24px;
+  text-align: center;
+  font-size: 13px;
+  color: #999;
+  line-height: 1.6;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+  white-space: pre-line;
+  word-break: keep-all;
+}
+
+.gift__subtitle:lang(en) {
+  font-family: "Lora", serif;
+}
+
+/* ---------- 본문: 접었다 펴는 계좌 묶음 ---------- */
+
+.gift__sides {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 묶음 하나 = 종이 카드. 보더·그림자는 티켓·태그와 같은 값 */
+.gift__side {
+  background: #FFFFFF;
+  border: 1px solid rgba(26, 47, 74, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+}
+
+/* 접힘 머리: 아이보리 종이 띠 */
+.gift__side-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px 20px;
+  margin: 0;
+  border: none;
+  background: #FAF8F3;
+  color: #1A2F4A;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.gift__side-label {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+}
+
+.gift__side-toggle:lang(en) .gift__side-label {
+  font-family: "Lora", serif;
+}
+
+.gift__side-chevron {
+  font-size: 20px;
+  color: #666;
+  transition: transform 0.3s ease;
+}
+
+.gift__side--open .gift__side-chevron {
+  transform: rotate(180deg);
+}
+
+.gift__side-body {
+  overflow: hidden;
+}
+
+.gift__side-inner {
+  padding: 28px 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.gift__account {
+  display: flex;
+  flex-direction: column;
+}
+
+.gift__holder {
+  font-size: 13px;
+  color: #333;
+  line-height: 1.5;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+}
+
+.gift__holder:lang(en) {
+  font-family: "Lora", serif;
+}
+
+.gift__role {
+  color: #999;
+  margin-right: 6px;
+}
+
+.gift__name {
+  font-weight: 500;
+}
+
+.gift__number {
+  margin-top: 4px;
+  font-size: 13px;
+  color: #333;
+  line-height: 1.5;
+  letter-spacing: 0.3px;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+}
+
+.gift__number:lang(en) {
+  font-family: "Lora", serif;
+}
+
+.gift__bank {
+  margin-right: 6px;
+}
+
+/* 호주 계좌의 라벨 + 번호 묶음 (BSB / Acc No). 라벨은 티켓 라벨 색 #9CA3AF */
+.gift__field {
+  margin-right: 6px;
+  white-space: nowrap;
+}
+
+.gift__field:last-child {
+  margin-right: 0;
+}
+
+.gift__field-label {
+  margin-right: 4px;
+  color: #9CA3AF;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.gift__digits {
+  font-variant-numeric: tabular-nums;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* 계좌 복사 버튼: 흰 바탕 + 회색 보더, 눌리면 네이비 보더 */
+.gift__copy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 16px;
+  padding: 12px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #333;
+  font-size: 13px;
+  font-family: "Gowun Dodum", "Lora", sans-serif;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.gift__copy:lang(en) {
+  font-family: "Lora", serif;
+}
+
+.gift__copy .material-symbols-outlined {
+  font-size: 18px;
+  color: #666;
+}
+
+.gift__copy:hover {
+  border-color: rgba(26, 47, 74, 0.3);
+  background-color: rgba(26, 47, 74, 0.05);
+}
+
+.gift__copy--done {
+  border-color: #C9A77C;
+  color: #1A2F4A;
+}
+
+.gift__copy--done .material-symbols-outlined {
+  color: #C9A77C;
+}
+
+/* ---------- 반응형 — 미디어쿼리는 파일 끝에, 이 순서로만 (6절) ---------- */
+
+@media (max-width: 430px) {
+  .gift {
+    padding: 20px;
+  }
+
+  .gift__title {
+    font-size: 24px;
+  }
+
+  .gift__title:lang(en) {
+    font-size: 20px;
+  }
+
+  .gift__side-toggle {
+    padding: 14px 18px;
+  }
+
+  .gift__side-inner {
+    padding: 24px 18px 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gift__side-chevron,
+  .gift__copy {
+    transition: none;
+  }
+}
